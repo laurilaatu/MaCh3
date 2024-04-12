@@ -115,6 +115,8 @@ public:
   void SetOscillator(Oscillator* Osc_);
   void FindEventOscBin();
 
+  int GetBinningOpt(){return BinningOpt;}
+
  protected:
   //TODO - I think this will be tricky to abstract. fdmc_base will have to contain the pointers to the appropriate weights, can probably pass the number of these weights to constructor?
   //DB Function to determine which weights apply to which types of samples
@@ -165,7 +167,6 @@ public:
   double CalcXsecWeightNorm(const int iSample, const int iEvent);
   virtual double CalcXsecWeightFunc(int iSample, int iEvent) = 0;
 
-  int GetBinningOpt(){return BinningOpt;}
 
   //virtual double ReturnKinematicParameter(KinematicTypes Var, int i) = 0;       //Returns parameter Var for event j in sample i
   virtual double ReturnKinematicParameter(std::string KinematicParamter, int iSample, int iEvent) = 0;
