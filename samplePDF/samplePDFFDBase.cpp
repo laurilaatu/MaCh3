@@ -255,9 +255,9 @@ void samplePDFFDBase::fillArray() {
   Selection = StoredSelection;
 
   // Call entirely different routine if we're running with openMP
-#ifdef MULTITHREAD
-  fillArray_MP();
-#else
+// #ifdef MULTITHREAD
+  // fillArray_MP();
+// #else
 
   //ETA we should probably store this in samplePDFFDBase
   int nXBins = XBinEdges.size()-1;
@@ -385,7 +385,7 @@ void samplePDFFDBase::fillArray() {
     }
   }
 
-#endif // end the else in openMP
+// #endif // end the else in openMP
   return;
 }
 
