@@ -155,8 +155,8 @@ void splineFDBase::TransferToMonolith()
                     manycoeff_arr[(iCoeff+i)*4+j]=tmpManyCoeffArr[i*4+j];
                     }
                   }
-                  delete tmpXCoeffArr;
-                  delete tmpManyCoeffArr;
+                  delete[] tmpXCoeffArr;
+                  delete[] tmpManyCoeffArr;
                 }
                 else {
                     isflatarray[splineindex]=true;
