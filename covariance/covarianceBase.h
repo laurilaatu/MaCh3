@@ -433,7 +433,7 @@ class covarianceBase {
   // TMatrixD* getMatrixSqrt(TMatrixDSym* inputMatrix);
   // double calculateSubmodality(TMatrixD* sqrtVectorCov, TMatrixDSym* throwCov);
   bool use_adaptive;
-  int total_steps;
+  int total_steps = 0;
   int lower_adapt, upper_adapt; //Thresholds for when to turn on/off adaptive MCMC
   // TMatrixD* covSqrt;
   std::vector<double> par_means;
