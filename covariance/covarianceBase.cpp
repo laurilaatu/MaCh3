@@ -444,7 +444,10 @@ void covarianceBase::init(std::vector<std::string> YAMLFile)
     }
   }
 
-  setName(YAMLFile[0].c_str());
+  const std::string::size_type length = YAMLFile[0].size();
+  char *buffer = new char[length + 1];
+  memcpy(buffer, YAMLFile[0].c_str(), length + 1);
+  setName(buffer);
   //size = covMatrix->GetNrows();
   //MakePosDef(covMatrix);
   //setCovMatrix(covMatrix);
@@ -1711,7 +1714,7 @@ void covarianceBase::setThrowMatrix(TMatrixDSym *cov){
   }
 
   throwMatrix = (TMatrixDSym*)cov->Clone();
-  if(total_steps<=lower_adapt) makeClosestPosDef(throwMatrix);
+  if(use_adaptive && total_steps<=lower_adapt) makeClosestPosDef(throwMatrix);
   else MakePosDef(throwMatrix);
   
   TDecompChol TDecompChol_throwMatrix(*throwMatrix);

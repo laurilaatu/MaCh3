@@ -432,7 +432,7 @@ class covarianceBase {
   void initialiseNewAdaptiveChain();
   // TMatrixD* getMatrixSqrt(TMatrixDSym* inputMatrix);
   // double calculateSubmodality(TMatrixD* sqrtVectorCov, TMatrixDSym* throwCov);
-  bool use_adaptive;
+  bool use_adaptive = false;
   int total_steps = 0;
   int lower_adapt, upper_adapt; //Thresholds for when to turn on/off adaptive MCMC
   // TMatrixD* covSqrt;
