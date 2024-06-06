@@ -23,7 +23,6 @@ namespace file_helper{
 
 class FileHelper{
     public:
-        :
         FileHelper(std::string input_file_name, std::string opts=""){
             /**
              * Basic Constructor
@@ -40,14 +39,12 @@ class FileHelper{
         }
 
         // Basic I/O
-        virtual void open_file(std::string opts="") = 0; /** Pure virtual, opens file*/
-        virtual void close_file() = 0; /** Pure virtual, closes file*/
+        virtual void open_file(std::string){}; /** virtual, opens file*/
+        virtual void close_file(){}; /** virtual, closes file*/
 
         // Getters
-        virtual std::unique_ptr<void> get_by_name(std::string obj_name); /**Pure virtual, gets object by name*/
-
-        virtual void write_to_file(void* object_to_write); /** pure virtual, writes to file*/
-
+        std::unique_ptr<void> get_by_name(std::string); /**virtual, gets object by name*/
+        virtual void write_to_file(){} /** virtual, writes to file*/
         std::string get_file_name(){return _input_file_name;} /** Gets file name */
 
 protected:

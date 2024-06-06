@@ -3,22 +3,22 @@ set(HEADERS
   root_utils.h
 )
 
-add_library(Utils INTERFACE)
+add_library(MaCh3Utils INTERFACE)
 
-set_target_properties(Utils PROPERTIES
+set_target_properties(MaCh3Utils PROPERTIES
   PUBLIC_NAME "${HEADERS}"
-  EXPORT_NAME Utils
+  EXPORT_NAME MaCh3Utils
 )
 
-#target_link_libraries(Utils ROOT::ROOT spdlog MaCh3::Manager MaCh3CompilerOptions)
+#target_link_libraries(MaCh3Utils ROOT::ROOT spdlog MaCh3::Manager MaCh3CompilerOptions)
 
-#target_include_directories(Utils INTERFACE
+#target_include_directories(MaCh3Utils INTERFACE
 #  $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../>
 #  $<INSTALL_INTERFACE:include>)
 
-install(TARGETS Utils
+install(TARGETS MaCh3Utils
         EXPORT MaCh3-targets
         LIBRARY DESTINATION lib/
         PUBLIC_HEADER DESTINATION include/utils)
 
-add_library(MaCh3::Utils ALIAS Utils)
+add_library(MaCh3::MaCh3Utils ALIAS MaCh3Utils)

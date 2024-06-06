@@ -251,6 +251,7 @@ endforeach()
 
 # Build components
 add_subdirectory(manager)
+add_subdirectory(utils)
 add_subdirectory(covariance)
 add_subdirectory(splines)
 if (NOT USE_PROB3)
@@ -265,7 +266,7 @@ add_subdirectory(Diagnostics)
 #This is to export the target properties of MaCh3
 #Anything that links to "MaCh3" will get all of these target properties
 add_library(MaCh3 INTERFACE)
-target_link_libraries(MaCh3 INTERFACE MCMC OscClass SamplePDF Covariance Splines Manager MaCh3CompilerOptions)
+target_link_libraries(MaCh3 INTERFACE MCMC MaCh3Utils OscClass SamplePDF Covariance Splines Manager MaCh3CompilerOptions)
 set_target_properties(MaCh3 PROPERTIES EXPORT_NAME All)
 
 install(TARGETS MaCh3

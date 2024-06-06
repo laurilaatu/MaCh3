@@ -24,7 +24,7 @@ public:
         : FileHelper(input_file_name, opts) {} /**Base class implementation */
 
     // IO operations
-    void open_file(std::string opt) override{
+    void open_file(std::string opts) override{
     /**
      * @brief Opens file specified in the constructor
      * @param opt I/O options (see https://root.cern.ch/doc/master/classTFile.html)
@@ -35,7 +35,7 @@ public:
             return;
         }
 
-        _input_file = std::unique<TFile>{TFile::Open(get_file_name().c_str(), opts)};
+        _input_file = std::unique_ptr<TFile>{TFile::Open(get_file_name().c_str(), opts.c_str())};
 
         if(_input_file->IsZombie()){
             _file_exception();
@@ -67,7 +67,7 @@ public:
             _object_exception(obj_name);
         }
         // Hopefully this will just work!
-        return std::move(obj);
+        return obj;
     }
 
     template <typename T>
@@ -88,5 +88,5 @@ public:
 
 protected:
     std::unique_ptr<TFile> _input_file;
-
+};
 } // file_helper namespace
