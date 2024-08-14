@@ -23,6 +23,7 @@ samplePDFFDBase::samplePDFFDBase(double pot, std::string mc_version, covarianceX
   fTestStatistic = kPoisson;
 }
 
+
 samplePDFFDBase::~samplePDFFDBase()
 {
   std::cout << "I'm deleting samplePDFFDBase" << std::endl;
@@ -1430,3 +1431,380 @@ inline cudaprob3::ProbType samplePDFFDBase::SwitchToCUDAProbType(CUDAProb_nu CUD
 }
 #endif
 
+TH1D* samplePDFFDBase::get1DVarHist(std::string KinematicVar1, int kModeToFill, int kChannelToFill, int WeightStyle, TAxis* Axis) {
+  bool fChannel;
+  bool fMode;
+
+
+  if (kChannelToFill!=-1) {
+    if (kChannelToFill>getNMCSamples()) {
+      std::cout << "Required channel is not available. kChannelToFill should be between 0 and " << getNMCSamples() << std::endl;
+      std::cout << "kChannelToFill given:" << kChannelToFill << std::endl;
+      std::cout << "Exitting.." << std::endl;
+      throw;
+    }
+    fChannel = true;
+  } else {
+    fChannel = false;
+  }
+
+// NK: Commented out as no way to know total number of modes
+/*  if (kModeToFill!=-1) {
+    if (kModeToFill>kMaCh3_nModes) {
+      std::cout << "Required mode is not available. kModeToFill should be between 0 and " << kMaCh3_nModes << std::endl;
+      std::cout << "kModeToFill given:" << kModeToFill << std::endl;
+      std::cout << "Exitting.." << std::endl;
+      throw;
+    }
+    fMode = true;
+  } else {
+    fMode = false;
+  }
+*/ 
+
+  std::vector< std::vector<std::string> > SelectionVec; //NK: Made this a vector of strings as the enums don't exist in Core MaCh3
+
+
+  if (fMode) {
+    std::vector<std::string> SelecMode(3);
+    SelecMode[0] = "M3Mode";
+    SelecMode[1] = std::to_string(kModeToFill);
+    SelecMode[2] = std::to_string(kModeToFill+1);
+    SelectionVec.push_back(SelecMode);
+  }
+
+
+  if (fChannel) {
+    std::vector<std::string> SelecChannel(3);
+    SelecChannel[0] = "OscChannel";
+    SelecChannel[1] = std::to_string(kChannelToFill);
+    SelecChannel[2] = std::to_string(kChannelToFill+1);
+    SelectionVec.push_back(SelecChannel);
+  }
+
+
+  return get1DVarHist(KinematicVar1,SelectionVec,WeightStyle,Axis);
+}
+
+
+/*! DB New version of get1DVarHist which only fills histogram with events passing IsEventSelected
+ * This works by having the Selection vector, where each component of Selection is a 2 or 3 length vector
+ * If Selection[i].size()==3, Selection[i][0] is the ND280KinematicType which is being cut, and only events with ND280KinematicType values between Selection[i][1] and Selection[i][2] are accepted
+ */
+TH1D* samplePDFFDBase::get1DVarHist(std::string KinematicVar1,std::vector< std::vector<std::string> > SelectionVec, int WeightStyle, TAxis* Axis) {
+
+
+  for(int ibounds = 0; ibounds <SelectionVec.size(); ibounds++){
+    SelectionStr.push_back(SelectionVec[ibounds][0]);
+    SelectionBounds.push_back(std::vector<double>(std::stod(SelectionVec[ibounds][1]), std::stod(SelectionVec[ibounds][2])));
+
+  }
+
+  //DB Cut on OscChannel in this function due to speed increase from considering skmcSamples structure (ie. Array of length NChannels)
+  bool fChannel = false;
+  int kChannelToFill = -1;
+  for (unsigned int iSelection=0;iSelection<SelectionStr.size();iSelection++) {
+    if (SelectionStr[iSelection] == "OscChannel") {
+      fChannel = true;
+      kChannelToFill = SelectionBounds[iSelection][1];
+    }
+  }
+
+
+  if (kChannelToFill>getNMCSamples()) {
+    std::cout << "Required channel is not available. kChannelToFill should be between 0 and " << getNMCSamples() << std::endl;
+    std::cout << "kChannelToFill given:" << kChannelToFill << std::endl;
+    std::cout << "Exitting.." << std::endl;
+    throw;
+  }
+
+  TH1D* _h1DVar;
+  std::string kPDFBinning = "PDFBinning"; //XVar
+  std::string modename = "all";
+  std::string channame = "all";
+  if(SelectionVec[0][0] == "M3Mode"){modename = std::to_string((int)(Selection[0][1]));}
+  else if(SelectionVec[0][0] == "OscChannel"){channame = std::to_string((int)(Selection[0][1]));}
+  if(SelectionVec[1][0] == "OscChannel"){channame = std::to_string((int)(Selection[0][1]));}
+  std::string HistName = KinematicVar1 +"_mode_"+modename+"_channel_"+channame;
+  if (KinematicVar1==kPDFBinning) {
+    _h1DVar = (TH1D*)_hPDF1D->Clone(HistName.c_str());
+    _h1DVar->Reset();
+  } else {
+    if (Axis) {
+      _h1DVar = new TH1D(HistName.c_str(), KinematicVar1.c_str(),Axis->GetNbins(),Axis->GetXbins()->GetArray());
+    } else {
+      std::vector<double> xBinEdges = ReturnKinematicParameterBinning(KinematicVar1);
+      _h1DVar = new TH1D(HistName.c_str(), KinematicVar1.c_str(), xBinEdges.size()-1, xBinEdges.data());
+    }
+  }
+  _h1DVar->GetXaxis()->SetTitle(KinematicVar1.c_str());
+  //This should be the same as FillArray in core basically, except that
+  //events will end up in different bins
+  for (int i=0;i<getNMCSamples();i++) {
+    if (fChannel && (i!=kChannelToFill)) {
+      continue;
+    }
+    for(int j=0;j<getNEventsInSample(i);j++) {
+
+
+      //DB Determine which events pass selection
+      if (!IsEventSelected(SelectionStr,i,j)) {
+		continue;
+      }
+      if(MCSamples[i].isNC[j]) { //DB Abstract check on MaCh3Modes to determine which apply to neutral current
+        MCSamples[i].osc_w[j] = 1.;
+      }
+
+
+      double Weight = GetEventWeight(i,j);
+	  if (WeightStyle==1) {
+            Weight = 1.0;
+            for (int iParam=0; iParam<MCSamples[i].ntotal_weight_pointers[j] ; ++iParam) {
+	      Weight *= *(MCSamples[i].total_weight_pointers[j][iParam]);
+            }
+	  }
+	  //ETA - not sure about this
+	  //if (MCSamples[i].xsec_w[j] == 0.) continue;
+          //NK changing depending on weight style
+          if (WeightStyle != 0 && MCSamples[i].xsec_w[j] == 0.) continue;
+          if (WeightStyle == 0){Weight = 1.0;}
+
+
+	  double Var1_Val;
+	  if (KinematicVar1==kPDFBinning) {
+		Var1_Val = *(MCSamples[i].x_var[j]);
+	  } else {
+		Var1_Val = ReturnKinematicParameter(KinematicVar1,i,j);
+	  }
+	  if (Var1_Val!=_DEFAULT_RETURN_VAL_) {
+		_h1DVar->Fill(Var1_Val,Weight);
+	  }
+    }
+  }
+  for(int iselec = 0; iselec<SelectionVec.size(); iselec++){
+    SelectionBounds.pop_back();
+    SelectionStr.pop_back();
+  }
+  /* DB: This is commented out be default
+  // This code shifts the histogram meaning to Events/Bin Width but this affects the overall integral of the histogram so it should not be used anywhere we care about event rates
+  // We could use Hist->Integral("width") but it would require a lot of modification throughout the code
+
+  if (Var1!=kPDFBinning) {
+    //_h1DVar->SetBinContent(1,_h1DVar->GetBinContent(0)+_h1DVar->GetBinContent(1));
+    //_h1DVar->SetBinContent(_h1DVar->GetNbinsX(),_h1DVar->GetBinContent(_h1DVar->GetNbinsX())+_h1DVar->GetBinContent(_h1DVar->GetNbinsX()+1));
+
+    for (int x=1;x<=_h1DVar->GetNbinsX();x++) {
+      _h1DVar->SetBinContent(x,_h1DVar->GetBinContent(x)/_h1DVar->GetXaxis()->GetBinWidth(x));
+    }
+
+    _h1DVar->GetYaxis()->SetTitle("Events/Bin Width");
+  }
+  */
+
+
+//  PrettifyAxis(Var1,_h1DVar->GetXaxis(),0);
+
+
+  return _h1DVar;
+}
+
+
+TH2D* samplePDFFDBase::get2DVarHist(std::string KinematicVar1,std::string KinematicVar2, int kModeToFill, int kChannelToFill, int WeightStyle, TAxis* Axis, TAxis* Axis2) {
+  bool fChannel;
+  bool fMode;
+
+
+  if (kChannelToFill!=-1) {
+    if (kChannelToFill>getNMCSamples()) {
+      std::cout << "Required channel is not available. kChannelToFill should be between 0 and " << getNMCSamples() << std::endl;
+      std::cout << "kChannelToFill given:" << kChannelToFill << std::endl;
+      std::cout << "Exitting.." << std::endl;
+      throw;
+    }
+    fChannel = true;
+  } else {
+    fChannel = false;
+  }
+
+// NK: Commented out as no way to know total number of modes
+/*  if (kModeToFill!=-1) {
+    if (kModeToFill>kMaCh3_nModes) {
+      std::cout << "Required mode is not available. kModeToFill should be between 0 and " << kMaCh3_nModes << std::endl;
+      std::cout << "kModeToFill given:" << kModeToFill << std::endl;
+      std::cout << "Exitting.." << std::endl;
+      throw;
+    }
+    fMode = true;
+  } else {
+    fMode = false;
+  }
+*/ 
+
+  std::vector< std::vector<std::string> > SelectionVec; //NK: Made this a vector of strings as the enums don't exist in Core MaCh3
+
+
+  if (fMode) {
+    std::vector<std::string> SelecMode(3);
+    SelecMode[0] = "M3Mode";
+    SelecMode[1] = std::to_string(kModeToFill);
+    SelecMode[2] = std::to_string(kModeToFill+1);
+    SelectionVec.push_back(SelecMode);
+  }
+
+
+  if (fChannel) {
+    std::vector<std::string> SelecChannel(3);
+    SelecChannel[0] = "OscChannel";
+    SelecChannel[1] = std::to_string(kChannelToFill);
+    SelecChannel[2] = std::to_string(kChannelToFill+1);
+    SelectionVec.push_back(SelecChannel);
+  }
+
+
+  if (kChannelToFill!=-1) {
+    if (kChannelToFill>getNMCSamples()) {
+      std::cout << "Required channel is not available. kChannelToFill should be between 0 and " << getNMCSamples() << std::endl;
+      std::cout << "kChannelToFill given:" << kChannelToFill << std::endl;
+      std::cout << "Exitting.." << std::endl;
+      throw;
+    }
+    fChannel = true;
+  } else {
+    fChannel = false;
+  }
+
+  return get2DVarHist(KinematicVar1,KinematicVar2, SelectionVec,WeightStyle,Axis, Axis2);
+}
+
+
+/*! DB New version of get1DVarHist which only fills histogram with events passing IsEventSelected
+ * This works by having the Selection vector, where each component of Selection is a 2 or 3 length vector
+ * If Selection[i].size()==3, Selection[i][0] is the ND280KinematicType which is being cut, and only events with ND280KinematicType values between Selection[i][1] and Selection[i][2] are accepted
+ */
+TH2D* samplePDFFDBase::get2DVarHist(std::string KinematicVar1,std::string KinematicVar2, std::vector< std::vector<std::string> > SelectionVec, int WeightStyle, TAxis* Axis, TAxis* Axis2) {
+
+  for(int ibounds = 0; ibounds <SelectionVec.size(); ibounds++){
+    SelectionBounds.push_back(std::vector<double>(std::stod(SelectionVec[ibounds][1]), std::stod(SelectionVec[ibounds][2])));
+    SelectionStr.push_back(SelectionVec[ibounds][0]);
+  }
+
+  for (unsigned int iStoredSelection=0;iStoredSelection<StoredSelection.size();iStoredSelection++) {
+    Selection.push_back(StoredSelection[iStoredSelection]);
+  }
+  
+  //DB Cut on OscChannel in this function due to speed increase from considering skmcSamples structure (ie. Array of length NChannels)
+  bool fChannel = false;
+  int kChannelToFill = -1;
+  for (unsigned int iSelection=0;iSelection<Selection.size();iSelection++) {
+    if (SelectionStr[iSelection] == "OscChannel") {
+      fChannel = true;
+      kChannelToFill = SelectionBounds[iSelection][1];
+    }
+  }
+
+
+  if (kChannelToFill>getNMCSamples()) {
+    std::cout << "Required channel is not available. kChannelToFill should be between 0 and " << getNMCSamples() << std::endl;
+    std::cout << "kChannelToFill given:" << kChannelToFill << std::endl;
+    std::cout << "Exitting.." << std::endl;
+    throw;
+  }
+
+  TH2D* _h2DVar;
+  std::string kPDFBinningX = "PDFBinning"; //NK: This should be set to the XVar Kinematic Parameter String
+  std::string kPDFBinningY = "PDFBinning"; //NK: This should be set to the YVar Kinematic Parameter String
+  std::string modename = "all";
+  std::string channame = "all";
+  if(SelectionVec[0][0] == "M3Mode"){modename = std::to_string((int)(Selection[0][1]));}
+  else if(SelectionVec[0][0] == "OscChannel"){channame = std::to_string((int)(Selection[0][1]));}
+  if(SelectionVec[1][0] == "OscChannel"){channame = std::to_string((int)(Selection[0][1]));}
+  std::string HistName = KinematicVar1 +"_mode_"+modename+"_channel_"+channame;
+  if (KinematicVar1==kPDFBinningX && KinematicVar2 == kPDFBinningY) {
+    _h2DVar = (TH2D*)_hPDF2D->Clone(HistName.c_str());
+    _h2DVar->Reset();
+  } else {
+    if (Axis) {
+      _h2DVar = new TH2D(HistName.c_str(), KinematicVar1.c_str(),Axis->GetNbins(),Axis->GetXbins()->GetArray(), Axis2->GetNbins(),Axis2->GetXbins()->GetArray());
+    } else {
+      std::vector<double> xBinEdges = ReturnKinematicParameterBinning(KinematicVar1);
+      std::vector<double> yBinEdges = ReturnKinematicParameterBinning(KinematicVar2);
+      _h2DVar = new TH2D(HistName.c_str(), KinematicVar1.c_str(), xBinEdges.size()-1, xBinEdges.data(), yBinEdges.size()-1, yBinEdges.data());
+    }
+  }
+  _h2DVar->GetXaxis()->SetTitle(KinematicVar1.c_str());
+  _h2DVar->GetYaxis()->SetTitle(KinematicVar2.c_str());
+   //This should be the same as FillArray in core basically, except that
+  //events will end up in different bins
+  for (int i=0;i<getNMCSamples();i++) {
+    if (fChannel && (i!=kChannelToFill)) {
+      continue;
+    }
+    for(int j=0;j<getNEventsInSample(i);j++) {
+
+
+      //DB Determine which events pass selection
+      if (!IsEventSelected(SelectionStr,i,j)) {
+		continue;
+      }
+      if(MCSamples[i].isNC[j]) { //DB Abstract check on MaCh3Modes to determine which apply to neutral current
+        MCSamples[i].osc_w[j] = 1.;
+      }
+
+
+      double Weight = GetEventWeight(i,j);
+	  if (WeightStyle==1) {
+            Weight = 1.0;
+            for (int iParam=0; iParam<MCSamples[i].ntotal_weight_pointers[j] ; ++iParam) {
+	      Weight *= *(MCSamples[i].total_weight_pointers[j][iParam]);
+            }
+ 	  }
+	  //ETA - not sure about this
+	  //if (MCSamples[i].xsec_w[j] == 0.) continue;
+          //NK changing depending on weight style
+          if (WeightStyle != 0 && MCSamples[i].xsec_w[j] == 0.) continue;
+          if (WeightStyle == 0){Weight = 1.0;}
+
+
+	  double Var1_Val;
+          double Var2_Val;
+	  if (KinematicVar1==kPDFBinningX) {
+		Var1_Val = *(MCSamples[i].x_var[j]);
+	  } else {
+		Var1_Val = ReturnKinematicParameter(KinematicVar1,i,j);
+	  }
+	  if (KinematicVar2==kPDFBinningY) {
+		Var2_Val = *(MCSamples[i].y_var[j]);
+	  } else {
+		Var2_Val = ReturnKinematicParameter(KinematicVar2,i,j);
+	  }
+	  if (Var1_Val!=_DEFAULT_RETURN_VAL_ && Var2_Val!=_DEFAULT_RETURN_VAL_ ) {
+		_h2DVar->Fill(Var1_Val,Var2_Val,Weight);
+	  }
+    }
+  }
+  for(int iselec = 0; iselec<SelectionVec.size(); iselec++){
+    SelectionBounds.pop_back();
+    SelectionStr.pop_back();
+  }
+  /* DB: This is commented out be default
+  // This code shifts the histogram meaning to Events/Bin Width but this affects the overall integral of the histogram so it should not be used anywhere we care about event rates
+  // We could use Hist->Integral("width") but it would require a lot of modification throughout the code
+
+  if (Var1!=kPDFBinning) {
+    //_h1DVar->SetBinContent(1,_h1DVar->GetBinContent(0)+_h1DVar->GetBinContent(1));
+    //_h1DVar->SetBinContent(_h1DVar->GetNbinsX(),_h1DVar->GetBinContent(_h1DVar->GetNbinsX())+_h1DVar->GetBinContent(_h1DVar->GetNbinsX()+1));
+
+    for (int x=1;x<=_h1DVar->GetNbinsX();x++) {
+      _h1DVar->SetBinContent(x,_h1DVar->GetBinContent(x)/_h1DVar->GetXaxis()->GetBinWidth(x));
+    }
+
+    _h1DVar->GetYaxis()->SetTitle("Events/Bin Width");
+  }
+  */
+
+
+//  PrettifyAxis(Var1,_h1DVar->GetXaxis(),0);
+
+
+  return _h2DVar;
+}

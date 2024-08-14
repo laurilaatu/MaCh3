@@ -104,6 +104,11 @@ public:
  
   //================================================================================
 
+  TH1D* get1DVarHist(std::string KinematicVar1, int kModeToFill=-1, int kChannelToFill=-1, int WeightStyle=0, TAxis* Axis=0);
+  TH1D* get1DVarHist(std::string KinematicVar1,std::vector< std::vector<std::string> > SelectionVec, int WeightStyle=0, TAxis* Axis=0);
+  TH2D* get2DVarHist(std::string KinematicVar1,std::string KinematicVar2, int kModeToFill=-1, int kChannelToFill=-1, int WeightStyle=0, TAxis* XAxis=0, TAxis* YAxis=0);
+  TH2D* get2DVarHist(std::string KinematicVar1,std::string KinematicVar2,std::vector< std::vector<std::string> > SelectionVec, int WeightStyle=0, TAxis* XAxis=0, TAxis* YAxis=0);
+
   virtual void setupSplines(fdmc_base *skobj, const char *splineFile, int nutype, int signal){};
   // LW - Setup Osc 
   void virtual SetupOscCalc(double PathLength, double Density);
@@ -115,7 +120,7 @@ public:
   //DB Function to determine which weights apply to which types of samples
   //pure virtual!!
   virtual void SetupWeightPointers() = 0;
-  
+
   splineFDBase *splineFile;
   //===============================================================================
   //DB Functions relating to sample and exec setup  
