@@ -67,6 +67,7 @@ else()
         NAME CUDAProb3
         GITHUB_REPOSITORY "mach3-software/CUDAProb3"
         GIT_TAG "main"
+        OPTIONS "GPU_ON OFF"
     )
 
   else()

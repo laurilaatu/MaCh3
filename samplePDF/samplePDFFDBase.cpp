@@ -257,6 +257,7 @@ void samplePDFFDBase::fillArray() {
   reconfigureFuncPars();
 
   for (int iSample=0;iSample<(int)MCSamples.size();iSample++) {
+    if(!MCSamples[iSample].splineFile){ continue; }
     MCSamples[iSample].splineFile->FindSplineSegment();
     MCSamples[iSample].splineFile->calcWeights();
   }
@@ -618,6 +619,9 @@ double samplePDFFDBase::CalcXsecWeightSpline(const int iSample, const int iEvent
 // ***************************************************************************
 
   double xsecw = 1.0;
+
+  if(!MCSamples[iSample].splineFile){ return xsecw; }
+
   //DB Xsec syst
   //Loop over stored spline pointers
   for (int iSpline=0;iSpline<MCSamples[iSample].nxsec_spline_pointers[iEvent];iSpline++) {
@@ -1310,6 +1314,9 @@ void samplePDFFDBase::fillSplineBins()
 
 	//Now loop over events and get the spline bin for each event
     for (int j = 0; j < MCSamples[i].nEvents; ++j) {
+      if(!MCSamples[i].splineFile){
+        continue;
+      }
 
       std::vector< std::vector<int> > EventSplines;
 	  double erec = *(MCSamples[i].x_var[j]);
@@ -1346,8 +1353,9 @@ void samplePDFFDBase::fillSplineBins()
 		  break;
 	  }
 	}
-
-    MCSamples[i].splineFile->SetSplineInfoArrays();
+    if(MCSamples[i].splineFile){  
+      MCSamples[i].splineFile->SetSplineInfoArrays();
+    }
   }
 
   std::cout << "Filled spline bins" << std::endl;
