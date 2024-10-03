@@ -334,12 +334,12 @@ endif()
 
 #This is to export the target properties of MaCh3
 #Anything that links to "MaCh3" will get all of these target properties
-#add_library(MaCh3 INTERFACE)
-if (USE_FPGA)
-  target_link_libraries(MaCh3 INTERFACE MCMC SamplePDF Covariance Splines Manager MaCh3CompilerOptions Plotting spdlog::spdlog)
-else()
-  target_link_libraries(MaCh3 INTERFACE MCMC SamplePDF Covariance Splines Manager MaCh3CompilerOptions MaCh3GPUCompilerOptions Plotting spdlog::spdlog)
+add_library(MaCh3 INTERFACE)
+find_package(OpenMP)
+if(OpenMP_CXX_FOUND)
+    target_link_libraries(MaCh3 INTERFACE OpenMP::OpenMP_CXX)
 endif()
+target_link_libraries(MaCh3 INTERFACE MCMC OscClass SamplePDF Covariance Splines Manager MaCh3CompilerOptions Plotting)
 set_target_properties(MaCh3 PROPERTIES EXPORT_NAME All)
 
 install(TARGETS MaCh3
