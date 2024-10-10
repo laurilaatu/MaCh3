@@ -6,7 +6,7 @@ DefineEnabledRequiredSwitch(CUDAProb3_ENABLED FALSE)
 DefineEnabledRequiredSwitch(ProbGPULinear_ENABLED FALSE)
 DefineEnabledRequiredSwitch(Prob3ppLinear_ENABLED FALSE)
 DefineEnabledRequiredSwitch(NuFastLinear_ENABLED FALSE)
-DefineEnabledRequiredSwitch(NuSQUIDSLinear_ENABLED FALSE)
+DefineEnabledRequiredSwitch(OscProb_ENABLED FALSE)
 
 #KS: If all Oscillators are turned off then enable CUDAProb3Linear_ENABLED
 if (NOT CUDAProb3Linear_ENABLED AND
@@ -14,7 +14,7 @@ if (NOT CUDAProb3Linear_ENABLED AND
     NOT ProbGPULinear_ENABLED AND
     NOT Prob3ppLinear_ENABLED AND
     NOT NuFastLinear_ENABLED AND
-    NOT NuSQUIDSLinear_ENABLED)
+    NOT OscProb_ENABLED)
     set(CUDAProb3Linear_ENABLED TRUE)
 endif()
 
@@ -35,8 +35,8 @@ endif()
 if(NuFastLinear_ENABLED)
   LIST(APPEND MaCh3_Oscillator_ENABLED "NuFast")
 endif()
-if(NuSQUIDSLinear_ENABLED)
-  LIST(APPEND MaCh3_Oscillator_ENABLED "NuSQUIDSLinear")
+if(OscProb_ENABLED)
+  LIST(APPEND MaCh3_Oscillator_ENABLED "OscProb")
 endif()
 
 #NuOscillator uses 1/0 instead of true/false thus use conversion
@@ -45,7 +45,7 @@ IsTrue(CUDAProb3_ENABLED USE_CUDAProb3)
 IsTrue(ProbGPULinear_ENABLED USE_ProbGPULinear)
 IsTrue(Prob3ppLinear_ENABLED USE_Prob3ppLinear)
 IsTrue(NuFastLinear_ENABLED USE_NuFastLiner)
-IsTrue(NuSQUIDSLinear_ENABLED USE_NuSQUIDSLinear)
+IsTrue(OscProb_ENABLED USE_OscProb)
 
 #Also additional flags
 IsTrue(MaCh3_GPU_ENABLED DAN_USE_GPU)
@@ -68,7 +68,7 @@ CPMAddPackage(
   NAME NuOscillator
     VERSION 0.0
     GITHUB_REPOSITORY "dbarrow257/NuOscillator"
-    GIT_TAG "feature_NuSQUIDS"
+    GIT_TAG "feature_OscProbEngine"
     OPTIONS
     "UseGPU ${DAN_USE_GPU}"
     "UseMultithreading ${DAN_USE_MULTITHREAD}"
@@ -79,7 +79,7 @@ CPMAddPackage(
     "UseProbGPULinear ${USE_ProbGPULinear}"
     "UseProb3ppLinear ${USE_Prob3ppLinear}"
     "UseNuFASTLinear  ${USE_NuFastLiner}"
-    "UseNuSQUIDSLinear ${USE_NuSQUIDSLinear}"
+    "UseOscProb ${USE_OscProb}"
 
     "NuOscillator_Compiler_Flags ${compile_options_string}"
     "CMAKE_CUDA_ARCHITECTURES ${CMAKE_CUDA_ARCHITECTURES_STRING}"
