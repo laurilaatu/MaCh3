@@ -233,7 +233,7 @@ bool samplePDFFDBase::IsEventSelected(const std::vector< std::string >& Paramete
 }
 
 //CalcOsc for Prob3++ CPU
-#if defined (USE_PROB3) && defined (CPU_ONLY)
+#if defined (USE_PROB3) && (defined (CPU_ONLY) || defined (USE_FPGA))
 double samplePDFFDBase::calcOscWeights(int sample, int nutype, int oscnutype, double en)
 {
   MCSamples[sample].Oscillator->SetMNS(*oscpars[0], *oscpars[2], *oscpars[1], *oscpars[3], *oscpars[4], *oscpars[5], en, doubled_angle, nutype);
@@ -286,7 +286,7 @@ void samplePDFFDBase::reweight() // Reweight function - Depending on Osc Calcula
   } else {
     for (int i=0; i< (int)MCSamples.size(); ++i) {
       
-#if defined (USE_PROB3) && defined (CPU_ONLY)
+#if defined (USE_PROB3) && (defined (CPU_ONLY) || defined (USE_FPGA))
       //Prob3 CPU needs to loop through events too
       for(int j = 0; j < MCSamples[i].nEvents; ++j) {
 		MCSamples[i].osc_w[j] = calcOscWeights(i, MCSamples[i].nutype, MCSamples[i].oscnutype, *(MCSamples[i].rw_etru[j]));
@@ -927,7 +927,7 @@ void samplePDFFDBase::SetupOscCalc(double PathLength, double Density)
 
   for (int iSample=0; iSample < (int)MCSamples.size(); iSample++) {
 
-#if defined (USE_PROB3) && defined (CPU_ONLY)
+#if defined (USE_PROB3) && (defined (CPU_ONLY) || defined (USE_FPGA))
 // if we're using Prob3++ CPU then initialise BargerPropagator object
 // if we're using Prob3++ GPU then we don't need to do this since event information gets passed straight to ProbGpu.cu in CalcOscWeights
     MCSamples[iSample].Oscillator = new BargerPropagator();
@@ -936,31 +936,33 @@ void samplePDFFDBase::SetupOscCalc(double PathLength, double Density)
     MCSamples[iSample].Oscillator->SetWarningSuppression(true);
 #endif
 
-#if not defined (USE_PROB3)
+#if !defined (USE_PROB3)
 //if we're using CUDAProb3 then make vector of energies and convert to CUDAProb3 structs
     std::vector<double> etruVector(*(MCSamples[iSample].rw_etru), *(MCSamples[iSample].rw_etru) + MCSamples[iSample].nEvents);
     MCSamples[iSample].ProbType = SwitchToCUDAProbType(GetCUDAProbFlavour(MCSamples[iSample].nutype, MCSamples[iSample].oscnutype));
 	// CUDAProb3 takes probType and antineutrino/neutrino separately
     if (MCSamples[iSample].nutype < 0) {MCSamples[iSample].NeutrinoType = cudaprob3::NeutrinoType::Antineutrino;}
     else {MCSamples[iSample].NeutrinoType = cudaprob3::NeutrinoType::Neutrino;}
-#if defined (CPU_ONLY)
+#if defined (CPU_ONLY) || defined (USE_FPGA)
 //if we just want to use CUDAProb3 CPU then setup BeamCpuPropagator object
 #if defined (MULTITHREAD)
 //if we want to multithread then get number of threads from OMP_NUM_THREADS env variable
-    MCSamples[iSample].Oscillator = new cudaprob3::BeamCpuPropagator<double>(MCSamples[iSample].nEvents, omp_get_max_threads());
+  MCSamples[iSample].Oscillator = new cudaprob3::BeamCpuPropagator<double>(MCSamples[iSample].nEvents, omp_get_max_threads());
   MCSamples[iSample].Oscillator->setPathLength(PathLength);
   MCSamples[iSample].Oscillator->setDensity(Density);
 #else
 //if we're not mulithreading then just set it to 1
-    MCSamples[iSample].Oscillator = new cudaprob3::BeamCpuPropagator<double>(MCSamples[iSample].nEvents, 1);
+  MCSamples[iSample].Oscillator = new cudaprob3::BeamCpuPropagator<double>(MCSamples[iSample].nEvents, 1);
   MCSamples[iSample].Oscillator->setPathLength(PathLength);
   MCSamples[iSample].Oscillator->setDensity(Density);
 #endif //MULTITHREAD
-#else
+#endif
+#if defined (CUDA)
 //if we want to use CUDAProb3 GPU then setup BeamCudaPropagator object
     MCSamples[iSample].Oscillator = new cudaprob3::BeamCudaPropagatorSingle(0, MCSamples[iSample].nEvents);
     MCSamples[iSample].Oscillator->setPathLength(PathLength);
     MCSamples[iSample].Oscillator->setDensity(Density);
+
 #endif // CPU_ONLY
     MCSamples[iSample].Oscillator->setEnergyList(etruVector);
 #endif // USE_PROB3

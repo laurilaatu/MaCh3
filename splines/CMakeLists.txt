@@ -4,25 +4,39 @@ set(HEADERS
     SplineMonolith.h
     SplineCommon.h
     SplineStructs.h
-    gpuSplineUtils.cuh
+    
 )
 
 add_library(Splines SHARED
     SplineBase.cpp
     splineFDBase.cpp
     SplineMonolith.cpp
-    $<$<NOT:$<BOOL:${CPU_ONLY}>>:gpuSplineUtils.cu>
 )
+
+
+
 
 ROOT_GENERATE_DICTIONARY(MaCh3SplineDict
     ${CMAKE_CURRENT_SOURCE_DIR}/SplineCommon.h
     LINKDEF ${CMAKE_CURRENT_SOURCE_DIR}/MaCh3SplinesLinkDef.h
     OPTIONS -p)
 
-if(NOT CPU_ONLY)
+if(NOT CPU_ONLY AND NOT FPGA)
+    set(HEADERS
+        gpuSplineUtils.cuh
+    )
+    add_library(gpuSplineUtils.cu)
     set_target_properties(Splines PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
     #KS: In cmake 3.18 this is no longer needed https://cmake.org/cmake/help/latest/variable/CMAKE_CUDA_ARCHITECTURES.html#cmake-cuda-architectures
     set_property(TARGET Splines PROPERTY CUDA_ARCHITECTURES ${CMAKE_CUDA_ARCHITECTURES})
+endif()
+
+if(NOT CPU_ONLY AND USE_FPGA)
+    set(HEADERS
+    oneAPISplineUtils.dp.hpp
+    )
+    add_library(oneAPISplineUtils.dp.cpp)
+
 endif()
 
 set_target_properties(Splines PROPERTIES

@@ -11,20 +11,31 @@ set(MaCh3_VERSION 1.1.7)
 find_package(CUDAToolkit QUIET)
 add_library(MaCh3CompilerOptions INTERFACE)
 # Check if CUDA was found
-if(CUDAToolkit_FOUND AND NOT(USE_CPU))
+if(CUDAToolkit_FOUND AND NOT(FPGA) AND NOT(USE_CPU))
   message(STATUS "CUDA found. Adding CUDA support.")
   set(MaCh3_GPU_ENABLED TRUE)
   set(CPU_ONLY FALSE)
 else()
-  message(STATUS "CUDA not found. Proceeding without CUDA support.")
+  message(STATUS "CUDA not used. Proceeding without CUDA support.")
   set(MaCh3_GPU_ENABLED FALSE)
+endif()
+
+if(USE_CPU)
   set(CPU_ONLY TRUE)
 endif()
 
-if(CPU_ONLY)
-  project(MaCh3 VERSION ${MaCh3_VERSION} LANGUAGES CXX)
-else()
+if(FPGA)
+
+  set(USE_FPGA TRUE)
+  set(CPU_ONLY FALSE)
+
+
+endif()
+
+if(MaCh3_GPU_ENABLED)
   project(MaCh3 VERSION ${MaCh3_VERSION} LANGUAGES CXX CUDA)
+else()
+  project(MaCh3 VERSION ${MaCh3_VERSION} LANGUAGES CXX)
 endif()
 
 # Changes default install path to be a subdirectory of the build dir.
