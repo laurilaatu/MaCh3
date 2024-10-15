@@ -6,7 +6,7 @@ endif()
 
 
 ######################Atmos######################
-if (NOT CPU_ONLY)
+if (NOT CPU_ONLY AND NOT USE_FPGA)
   set(HEADERS
       ${CUDAProb3_SOURCE_DIR}/atmoscudapropagator.cuh
   )
@@ -27,7 +27,7 @@ if (NOT CPU_ONLY)
       $<INSTALL_INTERFACE:include>
   )
 
-  if(NOT CPU_ONLY)
+  if(NOT CPU_ONLY AND NOT USE_FPGA)
       set_target_properties(Atmos PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
       #KS: In cmake 3.18 this is no longer needed https://cmake.org/cmake/help/latest/variable/CMAKE_CUDA_ARCHITECTURES.html#cmake-cuda-architectures
       set_property(TARGET Atmos PROPERTY CUDA_ARCHITECTURES ${CMAKE_CUDA_ARCHITECTURES})
@@ -59,10 +59,16 @@ set(HEADERS
     ${CUDAProb3_SOURCE_DIR}/cuda_unique.cuh
 )
 
+if (NOT CPU_ONLY AND NOT USE_FPGA)
 add_library(OscClass SHARED
     OscClass_CUDAProb3.cpp
     $<$<NOT:$<BOOL:${CPU_ONLY}>>:$<BUILD_INTERFACE:${CUDAProb3_SOURCE_DIR}/beamcudapropagator.cu>>
-)
+) 
+else()
+add_library(OscClass SHARED
+    OscClass_CUDAProb3.cpp
+) 
+endif()
 
 set_target_properties(OscClass PROPERTIES
     PUBLIC_HEADER "${HEADERS}"
@@ -70,7 +76,7 @@ set_target_properties(OscClass PROPERTIES
 
 
 target_link_libraries(OscClass Manager MaCh3CompilerOptions)
-if (NOT CPU_ONLY)
+if (NOT CPU_ONLY AND NOT USE_FPGA)
   target_link_libraries(OscClass Atmos)
 endif()
 
@@ -80,7 +86,7 @@ target_include_directories(OscClass PUBLIC
     $<INSTALL_INTERFACE:include>
 )
 
-if(NOT CPU_ONLY)
+if(NOT CPU_ONLY AND NOT USE_FPGA)
     set_target_properties(OscClass PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
     #KS: In cmake 3.18 this is no longer needed https://cmake.org/cmake/help/latest/variable/CMAKE_CUDA_ARCHITECTURES.html#cmake-cuda-architectures
     set_property(TARGET OscClass PROPERTY CUDA_ARCHITECTURES ${CMAKE_CUDA_ARCHITECTURES})

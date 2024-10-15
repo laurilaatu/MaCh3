@@ -6,6 +6,8 @@ set(HEADERS
     FDMCStruct.h
 )
 
+if(NOT CPU_ONLY AND NOT USE_FPGA)
+
 add_library(SamplePDF SHARED
     samplePDFBase.cpp
     samplePDFFDBase.cpp
@@ -14,6 +16,16 @@ add_library(SamplePDF SHARED
     $<$<NOT:$<BOOL:${CPU_ONLY}>>:kdeGpu.cu>
     $<$<NOT:$<BOOL:${CPU_ONLY}>>:kdeGpu2.cu>
 )
+else()
+
+add_library(SamplePDF SHARED
+    samplePDFBase.cpp
+    samplePDFFDBase.cpp
+    Structs.cpp
+)
+
+endif()
+
 
 target_link_libraries(SamplePDF Splines Covariance MaCh3CompilerOptions)
 
@@ -28,7 +40,7 @@ target_include_directories(SamplePDF PUBLIC
     $<INSTALL_INTERFACE:include>
 )
 
-if(NOT CPU_ONLY)
+if(NOT CPU_ONLY AND NOT USE_FPGA)
     set_target_properties(SamplePDF PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
     set_property(TARGET SamplePDF PROPERTY CUDA_ARCHITECTURES ${CMAKE_CUDA_ARCHITECTURES})
 endif()
