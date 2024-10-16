@@ -40,27 +40,6 @@ set(HEADERS
     oneAPISplineUtils.dp.cpp
 )
 
-set_source_files_properties(oneAPISplineUtils.dp.cpp PROPERTIES COMPILE_FLAGS "-fintelfpga")
-
-endif()
-
-
-
-if(CPU_ONLY)
-set(HEADERS
-    SplineBase.h
-    splineFDBase.h
-    SplineMonolith.h
-    SplineCommon.h
-    SplineStructs.h
-
-    )
-    add_library(Splines SHARED
-    SplineBase.cpp
-    splineFDBase.cpp
-    SplineMonolith.cpp
-)
-
 endif()
 
 

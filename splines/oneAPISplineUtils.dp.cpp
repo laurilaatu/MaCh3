@@ -5,7 +5,10 @@
 #include <sycl/ext/intel/fpga_extensions.hpp>
 #include <sycl/sycl.hpp>
 
+#include "memory_transfers.hpp"
 // Included from DirectProgramming/C++SYCL_FPGA/include/
+#include "streaming_matmul.hpp"
+
 #if not defined(IS_BSP)
 using sycl::ext::intel::experimental::property::usm::buffer_location;
 #endif
@@ -80,8 +83,55 @@ void MatmulImpl(sycl::queue &q,            // Device queue
   q.memcpy(a, a_matrix.data(), kMatsizeA * num_matrices * sizeof(TT)).wait();
   q.memcpy(b, b_matrix.data(), kMatsizeB * num_matrices * sizeof(TT)).wait();
 
+  using PipeDataA = fpga_tools::NTuple<TT, tile_a>;
+  using PipeDataB = fpga_tools::NTuple<TT, tile_b>;
+  using PipeDataC = fpga_tools::NTuple<TT, tile_a>;
 
+  // Pipes to communicate the matrices between kernels
+  using PipeA = sycl::ext::intel::pipe<APipe, PipeDataA, 64>;
+  using PipeB = sycl::ext::intel::pipe<BPipe, PipeDataB, 64>;
+  using PipeC = sycl::ext::intel::pipe<CPipe, PipeDataC, 64>;
+  using PipeDone = sycl::ext::intel::pipe<DonePipe, bool, 64>;
 
+  // Producer kernel for matrix A
+  auto feeder_a_event = q.single_task<FeederA>(
+      MatrixReadFromDDRToPipeA<TT, kBL1, rows_a, common, cols_b, tile_a, tile_b,
+                               kElemsPerDDRAccess, num_matrices, PipeA,
+                               PipeDone>{a, repetitions});
+
+  // Producer kernel for matrix B
+  auto feeder_b_event = q.single_task<FeederB>(
+      MatrixReadFromDDRToPipeB<TT, kBL2, rows_a, common, cols_b, tile_a, tile_b,
+                               kElemsPerDDRAccess, num_matrices, PipeB>{
+          b, repetitions});
+
+  // Matrix multiply kernel
+  q.single_task<Matmul>(
+      fpga_linalg::StreamingMatmul<TT, common, tile_a, tile_b, PipeA, PipeB,
+                                   PipeC, PipeDone>{});
+
+  // Consumer kernel for matrix C
+  auto drain_event = q.single_task<Drain>(
+      MatrixReadPipeToDDR<TT, kBL3, rows_a, cols_b, tile_a, tile_b,
+                          kElemsPerDDRAccess, num_matrices, PipeC>{
+          c, repetitions});
+
+  feeder_a_event.wait();
+  feeder_b_event.wait();
+  drain_event.wait();
+
+  // Compute the total time the execution lasted
+  auto start_time = feeder_a_event.template get_profiling_info<
+      sycl::info::event_profiling::command_start>();
+  auto end_time = drain_event.template get_profiling_info<
+      sycl::info::event_profiling::command_end>();
+  double diff = (end_time - start_time) / 1.0e9;
+  std::cout << "   Total duration:   " << diff << " s" << std::endl;
+  std::cout << "Throughput: " << repetitions * num_matrices / diff * 1e-3
+            << "k matrices/s" << std::endl;
+
+  // Copy result matrix back
+  q.memcpy(c_matrix.data(), c, kMatsizeC * num_matrices * sizeof(TT)).wait();
 
   // Free USM
   sycl::free(a, q);
