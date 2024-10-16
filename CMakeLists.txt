@@ -14,10 +14,13 @@ add_library(MaCh3CompilerOptions INTERFACE)
 if(CUDAToolkit_FOUND AND NOT(FPGA) AND NOT(USE_CPU))
   message(STATUS "CUDA found. Adding CUDA support.")
   set(MaCh3_GPU_ENABLED TRUE)
+  set(CUDA TRUE)
   set(CPU_ONLY FALSE)
 else()
   message(STATUS "CUDA not used. Proceeding without CUDA support.")
   set(MaCh3_GPU_ENABLED FALSE)
+  set(CUDA FALSE)
+
 endif()
 
 if(USE_CPU)
@@ -28,7 +31,31 @@ if(FPGA)
 
   set(USE_FPGA TRUE)
   set(CPU_ONLY FALSE)
+  set(CUDA FALSE)
 
+  if(NOT DEFINED FPGA_DEVICE)
+    set(FPGA_DEVICE "Agilex7")
+    message(STATUS "FPGA_DEVICE was not specified.\
+                    \nConfiguring the design to the default FPGA family target: ${FPGA_DEVICE}\
+                    \nPlease refer to the README for information on target selection.")
+  endif()
+
+  set(USER_FPGA_FLAGS ${USER_FPGA_FLAGS})
+
+  set(EMULATOR_TARGET fpga_emu)
+  set(SIMULATOR_TARGET fpga_sim)
+  set(REPORT_TARGET report)
+  set(FPGA_TARGET fpga)
+
+  # Set the names of the generated files per makefile target
+  set(EMULATOR_OUTPUT_NAME ${TARGET_NAME}.${EMULATOR_TARGET})
+  set(SIMULATOR_OUTPUT_NAME ${TARGET_NAME}.${SIMULATOR_TARGET})
+  set(REPORT_OUTPUT_NAME ${TARGET_NAME}.${REPORT_TARGET})
+  set(FPGA_OUTPUT_NAME ${TARGET_NAME}.${FPGA_TARGET})
+
+  message(STATUS "Additional USER_FPGA_FLAGS=${USER_FPGA_FLAGS}")
+  message(STATUS "Additional USER_FLAGS=${USER_FLAGS}")
+  set(QACTYPES "-qactypes")
 
 endif()
 
@@ -156,7 +183,11 @@ DefineEnabledRequiredSwitch(MaCh3_MULTITHREAD_ENABLED TRUE)
 
 #Add Multithread flags
 if(MaCh3_MULTITHREAD_ENABLED)
-  target_compile_options(MaCh3CompilerOptions INTERFACE -fopenmp)
+  if(FPGA)
+  target_compile_options(MaCh3CompilerOptions INTERFACE -qopenmp)
+  else()
+    target_compile_options(MaCh3CompilerOptions INTERFACE -fopenmp)
+  endif()
   target_link_libraries(MaCh3CompilerOptions INTERFACE gomp)
   target_compile_definitions(MaCh3CompilerOptions INTERFACE MULTITHREAD)
 endif()
@@ -172,6 +203,10 @@ endif()
 if(MaCh3_GPU_ENABLED)
   target_compile_definitions(MaCh3CompilerOptions INTERFACE CUDA)
   target_compile_definitions(MaCh3CompilerOptions INTERFACE GPU_ON)
+endif()
+
+if(FPGA) 
+target_compile_options(MaCh3CompilerOptions INTERFACE -fopenmp -fintelfpga -Wall ${QACTYPES} ${USER_FLAGS})
 endif()
 
 if(NOT DEFINED MaCh3_LOW_MEMORY_STRUCTS_ENABLED)
