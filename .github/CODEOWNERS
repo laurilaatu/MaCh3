@@ -10,18 +10,29 @@
 # Inspired by ROOT
 #   - https://github.com/root-project/root/blob/master/.github/CODEOWNERS
 
+* @kskwarczynski
+
 /cmake/* @kskwarczynski
-CMakeLists.txt @kskwarczynski
+**/CMakeLists.txt @kskwarczynski
 
 /Doc/* @kskwarczynski
 /.github/* @kskwarczynski
 *.cu @kskwarczynski
 *.cuh @kskwarczynski
 
+/covariance/AdaptiveMCMCHandler* @henry-wallace-phys
 /mcmc/* @kskwarczynski
 
 /samplePDF/samplePDFFDBase* @edatkin @dbarrow257
+/splines/splineFDBase* @edatkin @dbarrow257
 
 /plotting/* @ewanwm
 *.py @henry-wallace-phys @ewanwm
 py* @henry-wallace-phys @ewanwm
+
+README.md @kskwarczynski @edatkin
+CONTRIBUTING.md @kskwarczynski @edatkin
+.mailmap @kskwarczynski @edatkin
+
+LICENSE.txt @pjdunne @akaboth
+.zenodo.json @pjdunne @akaboth
