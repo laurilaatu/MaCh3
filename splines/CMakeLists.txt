@@ -43,6 +43,25 @@ set(HEADERS
 endif()
 
 
+
+if(CPU_ONLY)
+set(HEADERS
+    SplineBase.h
+    splineFDBase.h
+    SplineMonolith.h
+    SplineCommon.h
+    SplineStructs.h
+
+    )
+    add_library(Splines SHARED
+    SplineBase.cpp
+    splineFDBase.cpp
+    SplineMonolith.cpp
+)
+
+endif()
+
+
 ROOT_GENERATE_DICTIONARY(MaCh3SplineDict
     ${CMAKE_CURRENT_SOURCE_DIR}/SplineCommon.h
     LINKDEF ${CMAKE_CURRENT_SOURCE_DIR}/MaCh3SplinesLinkDef.h
