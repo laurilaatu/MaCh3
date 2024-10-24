@@ -233,7 +233,7 @@ bool samplePDFFDBase::IsEventSelected(const std::vector< std::string >& Paramete
 }
 
 //CalcOsc for Prob3++ CPU
-#if defined (USE_PROB3) && (defined (CPU_ONLY) || defined (USE_FPGA))
+#if defined (USE_PROB3) && !defined (CUDA)
 double samplePDFFDBase::calcOscWeights(int sample, int nutype, int oscnutype, double en)
 {
   MCSamples[sample].Oscillator->SetMNS(*oscpars[0], *oscpars[2], *oscpars[1], *oscpars[3], *oscpars[4], *oscpars[5], en, doubled_angle, nutype);
@@ -286,7 +286,7 @@ void samplePDFFDBase::reweight() // Reweight function - Depending on Osc Calcula
   } else {
     for (int i=0; i< (int)MCSamples.size(); ++i) {
       
-#if defined (USE_PROB3) && (defined (CPU_ONLY) || defined (USE_FPGA))
+#if defined (USE_PROB3) && !defined (CUDA)
       //Prob3 CPU needs to loop through events too
       for(int j = 0; j < MCSamples[i].nEvents; ++j) {
 		MCSamples[i].osc_w[j] = calcOscWeights(i, MCSamples[i].nutype, MCSamples[i].oscnutype, *(MCSamples[i].rw_etru[j]));
@@ -927,7 +927,7 @@ void samplePDFFDBase::SetupOscCalc(double PathLength, double Density)
 
   for (int iSample=0; iSample < (int)MCSamples.size(); iSample++) {
 
-#if defined (USE_PROB3) && (defined (CPU_ONLY) || defined (USE_FPGA))
+#if defined (USE_PROB3) && !defined (CUDA)
 // if we're using Prob3++ CPU then initialise BargerPropagator object
 // if we're using Prob3++ GPU then we don't need to do this since event information gets passed straight to ProbGpu.cu in CalcOscWeights
     MCSamples[iSample].Oscillator = new BargerPropagator();
