@@ -6,7 +6,7 @@ set(HEADERS
     FDMCStruct.h
 )
 
-if(NOT CPU_ONLY AND NOT USE_FPGA)
+if(CUDA)
 
 add_library(SamplePDF SHARED
     samplePDFBase.cpp
@@ -40,7 +40,7 @@ target_include_directories(SamplePDF PUBLIC
     $<INSTALL_INTERFACE:include>
 )
 
-if(NOT CPU_ONLY AND NOT USE_FPGA)
+if(CUDA)
     set_target_properties(SamplePDF PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
     set_property(TARGET SamplePDF PROPERTY CUDA_ARCHITECTURES ${CMAKE_CUDA_ARCHITECTURES})
 endif()
