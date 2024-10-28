@@ -22,11 +22,11 @@ class covarianceBase {
   /// @param threshold PCA threshold from 0 to 1. Default is -1 and means no PCA
   /// @param FirstPCAdpar First PCA parameter that will be decomposed.
   /// @param LastPCAdpar First PCA parameter that will be decomposed.
-  covarianceBase(const std::vector<std::string>& YAMLFile, const char *name, double threshold = -1, int FirstPCAdpar = -999, int LastPCAdpar = -999);
+  covarianceBase(const std::vector<std::string>& YAMLFile, std::string name, double threshold = -1, int FirstPCAdpar = -999, int LastPCAdpar = -999);
   /// @brief "Usual" constructors from root file
   /// @param name Matrix name
   /// @param file Path to matrix root file
-  covarianceBase(const char *name, const char *file);
+  covarianceBase(std::string name, std::string file);
 
   /// @brief Destructor
   virtual ~covarianceBase();
@@ -37,11 +37,11 @@ class covarianceBase {
   /// @param cov Covariance matrix which we set and will be used later for evaluation of penalty term
   void setCovMatrix(TMatrixDSym *cov);
   /// @brief Set matrix name
-  void setName(const char *name) { matrixName = name; }
+  void setName(std::string name) { matrixName = name; }
   /// @brief change parameter name
   /// @param i Parameter index
   /// @param name new name which will be set
-  void setParName(int i, char *name) { _fNames.at(i) = std::string(name); }
+  void setParName(int i, std::string name) { _fNames.at(i) = name; }
   void setSingleParameter(const int parNo, const double parVal);
   /// @brief Set all the covariance matrix parameters to a user-defined value
   /// @param i Parameter index
@@ -111,19 +111,13 @@ class covarianceBase {
   inline bool getFlatPrior(const int i) { return _fFlatPrior[i]; }
 
   /// @brief Get name of covariance
-  const char *getName() { return matrixName; }
+  std::string getName() { return matrixName; }
   /// @brief Get name of covariance
   /// @param i Parameter index
   std::string GetParName(const int i) {return _fNames[i];}
-  /// @brief Get name of the Parameter
-  /// @param i Parameter index
-  const char* GetParName(const int i) const { return _fNames[i].c_str(); }
   /// @brief Get fancy name of the Parameter
   /// @param i Parameter index
   std::string GetParFancyName(const int i) {return _fFancyNames[i];}
-  /// @brief Get fancy name of the Parameter
-  /// @param i Parameter index
-  const char* GetParFancyName(const int i) const { return _fFancyNames[i].c_str(); }
   /// @brief Get name of input file
   std::string getInputFile() const { return inputFile; }
 
@@ -177,6 +171,10 @@ class covarianceBase {
   /// way to deal with this? It was fine before when the return was to an
   /// element of a new array. There must be a clever C++ way to be careful
   inline const double* retPointer(const int iParam) {return &(_fPropVal.data()[iParam]);}
+
+  /// @brief Get a reference to the proposed parameter values
+  /// Can be useful if you want to track these without having to copy values using getProposed()
+  inline const std::vector<double> &getParPropVec() {return _fPropVal;}
 
   //Some Getters
   /// @brief Get total number of parameters
@@ -287,8 +285,6 @@ class covarianceBase {
     //KS: Transfer to normal base
     TransferToParam();
   }
-  /// @brief Get number of params in normal Base, if you want something which will work with PCA as well please use getNpars()
-  inline int getSize() { return _fNumPar; }
   /// @brief Get number of params which will be different depending if using Eigen decomposition or not
   inline int getNpars() {
     if (pca) return _fNumParPCA;
@@ -345,9 +341,9 @@ class covarianceBase {
 
   /// @brief Getter to return a copy of the YAML node
   YAML::Node GetConfig() const { return _fYAMLDoc; }
-protected:
+ protected:
   /// @brief Initialisation of the class using matrix from root file
-  void init(const char *name, const char *file);
+  void init(std::string name, std::string file);
   /// @brief Initialisation of the class using config
   /// @param YAMLFile A vector of strings representing the YAML files used for initialisation of matrix
   void init(const std::vector<std::string>& YAMLFile);
@@ -389,10 +385,8 @@ protected:
   /// The input root file we read in
   const std::string inputFile;
 
-  /// Total number of params, deprecated, please don't use it
-  int size;
   /// Name of cov matrix
-  const char *matrixName;
+  std::string matrixName;
   /// The covariance matrix
   TMatrixDSym *covMatrix;
   /// The inverse covariance matrix

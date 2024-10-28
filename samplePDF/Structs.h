@@ -57,10 +57,14 @@
 #include "TObjString.h"
 #include "TH2Poly.h"
 #include "TFile.h"
+#include "TGraphAsymmErrors.h"
 
 #ifdef MULTITHREAD
 #include "omp.h"
 #endif
+
+#include "manager/MaCh3Exception.h"
+#include "manager/MaCh3Logger.h"
 
 // *******************
 /// @brief Template to make vector out of an array of any length
@@ -138,10 +142,9 @@ inline std::string GetTF1(const SplineInterpolation i) {
       Func = "([1]+[0]*x)";
       break;
     default:
-      std::cerr << "UNKNOWN SPECIFIED!" << std::endl;
-      std::cerr << "You gave  " << static_cast<int>(i) << std::endl;
-      std::cerr << __FILE__ << ":" << __LINE__ << std::endl;
-      throw;
+      MACH3LOG_ERROR("UNKNOWN SPLINE INTERPOLATION SPECIFIED!");
+      MACH3LOG_ERROR("You gave {}", static_cast<int>(i));
+      throw MaCh3Exception(__FILE__ , __LINE__ );
   }
   return Func;
 }
@@ -171,10 +174,9 @@ inline RespFuncType SplineInterpolation_ToRespFuncType(const SplineInterpolation
       Type = RespFuncType::kTF1_red;
       break;
     default:
-      std::cerr << "UNKNOWN SPLINE INTERPOLATION SPECIFIED!" << std::endl;
-      std::cerr << "You gave  " << static_cast<int>(i) << std::endl;
-      std::cerr << __FILE__ << ":" << __LINE__ << std::endl;
-      throw;
+      MACH3LOG_ERROR("UNKNOWN SPLINE INTERPOLATION SPECIFIED!");
+      MACH3LOG_ERROR("You gave {}", static_cast<int>(i));
+      throw MaCh3Exception(__FILE__ , __LINE__ );
   }
   return Type;
 }
@@ -203,10 +205,9 @@ inline std::string SplineInterpolation_ToString(const SplineInterpolation i) {
       name = "LinearFunc";
       break;
     default:
-      std::cerr << "UNKNOWN SPLINE INTERPOLATION SPECIFIED!" << std::endl;
-      std::cerr << "You gave  " << static_cast<int>(i) << std::endl;
-      std::cerr << __FILE__ << ":" << __LINE__ << std::endl;
-      throw;
+      MACH3LOG_ERROR("UNKNOWN SPLINE INTERPOLATION SPECIFIED!");
+      MACH3LOG_ERROR("You gave {}", static_cast<int>(i));
+      throw MaCh3Exception(__FILE__ , __LINE__ );
   }
   return name;
 }
@@ -252,10 +253,9 @@ inline std::string SystType_ToString(const SystType i) {
       name = "Functional";
       break;
     default:
-      std::cerr << "UNKNOWN SYST TYPE SPECIFIED!" << std::endl;
-      std::cerr << "You gave  " << static_cast<int>(i) << std::endl;
-      std::cerr << __FILE__ << ":" << __LINE__ << std::endl;
-      throw;
+      MACH3LOG_ERROR("UNKNOWN SYST TYPE SPECIFIED!");
+      MACH3LOG_ERROR("You gave {}", static_cast<int>(i));
+      throw MaCh3Exception(__FILE__ , __LINE__ );
   }
   return name;
 }
@@ -360,59 +360,57 @@ inline int PDGToProbs(NuPDG pdg){
 
   switch (pdg){
     case kNue:
-	  ReturnProbNu = kProbNue;
-	  break;
+      ReturnProbNu = kProbNue;
+      break;
     case kNumu:
-	  ReturnProbNu = kProbNumu;
-	  break;
+      ReturnProbNu = kProbNumu;
+      break;
     case kNutau:
-	  ReturnProbNu = kProbNutau;
-	  break;
+      ReturnProbNu = kProbNutau;
+      break;
     case kNueBar:
-	  ReturnProbNu = kProbNueBar;
-	  break;
-	case kNumuBar:
-	  ReturnProbNu = kProbNumuBar;
-	  break;
-	case kNutauBar:
-	  ReturnProbNu = kProbNutauBar;
-	  break;
-	default:
-	  std::cout << "Unrecognised pdg for the neutrino so can't map this to an int for Prob3++" << std::endl;
-	  break;
+      ReturnProbNu = kProbNueBar;
+      break;
+    case kNumuBar:
+      ReturnProbNu = kProbNumuBar;
+      break;
+    case kNutauBar:
+      ReturnProbNu = kProbNutauBar;
+      break;
+    default:
+      MACH3LOG_WARN("Unrecognised pdg for the neutrino so can't map this to an int for Prob3++");
+      break;
   }
 
   return ReturnProbNu;
 }
 
 inline int ProbsToPDG(ProbNu NuType){
-
   int ReturnNuPDG = -999;
 
   switch (NuType){
-	case kProbNue:
-	  ReturnNuPDG = static_cast<int>(kNue);
-	  break;
-	case kProbNumu:
-	  ReturnNuPDG = static_cast<int>(kNumu);
-	  break;
-	case kProbNutau:
-	  ReturnNuPDG = static_cast<int>(kNutau);
-	  break;
-	case kProbNueBar:
-	  ReturnNuPDG = static_cast<int>(kNueBar);
-	  break;
-	case kProbNumuBar:
-	  ReturnNuPDG = static_cast<int>(kNumuBar);
-	  break;
-	case kProbNutauBar:
-	  ReturnNuPDG = static_cast<int>(kNutauBar);
-	  break;
-	default:
-	  std::cout << "Unrecognised NuType for the neutrino so can't map this to a PDG code" << std::endl;
-	  break;
+    case kProbNue:
+      ReturnNuPDG = static_cast<int>(kNue);
+      break;
+    case kProbNumu:
+      ReturnNuPDG = static_cast<int>(kNumu);
+      break;
+    case kProbNutau:
+      ReturnNuPDG = static_cast<int>(kNutau);
+      break;
+    case kProbNueBar:
+      ReturnNuPDG = static_cast<int>(kNueBar);
+      break;
+    case kProbNumuBar:
+      ReturnNuPDG = static_cast<int>(kNumuBar);
+      break;
+    case kProbNutauBar:
+      ReturnNuPDG = static_cast<int>(kNutauBar);
+      break;
+    default:
+      MACH3LOG_WARN("Unrecognised NuType for the neutrino so can't map this to a PDG code");
+      break;
   }
-
   return ReturnNuPDG;
 }
 
@@ -449,10 +447,9 @@ inline std::string TestStatistic_ToString(TestStatistic i) {
     name = "DembinskiAbdelmottele";
     break;
     default:
-      std::cerr << "UNKNOWN LIKELHOOD SPECIFIED!" << std::endl;
-      std::cerr << "You gave test-statistic " << i << std::endl;
-      std::cerr << __FILE__ << ":" << __LINE__ << std::endl;
-      throw;
+      MACH3LOG_ERROR("UNKNOWN LIKELIHOOD SPECIFIED!");
+      MACH3LOG_ERROR("You gave test-statistic {}", static_cast<int>(i));
+      throw MaCh3Exception(__FILE__ , __LINE__ );
   }
   return name;
 }
@@ -464,9 +461,9 @@ double OverflowIntegral(TH2Poly* poly);
 double NoOverflowIntegral(TH2Poly* poly);
 
 /// @brief WP: Poly Projectors
-TH1D* PolyProjectionX(TObject* poly, std::string TempName, std::vector<double> xbins, bool computeErrors = false);
+TH1D* PolyProjectionX(TObject* poly, std::string TempName, const std::vector<double>& xbins, const bool computeErrors = false);
 /// @brief WP: Poly Projectors
-TH1D* PolyProjectionY(TObject* poly, std::string TempName, std::vector<double> ybins, bool computeErrors = false);
+TH1D* PolyProjectionY(TObject* poly, std::string TempName, const std::vector<double>& ybins, const bool computeErrors = false);
 
 /// @brief KS: Convert TH2D to TH2Poly
 TH2D* ConvertTH2PolyToTH2D(TH2Poly *poly, TH2D *TH2Dhist);
@@ -489,93 +486,29 @@ void CheckTH2PolyFileVersion(TFile *file);
 /// @brief KS: Remove fitted TF1 from hist to make comparison easier
 void RemoveFitter(TH1D* hist, const std::string& name);
 
+/// @brief Used by sigma variation, check how 1 sigma changes spectra
+/// @param sigmaArrayLeft sigma var hist at -1 or -3 sigma shift
+/// @param sigmaArrayCentr sigma var hist at prior values
+/// @param sigmaArrayRight sigma var hist at +1 or +3 sigma shift
+/// @param title A tittle for returned object
+/// @return A `TGraphAsymmErrors` object that visualizes the sigma variation of spectra, showing confidence intervals between different sigma shifts.
+TGraphAsymmErrors* MakeAsymGraph(TH1D* sigmaArrayLeft, TH1D* sigmaArrayCentr, TH1D* sigmaArrayRight, const std::string& title);
+
 /// @brief Helper to check if files exist or not
 inline std::string file_exists(std::string filename) {
   std::ifstream infile(filename.c_str());
   if (!infile.good()) {
-    std::cerr << "*** ERROR ***" << std::endl;
-    std::cerr << "File " << filename << " does not exist" << std::endl;
-    std::cerr << "Please try again" << std::endl;
-    std::cerr << "*************" << std::endl;
-    throw;
+    MACH3LOG_ERROR("*** ERROR ***");
+    MACH3LOG_ERROR("File {} does not exist", filename);
+    MACH3LOG_ERROR("Please try again");
+    MACH3LOG_ERROR("*************");
+    throw MaCh3Exception(__FILE__ , __LINE__ );
   }
-
   return filename;
 }
-/// @brief DB Get the Cernekov momentum threshold in MeV
+
+/// @brief DB Get the Cherenkov momentum threshold in MeV
 double returnCherenkovThresholdMomentum(int PDG);
 
 double CalculateQ2(double PLep, double PUpd, double EnuTrue, double InitialQ2 = 0.0);
 double CalculateEnu(double PLep, double cosTheta, double EB, bool neutrino);
-
-
-enum CUDAProb_nu {
-  e_e = 0,
-  e_m = 1,
-  e_t = 2,
-  m_e = 3,
-  m_m = 4,
-  m_t = 5,
-  t_e = 6,
-  t_m = 7,
-  t_t = 8
-};
- 
-
-// ************************************************
-/// @brief Get CUDAProb3 flavour from intital and final states
-inline CUDAProb_nu GetCUDAProbFlavour(int nu_i, int nu_f) {
-//*************************************************  
-    
-  switch (abs(nu_i)) {
-  case 1:
-    switch (abs(nu_f)) {
-    case 1:
-      return CUDAProb_nu::e_e;
-      break;
-    case 2:
-      return CUDAProb_nu::e_m;
-      break;
-    case 3:
-      return CUDAProb_nu::e_t;
-      break;
-	default:
-	  std::cout << "Unknow flavour " << nu_f << std::endl;
-	  throw;
-    } 
-  case 2:
-    switch (abs(nu_f)) {
-    case 1:
-      return CUDAProb_nu::m_e;
-      break;
-    case 2:
-      return CUDAProb_nu::m_m;
-      break;
-    case 3:
-      return CUDAProb_nu::m_t;
-      break;
-	default:
-	  std::cout << "Unknow flavour " << nu_f << std::endl;
-	  throw;
-    } 
-  case 3:
-    switch (abs(nu_f)) {
-    case 1:
-      return CUDAProb_nu::t_e;
-      break;
-    case 2:
-      return CUDAProb_nu::t_m;
-      break;
-    case 3:
-      return CUDAProb_nu::t_t;
-      break;
-	default:
-	  std::cout << "Unknow flavour " << nu_f << std::endl;
-	  throw;
-    }
-  default:
-	std::cout << "Unknow flavour " << nu_i << std::endl;
-	throw;
-  }
-
-}

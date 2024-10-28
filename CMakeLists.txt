@@ -82,9 +82,10 @@ find_program(CMAKE_C_COMPILER NAMES $ENV{CC} gcc PATHS ENV PATH NO_DEFAULT_PATH)
 find_program(CMAKE_CXX_COMPILER NAMES $ENV{CXX} g++ PATHS ENV PATH NO_DEFAULT_PATH)
 
 LIST(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/Modules)
-################################## Dependencies ################################
-#KS: Store some handy cmake functions
+#KS: Load cmake function like DefineEnabledRequiredSwitch allowing to write more compact cmake
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/Modules/MaCh3Utils.cmake)
+
+################################## Dependencies ################################
 #Loads all dependencies
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/Modules/MaCh3Dependencies.cmake)
 
@@ -105,7 +106,6 @@ if(ROOT_CXX_STANDARD LESS 14 AND ROOT_VERSION VERSION_LESS 6.32.00)
 endif()
 
 ############################  Setting Flags  ####################################
-# Check the where to install 
 cmessage(STATUS "CMAKE_INSTALL_PREFIX: \"${CMAKE_INSTALL_PREFIX}\"")
 
 # add cmake script files
@@ -172,6 +172,7 @@ else()
   target_compile_options(MaCh3CompilerOptions INTERFACE
     -O3                                   # Optimize code for maximum speed
     -finline-limit=100000000              # Increase the limit for inlining functions to improve performance
+    #-fstrict-aliasing                    # Assume that pointers of different types do not point to the same memory location
     # KS: After benchmarking below didn't in fact worse performance, leave it for future tests and documentation
     #-funroll-loops                       # Unroll loops where possible for performance
     #--param=max-vartrack-size=100000000  # Set maximum size of variable tracking data to avoid excessive memory usage
@@ -199,10 +200,6 @@ if(CPU_ONLY)
   target_compile_definitions(MaCh3CompilerOptions INTERFACE CPU_ONLY)
 endif()
 
-if(USE_PROB3)
-  target_compile_definitions(MaCh3CompilerOptions INTERFACE USE_PROB3)
-endif()
-
 if(MaCh3_GPU_ENABLED)
   target_compile_definitions(MaCh3CompilerOptions INTERFACE CUDA)
   target_compile_definitions(MaCh3CompilerOptions INTERFACE GPU_ON)
@@ -227,6 +224,9 @@ install(TARGETS MaCh3CompilerOptions
 
 #Include logger
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/Modules/Logger.cmake)
+#Setup NuOscillator, this has to be here as it requires all flags to be setup
+include(${CMAKE_CURRENT_LIST_DIR}/cmake/Modules/NuOscillatorSetup.cmake)
+
 ################################# Features ##################################
 #KS: Retrieve and print the compile options and link libraries for maximal verbose
 get_target_property(compile_options MaCh3CompilerOptions INTERFACE_COMPILE_OPTIONS)
@@ -255,40 +255,20 @@ endforeach()
 add_subdirectory(manager)
 add_subdirectory(covariance)
 add_subdirectory(splines)
-if (NOT USE_PROB3)
-  add_subdirectory(OscClass)
-endif()
 add_subdirectory(samplePDF)
 add_subdirectory(mcmc)
 add_subdirectory(Diagnostics)
 add_subdirectory(plotting)
-
-
-################################# pybind11 stuff ##################################
-
-if( MaCh3_PYTHON_ENABLED )
-  ## EM: make a module target out of all the python*Module.cpp files (currently just one...)
-  pybind11_add_module( 
-    pyMaCh3 MODULE 
-    pyMaCh3.cpp 
-    plotting/plottingUtils/pythonPlottingModule.cpp
-  )
-  ## EM: only works with code compiled with -fPIC enabled.. I think this flag can things slightly slower
-  ## so would be good to find a way around this. 
-  set_property( TARGET pyMaCh3 PROPERTY POSITION_INDEPENDENT_CODE ON )
-  target_link_libraries( pyMaCh3 PUBLIC Plotting )
-  install( TARGETS pyMaCh3 DESTINATION pyMaCh3/)
+if (MaCh3_PYTHON_ENABLED)
+  add_subdirectory(python)
 endif()
+
 
 
 #This is to export the target properties of MaCh3
 #Anything that links to "MaCh3" will get all of these target properties
 add_library(MaCh3 INTERFACE)
-find_package(OpenMP)
-if(OpenMP_CXX_FOUND)
-    target_link_libraries(MaCh3 INTERFACE OpenMP::OpenMP_CXX)
-endif()
-target_link_libraries(MaCh3 INTERFACE MCMC OscClass SamplePDF Covariance Splines Manager MaCh3CompilerOptions Plotting)
+target_link_libraries(MaCh3 INTERFACE MCMC SamplePDF Covariance Splines Manager MaCh3CompilerOptions Plotting)
 set_target_properties(MaCh3 PROPERTIES EXPORT_NAME All)
 
 install(TARGETS MaCh3
