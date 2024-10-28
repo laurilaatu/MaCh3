@@ -26,6 +26,8 @@ endif()
 
 if(USE_CPU)
   set(CPU_ONLY TRUE)
+  set(CUDA FALSE)
+  set(USE_FPGA FALSE)
 endif()
 
 if(FPGA)
@@ -185,7 +187,7 @@ DefineEnabledRequiredSwitch(MaCh3_MULTITHREAD_ENABLED TRUE)
 #Add Multithread flags
 if(MaCh3_MULTITHREAD_ENABLED)
   if(FPGA)
-  target_compile_options(MaCh3CompilerOptions INTERFACE -qopenmp)
+    target_compile_options(MaCh3CompilerOptions INTERFACE -qopenmp)
   else()
     target_compile_options(MaCh3CompilerOptions INTERFACE -fopenmp)
   endif()
@@ -207,7 +209,7 @@ if(MaCh3_GPU_ENABLED)
 endif()
 
 if(FPGA) 
-target_compile_options(MaCh3CompilerOptions INTERFACE -fopenmp -fintelfpga -Wall ${QACTYPES} ${USER_FLAGS})
+target_compile_options(MaCh3CompilerOptions INTERFACE -Wall ${QACTYPES} ${USER_FLAGS})
 endif()
 
 if(NOT DEFINED MaCh3_LOW_MEMORY_STRUCTS_ENABLED)
