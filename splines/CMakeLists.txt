@@ -40,7 +40,7 @@ set(HEADERS
     oneAPISplineUtils.dp.cpp
 )
 
-set_source_files_properties(oneAPISplineUtils.dp.cpp PROPERTIES COMPILE_FLAGS "-fintelfpga")
+set_source_files_properties(oneAPISplineUtils.dp.cpp PROPERTIES COMPILE_FLAGS "-fintelfpga -fsycl")
 
 endif()
 

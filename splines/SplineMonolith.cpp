@@ -941,7 +941,26 @@ void SMonolith::Evaluate() {
   //KS: Normally it does nothing, in case you want to have weight for each spline it does the mapping, used mostly for debugging
   ModifyWeights_GPU();
 }
-#else
+#endif
+#ifdef USE_FPGA
+// *****************************************
+void SMonolith::Evaluate() {
+// *****************************************
+
+  // There's a parameter mapping that goes from spline parameter to a global parameter index
+  // Find the spline segments
+  FindSplineSegment();
+
+  //Use FPGA implementation
+  CalcSplineWeightsFPGA();
+
+  //KS: Huge MP loop over all events calculating total weight
+  ModifyWeights();
+
+  return;
+}
+#endif
+#ifdef CPU_ONLY
 //If CUDA is not enabled do the same on CPU
 // *****************************************
 void SMonolith::Evaluate() {
