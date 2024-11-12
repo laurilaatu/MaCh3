@@ -1,10 +1,10 @@
 var searchData=
 [
   ['random_0',['random',['../classFitterBase.html#a138f250d9204a30204e4ca5b973008b2',1,'FitterBase']]],
-  ['random_5fnumber_1',['random_number',['../classcovarianceBase.html#a60dcca091a79ccddd3ad5b414ccd809b',1,'covarianceBase']]],
+  ['random_5fnumber_1',['random_number',['../classcovarianceBase.html#a0704c430bdc8e87fd6f03f01b2ab00df',1,'covarianceBase']]],
   ['randomconfiguration_2',['RandomConfiguration',['../classcovarianceBase.html#a867bff214af25bba68f921eaea8b5cdd',1,'covarianceBase']]],
   ['randomhist_3',['RandomHist',['../classSampleSummary.html#a07ea4bf6cf23214263ec63cd69de49c1',1,'SampleSummary']]],
-  ['randomize_4',['randomize',['../classcovarianceBase.html#a3432b7a9acc1243b8bdb17ec0b40d195',1,'covarianceBase']]],
+  ['randomize_4',['randomize',['../classcovarianceBase.html#a8d58b8e8ac3b2a8f1c6867e8b6cd7ff8',1,'covarianceBase']]],
   ['randparams_5',['randParams',['../classcovarianceBase.html#a705e648220c06083cd1acc5fba4f2ef7',1,'covarianceBase']]],
   ['ranges_5fmax_6',['ranges_max',['../classPSO.html#a1c5454d8b4000375138447cada8a46a2',1,'PSO']]],
   ['ranges_5fmin_7',['ranges_min',['../classPSO.html#ad9824964649e96ac13d89d47bd5a5174',1,'PSO']]],
@@ -44,7 +44,7 @@ var searchData=
   ['rhat_41',['RHat',['../RHat_8cpp.html#ab5cfb5e8741283e8d8252aae184004e4',1,'RHat.cpp']]],
   ['rhat_2ecpp_42',['RHat.cpp',['../RHat_8cpp.html',1,'']]],
   ['rhatfolded_43',['RHatFolded',['../RHat_8cpp.html#a754fbe6088f05d880121693722fe6b99',1,'RHat.cpp']]],
-  ['rnd_44',['rnd',['../classsamplePDFBase.html#a06fd2c9575c0b9e56aaaf78b5be59b44',1,'samplePDFBase::rnd()'],['../classSampleSummary.html#a8322552ef396f34af5ee4bd47a44e39e',1,'SampleSummary::rnd()']]],
+  ['rnd_44',['rnd',['../classsamplePDFBase.html#a06fd2c9575c0b9e56aaaf78b5be59b44',1,'samplePDFBase::rnd()'],['../classSampleSummary.html#a364fb16938a26adbe59fdd057f4b9405',1,'SampleSummary::rnd()']]],
   ['run_45',['run',['../classPSO.html#af09adc84344d8618a37c900b05fd1bd7',1,'PSO']]],
   ['run2dllhscan_46',['Run2DLLHScan',['../classFitterBase.html#ab8b32ca268c20dd643eaf92dae04cd0a',1,'FitterBase']]],
   ['rundiagnostic_47',['RunDiagnostic',['../RHat_8cpp.html#a4c5629fb030eb27c32cab42a42c6623b',1,'RHat.cpp']]],
