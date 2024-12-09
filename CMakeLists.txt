@@ -11,31 +11,32 @@ set(MaCh3_VERSION 1.2.0)
 find_package(CUDAToolkit QUIET)
 add_library(MaCh3CompilerOptions INTERFACE)
 # Check if CUDA was found
-if(CUDAToolkit_FOUND AND NOT(FPGA) AND NOT(USE_CPU))
+
+message(STATUS "USE_CPU flag: ${USE_CPU}")
+message(STATUS "USE_FPGA flag: ${USE_FPGA}")
+
+if(CUDAToolkit_FOUND AND NOT(USE_CPU OR USE_FPGA))
   message(STATUS "CUDA found. Adding CUDA support.")
+  project(MaCh3 VERSION ${MaCh3_VERSION} LANGUAGES CXX CUDA)
   set(MaCh3_GPU_ENABLED TRUE)
   set(CUDA TRUE)
   set(CPU_ONLY FALSE)
   set(USE_FPGA FALSE)
 else()
-  message(STATUS "CUDA not used. Proceeding without CUDA support.")
-  set(MaCh3_GPU_ENABLED FALSE)
-  set(CUDA FALSE)
-
+  project(MaCh3 VERSION ${MaCh3_VERSION} LANGUAGES CXX)
+  if(USE_CPU)  
+    message(STATUS "CPU only mode, disabling CUDA")
+    set(CPU_ONLY TRUE)
+    set(USE_FPGA FALSE)
+  elseif(USE_FPGA)
+    message(STATUS "FPGA mode, disabling CUDA") 
+    set(MaCh3_GPU_ENABLED FALSE)
+    set(CUDA FALSE)
+    set(CPU_ONLY FALSE)
+  endif()
 endif()
 
-if(USE_CPU)
-  set(CPU_ONLY TRUE)
-  set(CUDA FALSE)
-  set(USE_FPGA FALSE)
-endif()
-
-if(FPGA)
-
-  set(USE_FPGA TRUE)
-  set(CPU_ONLY FALSE)
-  set(CUDA FALSE)
-
+if(USE_FPGA)
   if(NOT DEFINED FPGA_DEVICE)
     set(FPGA_DEVICE "Agilex7")
     message(STATUS "FPGA_DEVICE was not specified.\
@@ -62,11 +63,6 @@ if(FPGA)
 
 endif()
 
-if(MaCh3_GPU_ENABLED)
-  project(MaCh3 VERSION ${MaCh3_VERSION} LANGUAGES CXX CUDA)
-else()
-  project(MaCh3 VERSION ${MaCh3_VERSION} LANGUAGES CXX)
-endif()
 
 # Changes default install path to be a subdirectory of the build dir.
 # Can set build dir at configure time with -DCMAKE_INSTALL_PREFIX=/install/path
@@ -146,6 +142,13 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
   )
 endif()
 
+if(USE_FPGA)
+  target_compile_options(MaCh3CompilerOptions INTERFACE
+    -DFPGA_EMULATOR
+    -DUSE_FPGA              # preprocessor directive to switch on FPGA code
+  )
+endif()
+
 #KS: If Debug is not defined disable it by default
 DefineEnabledRequiredSwitch(MaCh3_DEBUG_ENABLED FALSE)
 
@@ -187,7 +190,7 @@ DefineEnabledRequiredSwitch(MaCh3_MULTITHREAD_ENABLED TRUE)
 
 #Add Multithread flags
 if(MaCh3_MULTITHREAD_ENABLED)
-  if(FPGA)
+  if(USE_FPGA)
     target_compile_options(MaCh3CompilerOptions INTERFACE -qopenmp)
   else()
     target_compile_options(MaCh3CompilerOptions INTERFACE -fopenmp)
@@ -198,6 +201,15 @@ endif()
 
 if(CPU_ONLY)
   target_compile_definitions(MaCh3CompilerOptions INTERFACE CPU_ONLY)
+endif()
+
+if(USE_FPGA)
+  target_link_libraries(MaCh3CompilerOptions INTERFACE sycl)
+  target_compile_options(MaCh3CompilerOptions INTERFACE -Wall ${QACTYPES} ${USER_FLAGS})
+endif()
+
+if(USE_PROB3)
+  target_compile_definitions(MaCh3CompilerOptions INTERFACE USE_PROB3)
 endif()
 
 if(MaCh3_GPU_ENABLED)
