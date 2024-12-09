@@ -33,7 +33,15 @@ set_target_properties(Manager PROPERTIES
     PUBLIC_HEADER "${HEADERS}"
     EXPORT_NAME Manager)
 
-target_link_libraries(Manager yaml-cpp spdlog ROOT::ROOT MaCh3CompilerOptions)
+if(NOT CPU_ONLY)
+    set_target_properties(Manager PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
+    #KS: In cmake 3.18 this is no longer needed https://cmake.org/cmake/help/latest/variable/CMAKE_CUDA_ARCHITECTURES.html#cmake-cuda-architectures
+    set_property(TARGET Manager PROPERTY CUDA_ARCHITECTURES ${CMAKE_CUDA_ARCHITECTURES})
+endif()
+
+target_link_libraries(Manager PUBLIC MaCh3CompilerOptions ROOT::Tree ROOT::Hist yaml-cpp spdlog)
+target_link_libraries(Manager PRIVATE MaCh3Warnings)
+
 target_include_directories(Manager PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/../>
   $<INSTALL_INTERFACE:include>)
