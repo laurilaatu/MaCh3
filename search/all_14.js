@@ -19,5 +19,6 @@ var searchData=
   ['updatethrowmatrix_16',['updateThrowMatrix',['../classcovarianceBase.html#a7e2d3623bbbf3edee558e04737fe2add',1,'covarianceBase']]],
   ['uppercut_17',['UpperCut',['../classMCMCProcessor.html#a840c686f15f419c0156df01c4ed62931',1,'MCMCProcessor']]],
   ['usage_18',['usage',['../classMaCh3Plotting_1_1PlottingManager.html#a8910c157ce1ec6698f3bacdf521789ff',1,'MaCh3Plotting::PlottingManager::usage()'],['../CombineMaCh3Chains_8cpp.html#a2ef30c42cbc289d899a8be5d2d8f77d0',1,'usage():&#160;CombineMaCh3Chains.cpp']]],
-  ['use_5fadaptive_19',['use_adaptive',['../classcovarianceBase.html#a838731abd6716940043b484b2b266f86',1,'covarianceBase']]]
+  ['use_5fadaptive_19',['use_adaptive',['../classcovarianceBase.html#a838731abd6716940043b484b2b266f86',1,'covarianceBase']]],
+  ['usefftautocorrelation_20',['useFFTAutoCorrelation',['../classMCMCProcessor.html#a562261269f0f4ec4a209b2fca64ff443',1,'MCMCProcessor']]]
 ];

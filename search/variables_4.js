@@ -7,9 +7,9 @@ var searchData=
   ['d_5fnentries_4',['d_nEntries',['../gpuMCMCProcessorUtils_8cu.html#a2612fc014389124064ca4e2c9c2eb616',1,'gpuMCMCProcessorUtils.cu']]],
   ['d_5fnlag_5',['d_nLag',['../gpuMCMCProcessorUtils_8cu.html#af8f4968d58719d599f3d6ac1adecf9bd',1,'gpuMCMCProcessorUtils.cu']]],
   ['d_5fspline_5fsize_6',['d_spline_size',['../gpuSplineUtils_8cu.html#ae11082fcc44d3cf2e38cb74043fd7835',1,'gpuSplineUtils.cu']]],
-  ['datahist_7',['DataHist',['../classSampleSummary.html#a584178216a524d9b9c114d1ff9f3e604',1,'SampleSummary']]],
-  ['datahist_5fprojectx_8',['DataHist_ProjectX',['../classSampleSummary.html#aed3d754bfa3b870ba2676748d1420b5f',1,'SampleSummary']]],
-  ['datahist_5fprojecty_9',['DataHist_ProjectY',['../classSampleSummary.html#abb300b204c11a5542efa5d28510d0860',1,'SampleSummary']]],
+  ['datahist_7',['DataHist',['../classSampleSummary.html#a7e962b36331edb6ff1e9de849cbabee3',1,'SampleSummary']]],
+  ['datahist_5fprojectx_8',['DataHist_ProjectX',['../classSampleSummary.html#abeaca1195db794d9e660a377d81c1b21',1,'SampleSummary']]],
+  ['datahist_5fprojecty_9',['DataHist_ProjectY',['../classSampleSummary.html#abfeb54f4d95b5b74257a1abf5c98824f',1,'SampleSummary']]],
   ['datasample_10',['dataSample',['../classsamplePDFBase.html#a71bbe44b4ed168c91db0db7abedc96a6',1,'samplePDFBase']]],
   ['datasample2d_11',['dataSample2D',['../classsamplePDFBase.html#aeb2636b03955525ed586f1bb7748bc96',1,'samplePDFBase']]],
   ['dathist_12',['dathist',['../classsamplePDFBase.html#a695ac7419652443240feb046f14ba1bb',1,'samplePDFBase']]],
@@ -28,8 +28,8 @@ var searchData=
   ['dodiagmcmc_25',['doDiagMCMC',['../classMCMCProcessor.html#adf449e50cf358f737fe4a2b65d9668e9',1,'MCMCProcessor']]],
   ['doshapeonly_26',['doShapeOnly',['../classSampleSummary.html#aebd01b201cf04608b251cd3e272878b7',1,'SampleSummary']]],
   ['drawrange_27',['DrawRange',['../classMCMCProcessor.html#a4abe633b264acd9b0459c7b8ccd8b9df',1,'MCMCProcessor']]],
-  ['draws_28',['Draws',['../RHat_8cpp.html#a9adc829d645affbb93eff1775ab7c0c6',1,'RHat.cpp']]],
-  ['drawsfolded_29',['DrawsFolded',['../RHat_8cpp.html#a7e7fe290fda4362be54b8cf5d56fea51',1,'RHat.cpp']]],
+  ['draws_28',['Draws',['../RHat__HighMem_8cpp.html#a9adc829d645affbb93eff1775ab7c0c6',1,'RHat_HighMem.cpp']]],
+  ['drawsfolded_29',['DrawsFolded',['../RHat__HighMem_8cpp.html#a7e7fe290fda4362be54b8cf5d56fea51',1,'RHat_HighMem.cpp']]],
   ['dummy_5fvalue_30',['dummy_value',['../structFarDetectorCoreInfo.html#a6999d8f0b1299aaad447cd1886110ffa',1,'FarDetectorCoreInfo']]],
   ['dummyfile_31',['DUMMYFILE',['../PlotMCMC__Diagnosis_8cpp.html#aff052b2c086f67396715402e80de5fd7',1,'PlotMCMC_Diagnosis.cpp']]]
 ];

@@ -30,7 +30,7 @@ MathJax.Hub.Config({
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="mach3logo_small.png"/></td>
   <td id="projectalign">
-   <div id="projectname">MaCh3<span id="projectnumber">&#160;1.2.0</span>
+   <div id="projectname">MaCh3<span id="projectnumber">&#160;1.2.1</span>
    </div>
    <div id="projectbrief">Reference Guide</div>
   </td>
@@ -93,11 +93,11 @@ $(function() {
 <dt>Member <a class="el" href="classFitterBase.html#a655ccea31627627e2b36745c97e5c0f0">FitterBase::StartFromPreviousFit</a>  (const std::string &amp;FitName)</dt>
 <dd><a class="anchor" id="_todo000006"></a>implement some check that number of params matches etc  </dd>
 <dt>File <a class="el" href="GetPenaltyTerm_8cpp.html">GetPenaltyTerm.cpp</a>  </dt>
-<dd><a class="anchor" id="_todo000013"></a>KS: This should really be moved to MCMC Processor  </dd>
-<dt>Member <a class="el" href="MaCh3Factory_8h.html#adf686154f88c21b8937a8c9062d41644">MaCh3CovarianceFactory</a>  (manager *fitMan, const std::string &amp;PreFix)</dt>
-<dd><p class="startdd"><a class="anchor" id="_todo000007"></a>this massive hack with "xsec_cov" is because we have const char * ... will have to fix it later... </p>
-<p class="enddd"><a class="anchor" id="_todo000008"></a>add adaptive stuff  </p>
-</dd>
+<dd><a class="anchor" id="_todo000012"></a>KS: This should really be moved to MCMC Processor  </dd>
+<dt>Member <a class="el" href="GetPostfitParamPlots_8cpp.html#ad53f55565623ac6efd066209b1821ea6">GetPostfitParamPlots</a>  ()</dt>
+<dd><a class="anchor" id="_todo000013"></a>this is temporary hack  </dd>
+<dt>Member <a class="el" href="MaCh3Factory_8h.html#a24f887a3654e745105ec22bb90b7ab89">MaCh3CovarianceFactory</a>  (manager *FitManager, const std::string &amp;PreFix)</dt>
+<dd><a class="anchor" id="_todo000007"></a>add adaptive stuff  </dd>
 <dt>Member <a class="el" href="structMaCh3Plotting_1_1InputFile.html#a0897b76fdbfc674ed94da1d2b4adb0a2">MaCh3Plotting::InputFile::Dump</a>  () const</dt>
 <dd><a class="anchor" id="_todo000018"></a>Same as for <a class="el" href="structMaCh3Plotting_1_1InputFile.html#a4b3753ca1fa1a399e519aa15bca8658a" title="Print out a small summary of what is contained in the file.">Summarise()</a>, could add a check that the file info has actually been filled.  </dd>
 <dt>Member <a class="el" href="structMaCh3Plotting_1_1InputFile.html#a7491ea81990748b02402796ee512f518">MaCh3Plotting::InputFile::hasLLHScans</a>  </dt>
@@ -142,13 +142,13 @@ $(function() {
 <p class="enddd"><a class="anchor" id="_todo000025"></a>Implement this.  </p>
 </dd>
 <dt>Member <a class="el" href="classmcmc.html#adf4c80255288c5396da3b95d609ce4b2">mcmc::StartFromPreviousFit</a>  (const std::string &amp;FitName) override</dt>
-<dd><a class="anchor" id="_todo000009"></a>implement some check that number of params matches etc  </dd>
+<dd><a class="anchor" id="_todo000008"></a>implement some check that number of params matches etc  </dd>
 <dt>Member <a class="el" href="classMCMCProcessor.html#aef760d8c4bb70690a5c4114f4b2409b3">MCMCProcessor::PowerSpectrumAnalysis</a>  ()</dt>
-<dd><a class="anchor" id="_todo000011"></a>KS: Code is awfully slow... I know how to make it faster (GPU scream in a distant) but for now just make it for two params, bit hacky sry...  </dd>
+<dd><a class="anchor" id="_todo000010"></a>KS: Code is awfully slow... I know how to make it faster (GPU scream in a distant) but for now just make it for two params, bit hacky sry...  </dd>
 <dt>Member <a class="el" href="classMCMCProcessor.html#a3733b3b753c73f79e6846bc92c4da11b">MCMCProcessor::ReadOSCFile</a>  ()</dt>
-<dd><a class="anchor" id="_todo000010"></a>we should actually calculate central value and prior error but leave it for now...  </dd>
+<dd><a class="anchor" id="_todo000009"></a>we should actually calculate central value and prior error but leave it for now...  </dd>
 <dt>Member <a class="el" href="MCMCProcessor_8h.html#acd2848273413543fe14936252942c20b">ParameterEnum</a>  </dt>
-<dd><p class="startdd"><a class="anchor" id="_todo000012"></a>KS: Apply reweighted weight to plotting and Bayes Factor. </p>
+<dd><p class="startdd"><a class="anchor" id="_todo000011"></a>KS: Apply reweighted weight to plotting and Bayes Factor. </p>
 <p class="interdd"></p>
 <p class="interdd">KS: Implement 2D reweighing like DayaBay. </p>
 <p class="interdd"></p>

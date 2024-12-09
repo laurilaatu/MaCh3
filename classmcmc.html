@@ -30,7 +30,7 @@ MathJax.Hub.Config({
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="mach3logo_small.png"/></td>
   <td id="projectalign">
-   <div id="projectname">MaCh3<span id="projectnumber">&#160;1.2.0</span>
+   <div id="projectname">MaCh3<span id="projectnumber">&#160;1.2.1</span>
    </div>
    <div id="projectbrief">Reference Guide</div>
   </td>
@@ -563,7 +563,7 @@ Additional Inherited Members</h2></td></tr>
 <div class="line"><span class="lineno">  206</span>      cov-&gt;printNominalCurrProp();</div>
 <div class="line"><span class="lineno">  207</span>    }</div>
 <div class="line"><span class="lineno">  208</span>  }</div>
-<div class="line"><span class="lineno">  209</span><span class="preprocessor">  #ifdef DEBUF</span></div>
+<div class="line"><span class="lineno">  209</span><span class="preprocessor">  #ifdef DEBUG</span></div>
 <div class="line"><span class="lineno">  210</span>  <span class="keywordflow">if</span> (debug) {</div>
 <div class="line"><span class="lineno">  211</span>    debugFile &lt;&lt; <span class="stringliteral">&quot;\n-------------------------------------------------------&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line"><span class="lineno">  212</span>    debugFile &lt;&lt; <span class="stringliteral">&quot;Step:\t&quot;</span> &lt;&lt; <a class="code hl_variable" href="classFitterBase.html#a50df1bd75b20a953f81ab9c2bab6b42c">step</a> + 1 &lt;&lt; <span class="stringliteral">&quot;/&quot;</span> &lt;&lt; <a class="code hl_variable" href="classmcmc.html#a2b9a5344ea8074fcecdc1ae2f3cfc62a">chainLength</a> &lt;&lt; <span class="stringliteral">&quot;  |  current: &quot;</span> &lt;&lt; <a class="code hl_variable" href="classFitterBase.html#abfb6f10720764d8bbbe43754fd5cd976">logLCurr</a> &lt;&lt; <span class="stringliteral">&quot; proposed: &quot;</span> &lt;&lt; <a class="code hl_variable" href="classFitterBase.html#a187dd22c17f9e96e5a7e2fb2371abace">logLProp</a> &lt;&lt; std::endl;</div>
@@ -748,7 +748,7 @@ Additional Inherited Members</h2></td></tr>
 <div class="line"><span class="lineno">  120</span>  <span class="comment">// Process MCMC</span></div>
 <div class="line"><span class="lineno">  121</span>  <a class="code hl_function" href="classFitterBase.html#a1dccdac8611e70c759c47a65f2b1aea7">ProcessMCMC</a>();</div>
 <div class="line"><span class="lineno">  122</span>}</div>
-<div class="ttc" id="aclassFitterBase_html_a1dccdac8611e70c759c47a65f2b1aea7"><div class="ttname"><a href="classFitterBase.html#a1dccdac8611e70c759c47a65f2b1aea7">FitterBase::ProcessMCMC</a></div><div class="ttdeci">void ProcessMCMC()</div><div class="ttdoc">Process MCMC output.</div><div class="ttdef"><b>Definition:</b> <a href="FitterBase_8cpp_source.html#l00355">FitterBase.cpp:355</a></div></div>
+<div class="ttc" id="aclassFitterBase_html_a1dccdac8611e70c759c47a65f2b1aea7"><div class="ttname"><a href="classFitterBase.html#a1dccdac8611e70c759c47a65f2b1aea7">FitterBase::ProcessMCMC</a></div><div class="ttdeci">void ProcessMCMC()</div><div class="ttdoc">Process MCMC output.</div><div class="ttdef"><b>Definition:</b> <a href="FitterBase_8cpp_source.html#l00354">FitterBase.cpp:354</a></div></div>
 <div class="ttc" id="aclassFitterBase_html_a418f581b688f035211107ddd83168c08"><div class="ttname"><a href="classFitterBase.html#a418f581b688f035211107ddd83168c08">FitterBase::SaveOutput</a></div><div class="ttdeci">void SaveOutput()</div><div class="ttdoc">Save output and close files.</div><div class="ttdef"><b>Definition:</b> <a href="FitterBase_8cpp_source.html#l00215">FitterBase.cpp:215</a></div></div>
 <div class="ttc" id="aclassFitterBase_html_a48f38bfa8996fe00d51f35b05dd16b46"><div class="ttname"><a href="classFitterBase.html#a48f38bfa8996fe00d51f35b05dd16b46">FitterBase::SaveSettings</a></div><div class="ttdeci">void SaveSettings()</div><div class="ttdoc">Save the settings that the MCMC was run with.</div><div class="ttdef"><b>Definition:</b> <a href="FitterBase_8cpp_source.html#l00084">FitterBase.cpp:84</a></div></div>
 <div class="ttc" id="aclassFitterBase_html_a53715760edd8c7640432f31793fd28f9"><div class="ttname"><a href="classFitterBase.html#a53715760edd8c7640432f31793fd28f9">FitterBase::PrepareOutput</a></div><div class="ttdeci">void PrepareOutput()</div><div class="ttdoc">Prepare the output file.</div><div class="ttdef"><b>Definition:</b> <a href="FitterBase_8cpp_source.html#l00149">FitterBase.cpp:149</a></div></div>
@@ -852,7 +852,7 @@ Additional Inherited Members</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000009">Todo:</a></b></dt><dd>implement some check that number of params matches etc </dd></dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000008">Todo:</a></b></dt><dd>implement some check that number of params matches etc </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classFitterBase.html#a655ccea31627627e2b36745c97e5c0f0">FitterBase</a>.</p>
 
@@ -874,7 +874,7 @@ Additional Inherited Members</h2></td></tr>
 <div class="line"><span class="lineno">  232</span>  infile-&gt;Close();</div>
 <div class="line"><span class="lineno">  233</span>  <span class="keyword">delete</span> infile;</div>
 <div class="line"><span class="lineno">  234</span>}</div>
-<div class="ttc" id="aclassFitterBase_html_a655ccea31627627e2b36745c97e5c0f0"><div class="ttname"><a href="classFitterBase.html#a655ccea31627627e2b36745c97e5c0f0">FitterBase::StartFromPreviousFit</a></div><div class="ttdeci">virtual void StartFromPreviousFit(const std::string &amp;FitName)</div><div class="ttdoc">Allow to start from previous fit/chain.</div><div class="ttdef"><b>Definition:</b> <a href="FitterBase_8cpp_source.html#l00285">FitterBase.cpp:285</a></div></div>
+<div class="ttc" id="aclassFitterBase_html_a655ccea31627627e2b36745c97e5c0f0"><div class="ttname"><a href="classFitterBase.html#a655ccea31627627e2b36745c97e5c0f0">FitterBase::StartFromPreviousFit</a></div><div class="ttdeci">virtual void StartFromPreviousFit(const std::string &amp;FitName)</div><div class="ttdoc">Allow to start from previous fit/chain.</div><div class="ttdef"><b>Definition:</b> <a href="FitterBase_8cpp_source.html#l00284">FitterBase.cpp:284</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
