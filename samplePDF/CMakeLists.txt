@@ -21,13 +21,7 @@ else()
     add_library(SamplePDF SHARED
         samplePDFBase.cpp
         samplePDFFDBase.cpp
-        Structs.cpp
-        $<$<NOT:$<BOOL:${CPU_ONLY}>>:probGpu.cu>
-        $<$<NOT:$<BOOL:${CPU_ONLY}>>:kdeGpu.cu>
-        $<$<NOT:$<BOOL:${CPU_ONLY}>>:kdeGpu2.cu>
-    )
-
-endif()
+        Structs.cpp)
 
 endif()
 
