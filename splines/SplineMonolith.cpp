@@ -261,7 +261,7 @@ void SMonolith::PrepareForGPU(std::vector<std::vector<TResponseFunction_red*> > 
 
 
   #ifdef USE_FPGA
-    cpu_spline_handler = new SplineMonoUSM(queue, event_size_max, nKnots*_nCoeff_, NSplines_valid, NSplines_valid);
+    cpu_spline_handler = new SplineMonoUSM(queue, event_size_max, nKnots*_nCoeff_, NSplines_valid, NSplines_valid, NEvents);
     cpu_coeff_TF1_many = sycl::malloc_shared<float>(nTF1coeff, queue);
     cpu_paramNo_TF1_arr = sycl::malloc_shared<short int>(NTF1_valid, queue);
     cpu_total_weights = sycl::malloc_host<float>(NEvents, queue);
@@ -340,14 +340,21 @@ void SMonolith::PrepareForGPU(std::vector<std::vector<TResponseFunction_red*> > 
   int ParamCounterGlobal = 0;
   int ParamCounter_TF1 = 0;
   int ParamCounterGlobalTF1 = 0;
+  int SplinePerEventCounter = 0;
   // Loop over events and extract the spline coefficients
   for(unsigned int EventCounter = 0; EventCounter < MasterSpline.size(); ++EventCounter) {
     // Structure of MasterSpline is std::vector<std::vector<TSpline3*>>
     // A conventional iterator to count which parameter a given spline should be applied to
+
+    // Reset counter to 0
+    SplinePerEventCounter = 0;
+
     for(unsigned int ParamNumber = 0; ParamNumber < MasterSpline[EventCounter].size(); ++ParamNumber) {
 
       // If NULL we don't have this spline for the event, so move to next spline
       if (MasterSpline[EventCounter][ParamNumber] == NULL) continue;
+
+      SplinePerEventCounter++;
 
       if(SplineType[ParamNumber] == kTSpline3_red)
       {
@@ -431,6 +438,11 @@ void SMonolith::PrepareForGPU(std::vector<std::vector<TResponseFunction_red*> > 
     ParamCounter = 0;
     ParamCounter_TF1 = 0;
     #endif
+
+    // Store the number of splines which affect that event
+    // This will only count the number of non-NULL splines (i.e. the valid splines)
+    cpu_spline_handler->splines_per_event_arr[EventCounter] = SplinePerEventCounter;
+
   } // End the loop over the number of events
   delete[] many_tmp;
   delete[] x_tmp;
@@ -764,7 +776,7 @@ void SMonolith::LoadSplineFile(std::string FileName) {
   cpu_nParamPerEvent.resize(2*NEvents);
   cpu_nParamPerEvent_tf1.resize(2*NEvents);
   #ifdef USE_FPGA
-    cpu_spline_handler = new SplineMonoUSM(queue, event_size_max, nKnots*_nCoeff_, NSplines_valid, NSplines_valid);
+    cpu_spline_handler = new SplineMonoUSM(queue, event_size_max, nKnots*_nCoeff_, NSplines_valid, NSplines_valid, NEvents);
     cpu_coeff_TF1_many = sycl::malloc_shared<float>(nTF1coeff, queue);
     cpu_paramNo_TF1_arr = sycl::malloc_shared<short int>(NTF1_valid, queue);
   #else

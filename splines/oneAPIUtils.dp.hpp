@@ -7,7 +7,8 @@ struct SplineMonoUSM {
                   int coeff_x_size,
                   int coeff_many_size,
                   int nKnots_arr_size,
-                  int paramNo_arr_size);
+                  int paramNo_arr_size,
+                  int number_of_events_size);
     ~SplineMonoUSM();
 
     sycl::queue& m_queue;
@@ -26,4 +27,7 @@ struct SplineMonoUSM {
     short int* paramNo_arr;
 
     int* param_n_knots;
+
+    /// Keep track of the number of splines that each event needs
+    unsigned short int* splines_per_event_arr;
 };
