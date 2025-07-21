@@ -8,10 +8,13 @@ var searchData=
   ['betweenchainvariance_5',['BetweenChainVariance',['../RHat__HighMem_8cpp.html#a52dcf07f8f740636605516f6c2ab3e40',1,'BetweenChainVariance():&#160;RHat_HighMem.cpp'],['../RHat_8cpp.html#a52dcf07f8f740636605516f6c2ab3e40',1,'BetweenChainVariance():&#160;RHat.cpp']]],
   ['betweenchainvariancefolded_6',['BetweenChainVarianceFolded',['../RHat__HighMem_8cpp.html#a3a65452412d9dd00c1a9e93d0bab1a26',1,'RHat_HighMem.cpp']]],
   ['bibliography_7',['Bibliography',['../citelist.html',1,'']]],
-  ['binningopts_8',['BinningOpts',['../classsplineFDBase.html#ac5f4c7bfc06ab3bcc769be433ad4708e',1,'splineFDBase']]],
-  ['bisection_9',['bisection',['../classPSO.html#af45f4a02f49c33401588a12f667e7380',1,'PSO']]],
-  ['branchnames_10',['BranchNames',['../classMCMCProcessor.html#ad043b6b2c885f47ab9967831bc8d0f5a',1,'MCMCProcessor::BranchNames()'],['../GetPenaltyTerm_8cpp.html#a871d6466cea2597401bdb203293f4033',1,'BranchNames():&#160;GetPenaltyTerm.cpp'],['../RHat_8cpp.html#a871d6466cea2597401bdb203293f4033',1,'BranchNames():&#160;RHat.cpp'],['../RHat__HighMem_8cpp.html#a871d6466cea2597401bdb203293f4033',1,'BranchNames():&#160;RHat_HighMem.cpp']]],
-  ['buf_11',['buf',['../classsamplePDFBase.html#a361ce3bc003686a461e7def89ebebfbc',1,'samplePDFBase']]],
-  ['buildsampleindexingarray_12',['BuildSampleIndexingArray',['../classsplineFDBase.html#aaa699bd90abc662ce3af907733b3b704',1,'splineFDBase']]],
-  ['burnincut_13',['BurnInCut',['../classMCMCProcessor.html#a22f82dadceccbe87dd8c5b7daa8432e8',1,'MCMCProcessor']]]
+  ['binnedsplinehandler_8',['BinnedSplineHandler',['../classBinnedSplineHandler.html',1,'BinnedSplineHandler'],['../classBinnedSplineHandler.html#ab4747c7d1cc21664305a72966d44a4b6',1,'BinnedSplineHandler::BinnedSplineHandler()']]],
+  ['binnedsplinehandler_2ecpp_9',['BinnedSplineHandler.cpp',['../BinnedSplineHandler_8cpp.html',1,'']]],
+  ['binnedsplinehandler_2eh_10',['BinnedSplineHandler.h',['../BinnedSplineHandler_8h.html',1,'']]],
+  ['binning_11',['Binning',['../classSampleHandlerFD.html#a18efb1f51f72f1b131e3889a8b50c353',1,'SampleHandlerFD']]],
+  ['bisection_12',['bisection',['../classPSO.html#a553e0c2200c248612e8c8a40890fbd81',1,'PSO']]],
+  ['branchnames_13',['BranchNames',['../classMCMCProcessor.html#ad043b6b2c885f47ab9967831bc8d0f5a',1,'MCMCProcessor::BranchNames()'],['../GetPenaltyTerm_8cpp.html#a871d6466cea2597401bdb203293f4033',1,'BranchNames():&#160;GetPenaltyTerm.cpp'],['../RHat_8cpp.html#a871d6466cea2597401bdb203293f4033',1,'BranchNames():&#160;RHat.cpp'],['../RHat__HighMem_8cpp.html#a871d6466cea2597401bdb203293f4033',1,'BranchNames():&#160;RHat_HighMem.cpp']]],
+  ['buf_14',['buf',['../classSampleHandlerBase.html#a47d291148fa6153a7e05beebde6cfdb9',1,'SampleHandlerBase']]],
+  ['buildsampleindexingarray_15',['BuildSampleIndexingArray',['../classBinnedSplineHandler.html#a9ec76e03369a3cf36c6cdf4eb8004c38',1,'BinnedSplineHandler']]],
+  ['burnincut_16',['BurnInCut',['../classMCMCProcessor.html#a22f82dadceccbe87dd8c5b7daa8432e8',1,'MCMCProcessor']]]
 ];

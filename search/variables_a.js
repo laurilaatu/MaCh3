@@ -1,11 +1,9 @@
 var searchData=
 [
-  ['kbaseline_0',['kBaseline',['../classcovarianceOsc.html#a74ac09650ebb641865afe2710f69c178',1,'covarianceOsc']]],
-  ['kdeltacp_1',['kDeltaCP',['../classcovarianceOsc.html#ac4068139be51a4426706d4ddf4bf930d',1,'covarianceOsc']]],
-  ['kdeltam23_2',['kDeltaM23',['../classcovarianceOsc.html#a5f554c455622a351015fa782e9933801',1,'covarianceOsc']]],
-  ['kdensity_3',['kDensity',['../classcovarianceOsc.html#a8ab8bea0eacbb9c09b9c9ca0b08fda6c',1,'covarianceOsc']]],
-  ['kinematicvarstr_4',['KinematicVarStr',['../structXsecNorms4.html#a67a1d237f1fdb41a0c11898fada0f00c',1,'XsecNorms4']]],
-  ['kmaxparticles_5',['kMaxParticles',['../classPSO.html#a0c6dc51dae4c926cf236eb482d000384',1,'PSO']]],
-  ['knowndetidsmap_6',['KnownDetIDsMap',['../namespaceMaCh3Utils.html#ab58c07d7176a31b58fe4c1fb0c81fd10',1,'MaCh3Utils']]],
-  ['ksintheta23_7',['kSinTheta23',['../classcovarianceOsc.html#ae065d9a3c633bfcef6915b2b86d3e209',1,'covarianceOsc']]]
+  ['kinematiclowbound_0',['KinematicLowBound',['../namespaceM3.html#a889843c4944ea4c89dd03ef2d1000a96',1,'M3']]],
+  ['kinematicparameters_1',['KinematicParameters',['../classSampleHandlerFD.html#aae37732e76f0b17b6f124bd5543177e4',1,'SampleHandlerFD']]],
+  ['kinematicupbound_2',['KinematicUpBound',['../namespaceM3.html#ae55af9a5eb2878e4c5e4bbe5c2af029d',1,'M3']]],
+  ['kinematicvarstr_3',['KinematicVarStr',['../structNormParameter.html#a8d05813ef3311f38396bd7c9208248f9',1,'NormParameter::KinematicVarStr()'],['../structFunctionalParameter.html#a46d6aa97d8c30fa2da877ab73f3f52f3',1,'FunctionalParameter::KinematicVarStr()']]],
+  ['kinematicvectors_4',['KinematicVectors',['../classSampleHandlerFD.html#a5d762b169bab4454bbdb1b387c09f4a7',1,'SampleHandlerFD']]],
+  ['kmaxparticles_5',['kMaxParticles',['../classPSO.html#ae2877221af2688fbadc4955d0ab3e0f0',1,'PSO']]]
 ];

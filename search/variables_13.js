@@ -1,17 +1,16 @@
 var searchData=
 [
   ['uncertainties_0',['uncertainties',['../classPSO.html#ad525975ef87127a49f78484366f264df',1,'PSO']]],
-  ['uniquecoeffindices_1',['uniquecoeffindices',['../classsplineFDBase.html#a7a564f5748f16d97ebf1e1c300a1cc5c',1,'splineFDBase']]],
-  ['uniquesplinevec_5fmonolith_2',['uniquesplinevec_Monolith',['../classsplineFDBase.html#ae237cc1c6d97e35bf4f7f64e369a5781',1,'splineFDBase']]],
-  ['uniquesystcurrsegment_3',['UniqueSystCurrSegment',['../classsplineFDBase.html#aa36e6889d054ad0f86f33a53dd3fe036',1,'splineFDBase']]],
-  ['uniquesystindices_4',['UniqueSystIndices',['../classsplineFDBase.html#a3b821b95c2db6063a9baa244b28aeaa6',1,'splineFDBase']]],
-  ['uniquesystnames_5',['UniqueSystNames',['../classsplineFDBase.html#aacf850f4ec22e4f7338f243999ecc7dd',1,'splineFDBase']]],
-  ['uniquesystnknots_6',['UniqueSystNKnots',['../classsplineFDBase.html#a176d42bb137d3c8c3771eb1a4a8440c8',1,'splineFDBase']]],
-  ['uniquesystxpts_7',['UniqueSystXPts',['../classsplineFDBase.html#a5112a1bbd658d3a90c6a785c12aebf34',1,'splineFDBase']]],
-  ['unity_8',['Unity',['../structFarDetectorCoreInfo.html#a365032372727c218a3d11e1ab6f804fb',1,'FarDetectorCoreInfo::Unity()'],['../classcovarianceBase.html#a7682c3de33ae5b23b23e070dc0a3f778',1,'covarianceBase::Unity()'],['../classsamplePDFFDBase.html#a4f0c67b108c3307c7943873ffcb0a361',1,'samplePDFFDBase::Unity()']]],
-  ['unity_5ff_9',['Unity_F',['../structFarDetectorCoreInfo.html#a03f091e0a2896169cd508bab43a8fde9',1,'FarDetectorCoreInfo::Unity_F()'],['../classsamplePDFFDBase.html#a32169b381961e12d91be0b83f445049d',1,'samplePDFFDBase::Unity_F()']]],
-  ['unity_5fint_10',['Unity_Int',['../structFarDetectorCoreInfo.html#aa4acd05f0690043c7f2e089e56d64609',1,'FarDetectorCoreInfo']]],
-  ['uppercut_11',['UpperCut',['../classMCMCProcessor.html#a840c686f15f419c0156df01c4ed62931',1,'MCMCProcessor']]],
-  ['use_5fadaptive_12',['use_adaptive',['../classcovarianceBase.html#a838731abd6716940043b484b2b266f86',1,'covarianceBase']]],
-  ['usefftautocorrelation_13',['useFFTAutoCorrelation',['../classMCMCProcessor.html#a562261269f0f4ec4a209b2fca64ff443',1,'MCMCProcessor']]]
+  ['uniquecoeffindices_1',['uniquecoeffindices',['../classBinnedSplineHandler.html#ac032bf729105a8848e3058a430d54250',1,'BinnedSplineHandler']]],
+  ['uniquesplinevec_5fmonolith_2',['uniquesplinevec_Monolith',['../classBinnedSplineHandler.html#a8e746122fde570e5ec454a708d61b6c8',1,'BinnedSplineHandler']]],
+  ['uniquesystindices_3',['UniqueSystIndices',['../classBinnedSplineHandler.html#aedb1c578eddc904c39b08aca36e5f75d',1,'BinnedSplineHandler']]],
+  ['uniquesystnames_4',['UniqueSystNames',['../classBinnedSplineHandler.html#a6387e407a74af8f40202c573024c48ef',1,'BinnedSplineHandler']]],
+  ['unity_5',['Unity',['../namespaceM3.html#a71856d3b09903af6696008c3cb8386b0',1,'M3']]],
+  ['unity_5fd_6',['Unity_D',['../namespaceM3.html#afade7c2e326a9ce1d3459559d54716e6',1,'M3']]],
+  ['unity_5ff_7',['Unity_F',['../namespaceM3.html#a0888fc3177e4a0c3ddbed03a5bd358b0',1,'M3']]],
+  ['updatew2_8',['UpdateW2',['../classSampleHandlerFD.html#aa654562842a0da51ff917aaed517310e',1,'SampleHandlerFD']]],
+  ['upperbound_9',['UpperBound',['../structKinematicCut.html#a244bd4ada65739a6984a2039a5a6f200',1,'KinematicCut']]],
+  ['uppercut_10',['UpperCut',['../classMCMCProcessor.html#a840c686f15f419c0156df01c4ed62931',1,'MCMCProcessor']]],
+  ['use_5fadaptive_11',['use_adaptive',['../classParameterHandlerBase.html#a0919e47e80710af8b9a3f837bba9bf8b',1,'ParameterHandlerBase']]],
+  ['usefftautocorrelation_12',['useFFTAutoCorrelation',['../classMCMCProcessor.html#a562261269f0f4ec4a209b2fca64ff443',1,'MCMCProcessor']]]
 ];

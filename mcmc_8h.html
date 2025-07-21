@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.6"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>MaCh3: mcmc/mcmc.h File Reference</title>
+<title>MaCh3: Fitters/mcmc.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -30,7 +30,7 @@ MathJax.Hub.Config({
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="mach3logo_small.png"/></td>
   <td id="projectalign">
-   <div id="projectname">MaCh3<span id="projectnumber">&#160;1.2.1</span>
+   <div id="projectname">MaCh3<span id="projectnumber">&#160;2.2.2</span>
    </div>
    <div id="projectbrief">Reference Guide</div>
   </td>
@@ -79,7 +79,7 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_9d1483aea13a0d690c9337bf5d7dafcd.html">mcmc</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_c4587985b869c96ecd5a3e2399525831.html">Fitters</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -88,74 +88,18 @@ $(function() {
   <div class="headertitle"><div class="title">mcmc.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="FitterBase_8h_source.html">mcmc/FitterBase.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="FitterBase_8h_source.html">Fitters/FitterBase.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for mcmc.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="mcmc_8h__incl.png" border="0" usemap="#amcmc_2mcmc_8h" alt=""/></div>
-<map name="amcmc_2mcmc_8h" id="amcmc_2mcmc_8h">
-<area shape="rect" title=" " alt="" coords="527,5,646,31"/>
-<area shape="rect" href="FitterBase_8h.html" title=" " alt="" coords="515,79,659,104"/>
-<area shape="rect" title=" " alt="" coords="485,739,565,764"/>
-<area shape="rect" title=" " alt="" coords="325,592,398,617"/>
-<area shape="rect" title=" " alt="" coords="1009,739,1084,764"/>
-<area shape="rect" href="samplePDFBase_8h.html" title=" " alt="" coords="3248,225,3467,251"/>
-<area shape="rect" href="manager_8h.html" title=" " alt="" coords="477,299,630,324"/>
-<area shape="rect" href="covarianceBase_8h.html" title=" " alt="" coords="481,152,693,177"/>
-<area shape="rect" href="MCMCProcessor_8h.html" title=" " alt="" coords="2073,152,2255,177"/>
-<area shape="rect" title=" " alt="" coords="3392,299,3467,324"/>
-<area shape="rect" title=" " alt="" coords="2812,519,2881,544"/>
-<area shape="rect" title=" " alt="" coords="3125,372,3195,397"/>
-<area shape="rect" title=" " alt="" coords="3026,372,3097,397"/>
-<area shape="rect" title=" " alt="" coords="2616,372,2691,397"/>
-<area shape="rect" title=" " alt="" coords="2845,592,2910,617"/>
-<area shape="rect" title=" " alt="" coords="2695,299,2774,324"/>
-<area shape="rect" title=" " alt="" coords="2488,372,2592,397"/>
-<area shape="rect" title=" " alt="" coords="2832,299,2912,324"/>
-<area shape="rect" href="Structs_8h.html" title=" " alt="" coords="753,519,911,544"/>
-<area shape="rect" title=" " alt="" coords="855,592,958,617"/>
-<area shape="rect" href="MaCh3Exception_8h.html" title=" " alt="" coords="423,592,628,617"/>
-<area shape="rect" href="MaCh3Logger_8h.html" title=" " alt="" coords="775,665,959,691"/>
-<area shape="rect" href="YamlHelper_8h.html" title="Utility functions for handling YAML nodes." alt="" coords="306,519,475,544"/>
-<area shape="rect" href="Monitor_8h.html" title="System and monitoring utilities for printing system information and status updates." alt="" coords="558,445,703,471"/>
-<area shape="rect" href="MaCh3Modes_8h.html" title=" " alt="" coords="428,372,612,397"/>
-<area shape="rect" title=" " alt="" coords="195,519,282,544"/>
-<area shape="rect" title=" " alt="" coords="1942,519,2053,544"/>
-<area shape="rect" href="CovarianceUtils_8h.html" title=" " alt="" coords="2291,299,2503,324"/>
-<area shape="rect" href="AdaptiveMCMCHandler_8h.html" title=" " alt="" coords="704,225,963,251"/>
-<area shape="rect" href="PCAHandler_8h.html" title=" " alt="" coords="494,225,679,251"/>
-<area shape="rect" title=" " alt="" coords="2219,372,2312,397"/>
-<area shape="rect" title=" " alt="" coords="2035,372,2194,397"/>
-<area shape="rect" title=" " alt="" coords="2730,225,2809,251"/>
-<area shape="rect" title=" " alt="" coords="2833,225,2895,251"/>
-<area shape="rect" title=" " alt="" coords="2919,225,3017,251"/>
-<area shape="rect" title=" " alt="" coords="3041,225,3130,251"/>
-<area shape="rect" title=" " alt="" coords="3155,225,3224,251"/>
-<area shape="rect" title=" " alt="" coords="1139,225,1229,251"/>
-<area shape="rect" title=" " alt="" coords="1253,225,1313,251"/>
-<area shape="rect" title=" " alt="" coords="1337,225,1397,251"/>
-<area shape="rect" title=" " alt="" coords="1421,225,1539,251"/>
-<area shape="rect" title=" " alt="" coords="1563,225,1637,251"/>
-<area shape="rect" title=" " alt="" coords="1661,225,1736,251"/>
-<area shape="rect" title=" " alt="" coords="1760,225,1829,251"/>
-<area shape="rect" title=" " alt="" coords="1854,225,1933,251"/>
-<area shape="rect" title=" " alt="" coords="1957,225,2021,251"/>
-<area shape="rect" title=" " alt="" coords="2046,225,2159,251"/>
-<area shape="rect" title=" " alt="" coords="2183,225,2270,251"/>
-<area shape="rect" title=" " alt="" coords="2295,225,2401,251"/>
-<area shape="rect" href="StatisticalUtils_8h.html" title="Utility functions for statistical interpretations in MaCh3." alt="" coords="296,225,469,251"/>
-</map>
+<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="mcmc_8h__incl.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><img src="mcmc_8h__dep__incl.png" border="0" usemap="#amcmc_2mcmc_8hdep" alt=""/></div>
-<map name="amcmc_2mcmc_8hdep" id="amcmc_2mcmc_8hdep">
-<area shape="rect" title=" " alt="" coords="124,5,243,31"/>
-<area shape="rect" href="MaCh3Factory_8h.html" title=" " alt="" coords="13,79,181,104"/>
-<area shape="rect" href="mcmc_8cpp.html" title=" " alt="" coords="205,79,338,104"/>
-<area shape="rect" href="MaCh3Factory_8cpp.html" title=" " alt="" coords="5,152,188,177"/>
-</map>
+<div class="center"><iframe scrolling="no" frameborder="0" src="mcmc_8h__dep__incl.svg" width="507" height="183"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
 </div>
 </div>
 <p><a href="mcmc_8h_source.html">Go to the source code of this file.</a></p>

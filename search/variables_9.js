@@ -1,18 +1,20 @@
 var searchData=
 [
   ['iamvaried_0',['IamVaried',['../classMCMCProcessor.html#a95fa49737432818bc830a44898d0d850',1,'MCMCProcessor']]],
-  ['index_1',['index',['../structXsecNorms4.html#a6c45244b8c559ada13c1c886dea37cc2',1,'XsecNorms4']]],
+  ['index_1',['index',['../structTypeParameterBase.html#a5723f938e8838c5742c841a38931f9bc',1,'TypeParameterBase']]],
   ['index_5fspline_5fcpu_2',['index_spline_cpu',['../classSMonolith.html#a9c4fa00b6e36d150d52e87e6463aabaa',1,'SMonolith']]],
   ['index_5ftf1_5fcpu_3',['index_TF1_cpu',['../classSMonolith.html#a723920c6c324901ac0fa48df7aad64cd',1,'SMonolith']]],
-  ['indexvec_4',['indexvec',['../classsplineFDBase.html#ab3a4e79bfe675a4070597557e6226e12',1,'splineFDBase']]],
-  ['inpfilelist_5',['inpFileList',['../CombineMaCh3Chains_8cpp.html#a92bfb809a0500604336ae74b5198373b',1,'CombineMaCh3Chains.cpp']]],
-  ['inputfile_6',['inputFile',['../classcovarianceBase.html#a5451d4189a9fb7591c8ce728852ba82e',1,'covarianceBase']]],
-  ['invcovmatrix_7',['invCovMatrix',['../classcovarianceBase.html#a35c7dc7817eaf4058e9775b6bc792ebc',1,'covarianceBase::invCovMatrix()'],['../GetPenaltyTerm_8cpp.html#a3fd4dd88b1fa6119298781296ea761c5',1,'invCovMatrix():&#160;GetPenaltyTerm.cpp']]],
-  ['invertcovmatrix_8',['InvertCovMatrix',['../classcovarianceBase.html#a49a8341eb8e997fb090749117320edf9',1,'covarianceBase']]],
-  ['isdecomposed_5fpca_9',['isDecomposed_PCA',['../classcovarianceBase.html#ae9f3cb2a310874b86965903714ef2bd8',1,'covarianceBase']]],
-  ['isflat_10',['isFlat',['../GetPenaltyTerm_8cpp.html#ae7c3a438d4508eba7ac26e26135b2c17',1,'GetPenaltyTerm.cpp']]],
-  ['isflatarray_11',['isflatarray',['../classsplineFDBase.html#aa8a204355df78af3f79bf8f2815258d3',1,'splineFDBase']]],
-  ['isnc_12',['isNC',['../structFarDetectorCoreInfo.html#aa747b7b9ef0058fc9362fc48c4a53b7e',1,'FarDetectorCoreInfo']]],
-  ['ispriorpredictive_13',['isPriorPredictive',['../classSampleSummary.html#adb737e335e68edeb14a6ce2ca112dc8c',1,'SampleSummary']]],
-  ['isxsec_14',['IsXsec',['../classMCMCProcessor.html#a2c06d64020e9246e720cc131a9f4986d',1,'MCMCProcessor']]]
+  ['indexvec_4',['indexvec',['../classBinnedSplineHandler.html#a1e0e6f58e9d7b67a4c4a20987f927ff8',1,'BinnedSplineHandler']]],
+  ['initpdg_5',['InitPDG',['../structOscChannelInfo.html#a05c0f4dbac9e0cf9ce4f35d5117d1414',1,'OscChannelInfo']]],
+  ['inpfilelist_6',['inpFileList',['../CombineMaCh3Chains_8cpp.html#a92bfb809a0500604336ae74b5198373b',1,'CombineMaCh3Chains.cpp']]],
+  ['inputfile_7',['inputFile',['../classParameterHandlerBase.html#adb2f867014619b5c38b67cd981e40dcb',1,'ParameterHandlerBase']]],
+  ['invcovmatrix_8',['invCovMatrix',['../classParameterHandlerBase.html#a2789064b551742edb5d05331ca8ef7e1',1,'ParameterHandlerBase::invCovMatrix()'],['../GetPenaltyTerm_8cpp.html#a3fd4dd88b1fa6119298781296ea761c5',1,'invCovMatrix():&#160;GetPenaltyTerm.cpp']]],
+  ['invertcovmatrix_9',['InvertCovMatrix',['../classParameterHandlerBase.html#a9806557b3612e29e106a0ac18cc35478',1,'ParameterHandlerBase']]],
+  ['is_5fpriorpredictive_10',['Is_PriorPredictive',['../classPredictiveThrower.html#a6be5b493541d6f30b3a0d6fd0e7557e9',1,'PredictiveThrower']]],
+  ['isdecomposedpca_11',['isDecomposedPCA',['../classPCAHandler.html#a10fecf91a038d034f55a08332dec0f4a',1,'PCAHandler']]],
+  ['isflat_12',['isFlat',['../GetPenaltyTerm_8cpp.html#ae7c3a438d4508eba7ac26e26135b2c17',1,'GetPenaltyTerm.cpp']]],
+  ['isflatarray_13',['isflatarray',['../classBinnedSplineHandler.html#a13329dc38e92088744a5a49a60c01a83',1,'BinnedSplineHandler']]],
+  ['isnc_14',['IsNC',['../structMaCh3ModeInfo.html#ad987766dd95bed2cfcdad169d07a885b',1,'MaCh3ModeInfo']]],
+  ['isnc_15',['isNC',['../structFarDetectorCoreInfo.html#abdba4588283aa31368e3fab57ac8cd60',1,'FarDetectorCoreInfo']]],
+  ['ispriorpredictive_16',['isPriorPredictive',['../classSampleSummary.html#adb737e335e68edeb14a6ce2ca112dc8c',1,'SampleSummary']]]
 ];
