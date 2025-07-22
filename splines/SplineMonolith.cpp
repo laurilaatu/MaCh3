@@ -62,6 +62,57 @@ void FPGACalcSplineWeights(int nParams, int NSplines_valid, int *param_n_knots, 
     vals_bram[i] = vals_host[i];
   }
 
+
+  int nChunk = 4;
+  int nKnots = 4;
+
+  for (size_t eventNum = 0; eventNum < NEvents; eventNum++) {
+
+    // Read the number of splines for this event
+
+    int NSplines_event = ; // retrieve the amount of splines for this event
+
+    for (size_t eventSpline = 0; eventSpline < NSplines_event; eventSpline+= nChunk) {
+
+  
+      splineStartIndex = ; // retrieve start index for coefficients
+
+      // Execute each clock cycle
+      [[intel::initiation_interval(1)]]
+      for (size_t chunk = 0; chunk < nChunk; chunk++) {
+
+        CurrentKnotPos = splineStartIndex + chunk * nChunk * nKnots;
+
+
+        ac_int<8, false> segment_X = Param * max_knots + segment;
+
+
+        float fX[nKnots];
+
+        // fetch all fX simultaneously
+        #pragma unroll
+        for (unsigned int knotPos = 0; knotPos < nKnots; knotPos++) {
+
+          fX[knotPos] = coeff_many_host[CurrentKnotPos+knotPos];
+          // coeff_many = n_splines * n_knots -> large!
+
+        }
+
+        const float dx = vals_bram[Param] - coeff_x_host[segment_X];
+
+        float a = dx * fX[3] + fX[2];
+        float b = dx * a + fX[1];
+        float c = dx * b + fX[0];
+
+      }
+
+    }
+
+
+  }
+
+
+
   [[intel::initiation_interval(1)]]
   for (size_t splineNum = 0; splineNum < NSplines_valid; splineNum++) {
 
