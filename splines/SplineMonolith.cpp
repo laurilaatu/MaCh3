@@ -20,13 +20,11 @@ constexpr size_t kPipeMinCapacity = 32;
 // Pipes
 struct PipeStruct{
   PipeStruct() = default;
-  PipeStruct(int a, float b, float c):
+    PipeStruct(int a, float b[2]):
     eventNum(a),
-    spline1_computations(b),
-    spline2_computations(c){}
+    spline_computations{b[0], b[1]}{}
   int eventNum;
-  float spline1_computations; 
-  float spline2_computations; 
+  float spline_computations[2];
 };
 class IDPipeAB;
 using PipeAB = sycl::ext::intel::pipe<IDPipeAB,        // An identifier for the pipe
@@ -141,7 +139,7 @@ void FPGACalcSplineWeights(int nParams,
           for_pipe[chunk] = c;
         }
       } // end of chunk loop
-      PipeAB::write(PipeStruct(eventNum, for_pipe[0], for_pipe[1])); // [value_splineA, value_splinB] down pipe
+      PipeAB::write(PipeStruct(eventNum, for_pipe));
 
       knot_offset += knots_per_spline;
     } //end of splines per event loop
@@ -253,8 +251,7 @@ void FPGAModifyWeights(int NSplines_valid, float *cpu_total_weights){
 
     #pragma unroll
     for (size_t a = 0; a < chunk_size; a++) {
-      prod *= tmp.spline1_computations;
-      prod *= tmp.spline2_computations;
+      prod *= tmp.spline_computations[a];
     }
   }
 
