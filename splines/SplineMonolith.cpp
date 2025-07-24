@@ -19,6 +19,7 @@ constexpr size_t kPipeMinCapacity = 32;
 
 // Pipes
 struct PipeStruct{
+  PipeStruct() = default;
   PipeStruct(int a, float b, float c):
     eventNum(a),
     spline1_computations(b),
