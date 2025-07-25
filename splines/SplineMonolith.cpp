@@ -72,7 +72,6 @@ void FPGACalcSplineWeights(int nParams,
   // 200 = arbitrary number > nParams
   [[intel::fpga_memory("BLOCK_RAM")]] int segments_bram[200];
   [[intel::max_replicates(4)]] float vals_bram[200];
-  #pragma unroll
   for (int i = 0; i < nParams; i++) {
     segments_bram[i] = segments_host[i];
     vals_bram[i] = vals_host[i];
