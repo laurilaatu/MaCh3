@@ -111,7 +111,7 @@ void FPGACalcSplineWeights(int nParams,
           
           int Param = params_host[spline_offset + eventSpline + chunk];
           int segment = segments_bram[Param];
-          int CurrentKnotPos = knots_host[Param] + segment * num_coeff; // still needs to be checked
+          int CurrentKnotPos = knots_host[spline_offset + eventSpline + chunk] * num_coeff + segment * num_coeff; // still needs to be checked
 
 
           //int CurrentKnotPos =  * num_coeff;
