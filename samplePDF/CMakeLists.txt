@@ -6,11 +6,23 @@ set(HEADERS
     FarDetectorCoreInfoStruct.h
 )
 
+if(CUDA)
+
 add_library(SamplePDF SHARED
     samplePDFBase.cpp
     samplePDFFDBase.cpp
     HistogramUtils.cpp
 )
+else()
+
+add_library(SamplePDF SHARED
+    samplePDFBase.cpp
+    samplePDFFDBase.cpp
+    Structs.cpp
+)
+
+endif()
+
 
 target_link_libraries(SamplePDF PUBLIC Splines NuOscillator)
 target_link_libraries(SamplePDF PRIVATE MaCh3Warnings)
@@ -20,7 +32,7 @@ target_include_directories(SamplePDF PUBLIC
     $<INSTALL_INTERFACE:include>
 )
 
-if(MaCh3_GPU_ENABLED)
+if(CUDA)
     set_target_properties(SamplePDF PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
     set_property(TARGET SamplePDF PROPERTY CUDA_ARCHITECTURES ${CMAKE_CUDA_ARCHITECTURES})
 endif()

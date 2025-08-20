@@ -45,6 +45,71 @@ struct FastSplineInfo {
   const double* splineParsPointer;
 };
 
+// ********************************************
+/// @brief CW: Generic xsec class. Can use TF1 or TSpline3 or TSpline5 here, tjoho
+template <class T>
+class XSecStruct {
+// ********************************************
+public:
+  /// @brief CW: The light constructor
+  XSecStruct(_int_ NumberOfSplines) {
+    nParams = NumberOfSplines;
+    Func->reserve(nParams);
+    for (int i = 0; i < nParams; ++i) {
+      Func[i] = NULL;
+    }
+  }
+
+  /// @brief CW: The empty constructor
+  XSecStruct() {
+    nParams = 0;
+    Func = NULL;
+  };
+
+  /// @brief CW: The light destructor
+  ~XSecStruct() {
+    for (int i = 0; i < nParams; ++i) {
+      if (Func[i]) delete Func[i];
+    }
+  }
+
+  /// @brief CW: Get number of splines
+  inline _int_ GetNumberOfParams() { return nParams; }
+
+  /// @brief CW: The Printer
+  inline void Print() {
+    MACH3LOG_INFO("    Splines:");
+    for (int i = 0; i < nParams; ++i) {
+      if (!Func[i]) continue;
+      MACH3LOG_INFO("    {:<25}", Func[i]->GetName());
+    }
+  }
+
+  /// @brief CW: Set the number of splines for this event
+  inline void SetSplineNumber(const _int_ NumberOfSplines) {
+    nParams = NumberOfSplines;
+    Func = new T[nParams];
+  }
+
+  /// @brief CW: Get the function for the nth spline
+  inline T GetFunc(const _int_ nSpline) { return Func[nSpline]; }
+  /// @brief CW: Set the function for the nth spline
+  inline void SetFunc(const _int_ nSpline, T Function) { Func[nSpline] = Function; }
+  /// @brief CW: Eval the current variation
+  inline double Eval(const _int_ nSpline, const _float_ variation) {
+    // Some will be NULL, check this
+    if (Func[nSpline]) {
+      return Func[nSpline]->Eval(variation);
+    } else {
+      return 1.0;
+    }
+  }
+private:
+  /// Number of parameters
+  _int_ nParams;
+  /// The function
+  T* Func;
+};
 
 // ***************************************************************************
 /// @brief EM: Apply capping to knot weight for specified spline parameter. param graph needs to have been set in xsecgraph array first

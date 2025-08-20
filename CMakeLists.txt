@@ -31,32 +31,31 @@ add_library(MaCh3 INTERFACE)
 
 find_package(CUDAToolkit QUIET)
 # Check if CUDA was found
-if(CUDAToolkit_FOUND AND MaCh3_GPU_ENABLED AND NOT (USE_CPU OR USE_FPGA))
-  cmessage(STATUS "CUDA found. Adding CUDA support.")
-  set(MaCh3_GPU_ENABLED ON)
-  enable_language(CUDA)
+if(CUDAToolkit_FOUND AND NOT(FPGA) AND NOT(USE_CPU))
+  message(STATUS "CUDA found. Adding CUDA support.")
+  set(MaCh3_GPU_ENABLED TRUE)
   set(CUDA TRUE)
   set(CPU_ONLY FALSE)
+  set(USE_FPGA FALSE)
 else()
-  cmessage(STATUS "CUDA not found. Proceeding without CUDA support.")
-  set(MaCh3_GPU_ENABLED OFF)
+  message(STATUS "CUDA not used. Proceeding without CUDA support.")
+  set(MaCh3_GPU_ENABLED FALSE)
   set(CUDA FALSE)
-  if(USE_CPU)  
-    message(STATUS "CPU only mode")
-    set(CPU_ONLY TRUE)
-    set(USE_FPGA FALSE)
-  elseif(USE_FPGA)
-    message(STATUS "FPGA mode") 
-    set(CPU_ONLY FALSE)
-    set(USE_FPGA TRUE)
-  endif()
-
-  message(STATUS "USE_CPU flag: ${USE_CPU}")
-  message(STATUS "USE_FPGA flag: ${USE_FPGA}")
 
 endif()
 
-if(USE_FPGA)
+if(USE_CPU)
+  set(CPU_ONLY TRUE)
+  set(CUDA FALSE)
+  set(USE_FPGA FALSE)
+endif()
+
+if(FPGA)
+
+  set(USE_FPGA TRUE)
+  set(CPU_ONLY FALSE)
+  set(CUDA FALSE)
+
   if(NOT DEFINED FPGA_DEVICE)
     set(FPGA_DEVICE "Agilex7")
     message(STATUS "FPGA_DEVICE was not specified.\
@@ -81,6 +80,12 @@ if(USE_FPGA)
   message(STATUS "Additional USER_FLAGS=${USER_FLAGS}")
   set(QACTYPES "-qactypes")
 
+endif()
+
+if(MaCh3_GPU_ENABLED)
+  project(MaCh3 VERSION ${MaCh3_VERSION} LANGUAGES CXX CUDA)
+else()
+  project(MaCh3 VERSION ${MaCh3_VERSION} LANGUAGES CXX)
 endif()
 
 
@@ -234,31 +239,13 @@ endif()
 
 #Add Multithread flags
 if(MaCh3_MULTITHREAD_ENABLED)
-  if(USE_FPGA)
-    target_compile_options(MaCh3CompilerOptions BEFORE INTERFACE -qopenmp)
+  if(FPGA)
+  target_compile_options(MaCh3CompilerOptions INTERFACE -qopenmp)
   else()
     target_compile_options(MaCh3CompilerOptions INTERFACE -fopenmp)
   endif()
-
-  # KS: Not a clue why clang need different...
-  if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-    target_link_libraries(MaCh3CompilerOptions INTERFACE omp)
-  elseif(CMAKE_CXX_COMPILER_ID MATCHES "IntelLLVM")
-    #ETA: intel icpx requires this I believe
-    cmessage(STATUS "CMAKE_CXX_COMPILER_ID is IntelLLVM!!")
-    find_package(OpenMP)
-    if(OpenMP_CXX_FOUND)
-      target_link_libraries(MaCh3 INTERFACE OpenMP::OpenMP_CXX)
-    endif()
-  else()
-    target_link_libraries(MaCh3CompilerOptions INTERFACE gomp)
-  endif()
-  target_compile_definitions(MaCh3CompileDefinitions INTERFACE MULTITHREAD)
-endif()
-
-if(MaCh3_GPU_ENABLED) 
-  target_compile_definitions(MaCh3GPUCompilerOptions INTERFACE CUDA)
-  target_compile_definitions(MaCh3GPUCompilerOptions INTERFACE GPU_ON)
+  target_link_libraries(MaCh3CompilerOptions INTERFACE gomp)
+  target_compile_definitions(MaCh3CompilerOptions INTERFACE MULTITHREAD)
 endif()
 
 if(CPU_ONLY)
@@ -270,6 +257,18 @@ if(USE_FPGA)
   target_compile_options(MaCh3CompilerOptions INTERFACE -Wall ${QACTYPES} ${USER_FLAGS})
 endif()
 
+if(MaCh3_GPU_ENABLED)
+  target_compile_definitions(MaCh3CompilerOptions INTERFACE CUDA)
+  target_compile_definitions(MaCh3CompilerOptions INTERFACE GPU_ON)
+endif()
+
+if(FPGA) 
+target_compile_options(MaCh3CompilerOptions INTERFACE -fopenmp -fintelfpga -Wall ${QACTYPES} ${USER_FLAGS})
+endif()
+
+if(NOT DEFINED MaCh3_LOW_MEMORY_STRUCTS_ENABLED)
+  set(MaCh3_LOW_MEMORY_STRUCTS_ENABLED FALSE)
+endif()
 
 if(MaCh3_LOW_MEMORY_STRUCTS_ENABLED)
   target_compile_definitions(MaCh3CompileDefinitions INTERFACE _LOW_MEMORY_STRUCTS_)
@@ -334,12 +333,12 @@ endif()
 
 #This is to export the target properties of MaCh3
 #Anything that links to "MaCh3" will get all of these target properties
-#add_library(MaCh3 INTERFACE)
-if (USE_FPGA)
-  target_link_libraries(MaCh3 INTERFACE MCMC SamplePDF Covariance Splines Manager MaCh3CompilerOptions Plotting spdlog::spdlog)
-else()
-  target_link_libraries(MaCh3 INTERFACE MCMC SamplePDF Covariance Splines Manager MaCh3CompilerOptions MaCh3GPUCompilerOptions Plotting spdlog::spdlog)
+add_library(MaCh3 INTERFACE)
+find_package(OpenMP)
+if(OpenMP_CXX_FOUND)
+    target_link_libraries(MaCh3 INTERFACE OpenMP::OpenMP_CXX)
 endif()
+target_link_libraries(MaCh3 INTERFACE MCMC OscClass SamplePDF Covariance Splines Manager MaCh3CompilerOptions Plotting)
 set_target_properties(MaCh3 PROPERTIES EXPORT_NAME All)
 
 install(TARGETS MaCh3
