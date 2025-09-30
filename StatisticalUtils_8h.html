@@ -30,7 +30,7 @@ MathJax.Hub.Config({
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="mach3logo_small.png"/></td>
   <td id="projectalign">
-   <div id="projectname">MaCh3<span id="projectnumber">&#160;2.2.2</span>
+   <div id="projectname">MaCh3<span id="projectnumber">&#160;2.2.3</span>
    </div>
    <div id="projectbrief">Reference Guide</div>
   </td>
@@ -121,7 +121,7 @@ This graph shows which files directly or indirectly include this file:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:aac0e253784ed2f2a3258d68df22a2568"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="StatisticalUtils_8h.html#aac0e253784ed2f2a3258d68df22a2568">GetJeffreysScale</a> (const double BayesFactor)</td></tr>
-<tr class="memdesc:aac0e253784ed2f2a3258d68df22a2568"><td class="mdescLeft">&#160;</td><td class="mdescRight">KS: Following H. Jeffreys <a class="el" href="citelist.html#CITEREF_jeffreys1998theory">[17]</a>.  <br /></td></tr>
+<tr class="memdesc:aac0e253784ed2f2a3258d68df22a2568"><td class="mdescLeft">&#160;</td><td class="mdescRight">KS: Following H. Jeffreys <a class="el" href="citelist.html#CITEREF_jeffreys1998theory">[19]</a>.  <br /></td></tr>
 <tr class="separator:aac0e253784ed2f2a3258d68df22a2568"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acf403b05be9baa719893db7449e833c7"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="StatisticalUtils_8h.html#acf403b05be9baa719893db7449e833c7">GetDunneKaboth</a> (const double BayesFactor)</td></tr>
 <tr class="memdesc:acf403b05be9baa719893db7449e833c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">KS: Based on Table 1 in <a href="https://www.t2k.org/docs/technotes/435">https://www.t2k.org/docs/technotes/435</a>.  <br /></td></tr>
@@ -133,7 +133,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:a3dbcf2e503dd81c1c26f063a7e6b3362"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Bayesian Information Criterion (BIC) or Schwarz information criterion (also SIC, SBC, SBIC)  <br /></td></tr>
 <tr class="separator:a3dbcf2e503dd81c1c26f063a7e6b3362"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaf02981e45bb7adc146cebb4d82c6f36"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="StatisticalUtils_8h.html#aaf02981e45bb7adc146cebb4d82c6f36">GetNeffective</a> (const int N1, const int N2)</td></tr>
-<tr class="memdesc:aaf02981e45bb7adc146cebb4d82c6f36"><td class="mdescLeft">&#160;</td><td class="mdescRight">KS: See 14.3.10 in Numerical Recipes in C <a class="el" href="citelist.html#CITEREF_press1992numerical">[23]</a>.  <br /></td></tr>
+<tr class="memdesc:aaf02981e45bb7adc146cebb4d82c6f36"><td class="mdescLeft">&#160;</td><td class="mdescRight">KS: See 14.3.10 in Numerical Recipes in C <a class="el" href="citelist.html#CITEREF_press1992numerical">[26]</a>.  <br /></td></tr>
 <tr class="separator:aaf02981e45bb7adc146cebb4d82c6f36"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adba5abb16555092305a8b459f94a24c1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="StatisticalUtils_8h.html#adba5abb16555092305a8b459f94a24c1">CheckBonferoniCorrectedpValue</a> (const std::vector&lt; std::string &gt; &amp;SampleNameVec, const std::vector&lt; double &gt; &amp;PValVec, const double Threshold=0.05)</td></tr>
 <tr class="memdesc:adba5abb16555092305a8b459f94a24c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">KS: For more see <a href="https://www.t2k.org/docs/technotes/429/TN429_v8#page=63">https://www.t2k.org/docs/technotes/429/TN429_v8#page=63</a>.  <br /></td></tr>
@@ -147,7 +147,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:afecd84c56d6546271c4547192aae31af"><td class="mdescLeft">&#160;</td><td class="mdescRight">KS: Calculate Beta parameter which will be different based on specified test statistic.  <br /></td></tr>
 <tr class="separator:afecd84c56d6546271c4547192aae31af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a34d5232bfb12e29ec9d63acaa8744b58"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="StatisticalUtils_8h.html#a34d5232bfb12e29ec9d63acaa8744b58">GetSubOptimality</a> (const std::vector&lt; double &gt; &amp;EigenValues, const int TotalTarameters)</td></tr>
-<tr class="memdesc:a34d5232bfb12e29ec9d63acaa8744b58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Based on <a class="el" href="citelist.html#CITEREF_roberts2009adaptive">[24]</a>.  <br /></td></tr>
+<tr class="memdesc:a34d5232bfb12e29ec9d63acaa8744b58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Based on <a class="el" href="citelist.html#CITEREF_roberts2009adaptive">[27]</a>.  <br /></td></tr>
 <tr class="separator:a34d5232bfb12e29ec9d63acaa8744b58"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab4dc9e4455015e55031e2cc8a076349d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="StatisticalUtils_8h.html#ab4dc9e4455015e55031e2cc8a076349d">GetArithmetic</a> (TH1D *const hist, double &amp;<a class="el" href="RHat_8cpp.html#ab7d224b5fffa9367046f2976bb4972d1">Mean</a>, double &amp;Error)</td></tr>
 <tr class="memdesc:ab4dc9e4455015e55031e2cc8a076349d"><td class="mdescLeft">&#160;</td><td class="mdescRight">CW: Get Arithmetic mean from posterior.  <br /></td></tr>
@@ -278,9 +278,9 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">  123</span>  }</div>
 <div class="line"><span class="lineno">  124</span>  <a class="code hl_define" href="MaCh3Logger_8h.html#a95fa4dffc648e4c5536c9292c2bdcac3">MACH3LOG_INFO</a>(<span class="stringliteral">&quot;&quot;</span>);</div>
 <div class="line"><span class="lineno">  125</span>}</div>
-<div class="ttc" id="aMaCh3Logger_8h_html_a61052119a625282d0ec6d4a97adf3ee2"><div class="ttname"><a href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a></div><div class="ttdeci">#define MACH3LOG_ERROR</div><div class="ttdef"><b>Definition:</b> <a href="MaCh3Logger_8h_source.html#l00025">MaCh3Logger.h:25</a></div></div>
-<div class="ttc" id="aMaCh3Logger_8h_html_a95fa4dffc648e4c5536c9292c2bdcac3"><div class="ttname"><a href="MaCh3Logger_8h.html#a95fa4dffc648e4c5536c9292c2bdcac3">MACH3LOG_INFO</a></div><div class="ttdeci">#define MACH3LOG_INFO</div><div class="ttdef"><b>Definition:</b> <a href="MaCh3Logger_8h_source.html#l00023">MaCh3Logger.h:23</a></div></div>
-<div class="ttc" id="aMaCh3Logger_8h_html_ad5b2eb6377721e3ac95def22c2386bb1"><div class="ttname"><a href="MaCh3Logger_8h.html#ad5b2eb6377721e3ac95def22c2386bb1">MACH3LOG_WARN</a></div><div class="ttdeci">#define MACH3LOG_WARN</div><div class="ttdef"><b>Definition:</b> <a href="MaCh3Logger_8h_source.html#l00024">MaCh3Logger.h:24</a></div></div>
+<div class="ttc" id="aMaCh3Logger_8h_html_a61052119a625282d0ec6d4a97adf3ee2"><div class="ttname"><a href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a></div><div class="ttdeci">#define MACH3LOG_ERROR</div><div class="ttdef"><b>Definition:</b> <a href="MaCh3Logger_8h_source.html#l00027">MaCh3Logger.h:27</a></div></div>
+<div class="ttc" id="aMaCh3Logger_8h_html_a95fa4dffc648e4c5536c9292c2bdcac3"><div class="ttname"><a href="MaCh3Logger_8h.html#a95fa4dffc648e4c5536c9292c2bdcac3">MACH3LOG_INFO</a></div><div class="ttdeci">#define MACH3LOG_INFO</div><div class="ttdef"><b>Definition:</b> <a href="MaCh3Logger_8h_source.html#l00025">MaCh3Logger.h:25</a></div></div>
+<div class="ttc" id="aMaCh3Logger_8h_html_ad5b2eb6377721e3ac95def22c2386bb1"><div class="ttname"><a href="MaCh3Logger_8h.html#ad5b2eb6377721e3ac95def22c2386bb1">MACH3LOG_WARN</a></div><div class="ttdeci">#define MACH3LOG_WARN</div><div class="ttdef"><b>Definition:</b> <a href="MaCh3Logger_8h_source.html#l00026">MaCh3Logger.h:26</a></div></div>
 <div class="ttc" id="aclassMaCh3Exception_html"><div class="ttname"><a href="classMaCh3Exception.html">MaCh3Exception</a></div><div class="ttdoc">Custom exception class for MaCh3 errors.</div><div class="ttdef"><b>Definition:</b> <a href="MaCh3Exception_8h_source.html#l00013">MaCh3Exception.h:13</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -615,7 +615,7 @@ Functions</h2></td></tr>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="StatisticalUtils_8cpp_source.html#l00154">154</a> of file <a class="el" href="StatisticalUtils_8cpp_source.html">StatisticalUtils.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  154</span>                                                                                                     {</div>
+<div class="fragment"><div class="line"><span class="lineno">  154</span>                                                                                                           {</div>
 <div class="line"><span class="lineno">  155</span><span class="comment">// ****************</span></div>
 <div class="line"><span class="lineno">  156</span>  <span class="keywordtype">double</span> Beta = 0.0;</div>
 <div class="line"><span class="lineno">  157</span> </div>
@@ -731,6 +731,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">hist</td><td>histograms based on which we calculate credible interval </td></tr>
+    <tr><td class="paramname">hpost_copy</td><td>To make code thread safe we use copy of histograms which user has to pass </td></tr>
     <tr><td class="paramname">coverage</td><td>What is defined coverage, by default 0.6827 (1 sigma) </td></tr>
   </table>
   </dd>
@@ -831,6 +832,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">hist</td><td>histograms based on which we calculate credible interval </td></tr>
+    <tr><td class="paramname">hpost_copy</td><td>To make code thread safe we use copy of histograms which user has to pass </td></tr>
     <tr><td class="paramname">CredibleInSigmas</td><td>Whether interval is in sigmas or percentage </td></tr>
     <tr><td class="paramname">coverage</td><td>What is defined coverage, by default 0.6827 (1 sigma) </td></tr>
   </table>
@@ -1284,7 +1286,7 @@ Functions</h2></td></tr>
 <p>Interquartile Range (IQR) </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">hist</td><td>histograms from which we IQR </td></tr>
+    <tr><td class="paramname">Hist</td><td>histograms from which we IQR </td></tr>
   </table>
   </dd>
 </dl>
@@ -1320,7 +1322,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>KS: Following H. Jeffreys <a class="el" href="citelist.html#CITEREF_jeffreys1998theory">[17]</a>. </p>
+<p>KS: Following H. Jeffreys <a class="el" href="citelist.html#CITEREF_jeffreys1998theory">[19]</a>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">BayesFactor</td><td>Obtained value of Bayes factor </td></tr>
@@ -1450,7 +1452,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>KS: See 14.3.10 in Numerical Recipes in C <a class="el" href="citelist.html#CITEREF_press1992numerical">[23]</a>. </p>
+<p>KS: See 14.3.10 in Numerical Recipes in C <a class="el" href="citelist.html#CITEREF_press1992numerical">[26]</a>. </p>
 
 <p class="definition">Definition at line <a class="el" href="StatisticalUtils_8cpp_source.html#l00081">81</a> of file <a class="el" href="StatisticalUtils_8cpp_source.html">StatisticalUtils.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   81</span>                                                 {</div>
@@ -1612,10 +1614,11 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Based on <a class="el" href="citelist.html#CITEREF_roberts2009adaptive">[24]</a>. </p>
+<p>Based on <a class="el" href="citelist.html#CITEREF_roberts2009adaptive">[27]</a>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">EigenValues</td><td>Eigen values of covariance matrix </td></tr>
+    <tr><td class="paramname">TotalTarameters</td><td>Total number of parameters needed to correctly calculate suboptimality </td></tr>
   </table>
   </dd>
 </dl>
@@ -1721,7 +1724,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">FilePath</td><td>Path to MCMC chain you want to thin </td></tr>
-    <tr><td class="paramname">ThinningCut</td><td>every which entry you want to thin <a class="el" href="citelist.html#CITEREF_2011ThinningMCMC">[19]</a> </td></tr>
+    <tr><td class="paramname">ThinningCut</td><td>every which entry you want to thin <a class="el" href="citelist.html#CITEREF_2011ThinningMCMC">[21]</a> </td></tr>
   </table>
   </dd>
 </dl>
@@ -1772,14 +1775,46 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">  528</span>  <a class="code hl_define" href="MaCh3Logger_8h.html#a95fa4dffc648e4c5536c9292c2bdcac3">MACH3LOG_INFO</a>(<span class="stringliteral">&quot;Thinned TTree saved and overwrote original in: {}&quot;</span>, TempFilePath);</div>
 <div class="line"><span class="lineno">  529</span>}</div>
 <div class="ttc" id="anamespaceM3_html_a87841bdbf0e0a2a733d9e4ca499f820d"><div class="ttname"><a href="namespaceM3.html#a87841bdbf0e0a2a733d9e4ca499f820d">M3::Open</a></div><div class="ttdeci">TFile * Open(const std::string &amp;Name, const std::string &amp;Type, const std::string &amp;File, const int Line)</div><div class="ttdoc">Opens a ROOT file with the given name and mode.</div><div class="ttdef"><b>Definition:</b> <a href="HistogramUtils_8cpp_source.html#l00610">HistogramUtils.cpp:610</a></div></div>
-<div class="ttc" id="anamespaceMaCh3Utils_html_a4c8bdeb1d34606aed192e9f1311a72f5"><div class="ttname"><a href="namespaceMaCh3Utils.html#a4c8bdeb1d34606aed192e9f1311a72f5">MaCh3Utils::PrintProgressBar</a></div><div class="ttdeci">void PrintProgressBar(const Long64_t Done, const Long64_t All)</div><div class="ttdoc">KS: Simply print progress bar.</div><div class="ttdef"><b>Definition:</b> <a href="Monitor_8cpp_source.html#l00212">Monitor.cpp:212</a></div></div>
+<div class="ttc" id="anamespaceMaCh3Utils_html_a4c8bdeb1d34606aed192e9f1311a72f5"><div class="ttname"><a href="namespaceMaCh3Utils.html#a4c8bdeb1d34606aed192e9f1311a72f5">MaCh3Utils::PrintProgressBar</a></div><div class="ttdeci">void PrintProgressBar(const Long64_t Done, const Long64_t All)</div><div class="ttdoc">KS: Simply print progress bar.</div><div class="ttdef"><b>Definition:</b> <a href="Monitor_8cpp_source.html#l00213">Monitor.cpp:213</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->
-<!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6
-</small></address>
-</body>
-</html>
+<!-- Footer for MaCh3 Doxygen documentation -->
+<footer class="mach3-footer" style="text-align: center;">
+    <div style="margin-bottom: 15px;">
+        <span style="font-weight: bold;">The MaCh3 Collaboration</span>
+    </div>
+    <!-- Dropdown to jump between doc versions -->
+    <div style="margin-bottom: 10px;">
+        <span>Select Software Version: </span>
+        <select id="versionSelector" onchange="window.location.href=this.value" style="padding: 5px; border-radius: 4px; border: 1px solid #ccc;">
+            <option value="">-- Select --</option>
+            <option value="https://mach3-software.github.io/MaCh3/">develop</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v2.2.0/index.html">v2.2.0</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v2.1.0/index.html">v2.1.0</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v2.0.0/index.html">v2.0.0</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v1.5.0/index.html">v1.5.0</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v1.4.0/index.html">v1.4.0</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v1.3.0/index.html">v1.3.0</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v1.2.0/index.html">v1.2.0</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v1.1.0/index.html">v1.1.0</option>
+        </select>
+    </div>
+    <!-- Footer info about doxygen -->
+    <div style="font-size: 0.9em; color: #666; margin-top: 10px;">
+        Documentation generated with
+        <a href="https://www.doxygen.nl/" target="_blank" style="color: #666;">Doxygen</a>
+        <span id="doxygenVersion"></span>
+    </div>
+    <!-- Now grab doxygen version from metadata -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const meta = document.querySelector('meta[name="generator"]');
+        if (meta) {
+            const version = meta.getAttribute("content").replace("Doxygen ", "");
+            document.getElementById("doxygenVersion").textContent = " " + version;
+        }
+    });
+    </script>
+</footer>

@@ -30,7 +30,7 @@ MathJax.Hub.Config({
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="mach3logo_small.png"/></td>
   <td id="projectalign">
-   <div id="projectname">MaCh3<span id="projectnumber">&#160;2.2.2</span>
+   <div id="projectname">MaCh3<span id="projectnumber">&#160;2.2.3</span>
    </div>
    <div id="projectbrief">Reference Guide</div>
   </td>
@@ -191,7 +191,7 @@ $(function() {
 <div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    <span class="keyword">auto</span> likelihood = GetFromManager&lt;std::string&gt;(<a class="code hl_variable" href="classmanager.html#a7519c9ab5670ae939d18485d31057b46">config</a>[<span class="stringliteral">&quot;LikelihoodOptions&quot;</span>][<span class="stringliteral">&quot;TestStatistic&quot;</span>], <span class="stringliteral">&quot;Barlow-Beeston&quot;</span>, __FILE__ , __LINE__);</div>
 <div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span> </div>
 <div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; <a class="code hl_enumvalue" href="SampleStructs_8h.html#a960da89e33ac45a56f7bbfac3068dc67a1459dbcc0f1b68b266cf0ddc37c34aee">kNTestStatistics</a>; i++) {</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>      <span class="keywordflow">if</span>(likelihood == <a class="code hl_function" href="SampleStructs_8h.html#afe33f23691e6b5e3e0f5ab97aaeb7726">TestStatistic_ToString</a>(<a class="code hl_enumeration" href="SampleStructs_8h.html#a960da89e33ac45a56f7bbfac3068dc67">TestStatistic</a>(i))) {</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>      <span class="keywordflow">if</span>(likelihood == <a class="code hl_function" href="SampleStructs_8h.html#a300e6cbc6c664b9ae8462c637732cf61">TestStatistic_ToString</a>(<a class="code hl_enumeration" href="SampleStructs_8h.html#a960da89e33ac45a56f7bbfac3068dc67">TestStatistic</a>(i))) {</div>
 <div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        mc_stat_llh = <a class="code hl_enumeration" href="SampleStructs_8h.html#a960da89e33ac45a56f7bbfac3068dc67">TestStatistic</a>(i);</div>
 <div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        <span class="keywordflow">break</span>;</div>
 <div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>      }</div>
@@ -202,33 +202,33 @@ $(function() {
 <div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>      <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;You gave {} and I only support:&quot;</span>, likelihood);</div>
 <div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>      <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; <a class="code hl_enumvalue" href="SampleStructs_8h.html#a960da89e33ac45a56f7bbfac3068dc67a1459dbcc0f1b68b266cf0ddc37c34aee">kNTestStatistics</a>; i++)</div>
 <div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>      {</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>        <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;{}&quot;</span>, <a class="code hl_function" href="SampleStructs_8h.html#afe33f23691e6b5e3e0f5ab97aaeb7726">TestStatistic_ToString</a>(<a class="code hl_enumeration" href="SampleStructs_8h.html#a960da89e33ac45a56f7bbfac3068dc67">TestStatistic</a>(i)));</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>        <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;{}&quot;</span>, <a class="code hl_function" href="SampleStructs_8h.html#a300e6cbc6c664b9ae8462c637732cf61">TestStatistic_ToString</a>(<a class="code hl_enumeration" href="SampleStructs_8h.html#a960da89e33ac45a56f7bbfac3068dc67">TestStatistic</a>(i)));</div>
 <div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>      }</div>
 <div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>      <span class="keywordflow">throw</span> <a class="code hl_class" href="classMaCh3Exception.html">MaCh3Exception</a>(__FILE__ , __LINE__ );</div>
 <div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    }</div>
 <div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>  } <span class="keywordflow">else</span> {</div>
 <div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    <a class="code hl_define" href="MaCh3Logger_8h.html#ad5b2eb6377721e3ac95def22c2386bb1">MACH3LOG_WARN</a>(<span class="stringliteral">&quot;Didn&#39;t find a TestStatistic specified&quot;</span>);</div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    <a class="code hl_define" href="MaCh3Logger_8h.html#ad5b2eb6377721e3ac95def22c2386bb1">MACH3LOG_WARN</a>(<span class="stringliteral">&quot;Defaulting to using a {} likelihood&quot;</span>, <a class="code hl_function" href="SampleStructs_8h.html#afe33f23691e6b5e3e0f5ab97aaeb7726">TestStatistic_ToString</a>(<a class="code hl_enumvalue" href="SampleStructs_8h.html#a960da89e33ac45a56f7bbfac3068dc67a82f43d91f1eda213c4b5c486672a32a5">kPoisson</a>));</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    <a class="code hl_define" href="MaCh3Logger_8h.html#ad5b2eb6377721e3ac95def22c2386bb1">MACH3LOG_WARN</a>(<span class="stringliteral">&quot;Defaulting to using a {} likelihood&quot;</span>, <a class="code hl_function" href="SampleStructs_8h.html#a300e6cbc6c664b9ae8462c637732cf61">TestStatistic_ToString</a>(<a class="code hl_enumvalue" href="SampleStructs_8h.html#a960da89e33ac45a56f7bbfac3068dc67a82f43d91f1eda213c4b5c486672a32a5">kPoisson</a>));</div>
 <div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    mc_stat_llh = <a class="code hl_enumvalue" href="SampleStructs_8h.html#a960da89e33ac45a56f7bbfac3068dc67a82f43d91f1eda213c4b5c486672a32a5">kPoisson</a>;</div>
 <div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>  }</div>
 <div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>  <span class="keywordflow">return</span> mc_stat_llh;</div>
 <div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>}</div>
 <div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span> </div>
 <div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span> </div>
-<div class="ttc" id="aCore_8h_html_a46b8fa28114cf68de4549061568b5ade"><div class="ttname"><a href="Core_8h.html#a46b8fa28114cf68de4549061568b5ade">_MaCh3_Safe_Include_Start_</a></div><div class="ttdeci">#define _MaCh3_Safe_Include_Start_</div><div class="ttdoc">KS: Avoiding warning checking for headers.</div><div class="ttdef"><b>Definition:</b> <a href="Core_8h_source.html#l00106">Core.h:106</a></div></div>
-<div class="ttc" id="aCore_8h_html_a91209a17295738b34b124b79faa68a1b"><div class="ttname"><a href="Core_8h.html#a91209a17295738b34b124b79faa68a1b">_MaCh3_Safe_Include_End_</a></div><div class="ttdeci">#define _MaCh3_Safe_Include_End_</div><div class="ttdoc">KS: Restore warning checking after including external headers.</div><div class="ttdef"><b>Definition:</b> <a href="Core_8h_source.html#l00117">Core.h:117</a></div></div>
-<div class="ttc" id="aMaCh3Logger_8h_html_a61052119a625282d0ec6d4a97adf3ee2"><div class="ttname"><a href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a></div><div class="ttdeci">#define MACH3LOG_ERROR</div><div class="ttdef"><b>Definition:</b> <a href="MaCh3Logger_8h_source.html#l00025">MaCh3Logger.h:25</a></div></div>
-<div class="ttc" id="aMaCh3Logger_8h_html_a95fa4dffc648e4c5536c9292c2bdcac3"><div class="ttname"><a href="MaCh3Logger_8h.html#a95fa4dffc648e4c5536c9292c2bdcac3">MACH3LOG_INFO</a></div><div class="ttdeci">#define MACH3LOG_INFO</div><div class="ttdef"><b>Definition:</b> <a href="MaCh3Logger_8h_source.html#l00023">MaCh3Logger.h:23</a></div></div>
-<div class="ttc" id="aMaCh3Logger_8h_html_aa603c55ea73cd86d1994901227883e1e"><div class="ttname"><a href="MaCh3Logger_8h.html#aa603c55ea73cd86d1994901227883e1e">SetMaCh3LoggerFormat</a></div><div class="ttdeci">void SetMaCh3LoggerFormat()</div><div class="ttdoc">Set messaging format of the logger.</div><div class="ttdef"><b>Definition:</b> <a href="MaCh3Logger_8h_source.html#l00030">MaCh3Logger.h:30</a></div></div>
-<div class="ttc" id="aMaCh3Logger_8h_html_ad5b2eb6377721e3ac95def22c2386bb1"><div class="ttname"><a href="MaCh3Logger_8h.html#ad5b2eb6377721e3ac95def22c2386bb1">MACH3LOG_WARN</a></div><div class="ttdeci">#define MACH3LOG_WARN</div><div class="ttdef"><b>Definition:</b> <a href="MaCh3Logger_8h_source.html#l00024">MaCh3Logger.h:24</a></div></div>
+<div class="ttc" id="aCore_8h_html_a46b8fa28114cf68de4549061568b5ade"><div class="ttname"><a href="Core_8h.html#a46b8fa28114cf68de4549061568b5ade">_MaCh3_Safe_Include_Start_</a></div><div class="ttdeci">#define _MaCh3_Safe_Include_Start_</div><div class="ttdoc">KS: Avoiding warning checking for headers.</div><div class="ttdef"><b>Definition:</b> <a href="Core_8h_source.html#l00109">Core.h:109</a></div></div>
+<div class="ttc" id="aCore_8h_html_a91209a17295738b34b124b79faa68a1b"><div class="ttname"><a href="Core_8h.html#a91209a17295738b34b124b79faa68a1b">_MaCh3_Safe_Include_End_</a></div><div class="ttdeci">#define _MaCh3_Safe_Include_End_</div><div class="ttdoc">KS: Restore warning checking after including external headers.</div><div class="ttdef"><b>Definition:</b> <a href="Core_8h_source.html#l00120">Core.h:120</a></div></div>
+<div class="ttc" id="aMaCh3Logger_8h_html_a61052119a625282d0ec6d4a97adf3ee2"><div class="ttname"><a href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a></div><div class="ttdeci">#define MACH3LOG_ERROR</div><div class="ttdef"><b>Definition:</b> <a href="MaCh3Logger_8h_source.html#l00027">MaCh3Logger.h:27</a></div></div>
+<div class="ttc" id="aMaCh3Logger_8h_html_a95fa4dffc648e4c5536c9292c2bdcac3"><div class="ttname"><a href="MaCh3Logger_8h.html#a95fa4dffc648e4c5536c9292c2bdcac3">MACH3LOG_INFO</a></div><div class="ttdeci">#define MACH3LOG_INFO</div><div class="ttdef"><b>Definition:</b> <a href="MaCh3Logger_8h_source.html#l00025">MaCh3Logger.h:25</a></div></div>
+<div class="ttc" id="aMaCh3Logger_8h_html_aa603c55ea73cd86d1994901227883e1e"><div class="ttname"><a href="MaCh3Logger_8h.html#aa603c55ea73cd86d1994901227883e1e">SetMaCh3LoggerFormat</a></div><div class="ttdeci">void SetMaCh3LoggerFormat()</div><div class="ttdoc">Set messaging format of the logger.</div><div class="ttdef"><b>Definition:</b> <a href="MaCh3Logger_8h_source.html#l00051">MaCh3Logger.h:51</a></div></div>
+<div class="ttc" id="aMaCh3Logger_8h_html_ad5b2eb6377721e3ac95def22c2386bb1"><div class="ttname"><a href="MaCh3Logger_8h.html#ad5b2eb6377721e3ac95def22c2386bb1">MACH3LOG_WARN</a></div><div class="ttdeci">#define MACH3LOG_WARN</div><div class="ttdef"><b>Definition:</b> <a href="MaCh3Logger_8h_source.html#l00026">MaCh3Logger.h:26</a></div></div>
 <div class="ttc" id="aManager_8h_html"><div class="ttname"><a href="Manager_8h.html">Manager.h</a></div></div>
-<div class="ttc" id="aProcessMCMC_8cpp_html_a13056efd080ab16304b6f7be0ebf0a61"><div class="ttname"><a href="ProcessMCMC_8cpp.html#a13056efd080ab16304b6f7be0ebf0a61">config</a></div><div class="ttdeci">std::string config</div><div class="ttdef"><b>Definition:</b> <a href="ProcessMCMC_8cpp_source.html#l00030">ProcessMCMC.cpp:30</a></div></div>
+<div class="ttc" id="aProcessMCMC_8cpp_html_a13056efd080ab16304b6f7be0ebf0a61"><div class="ttname"><a href="ProcessMCMC_8cpp.html#a13056efd080ab16304b6f7be0ebf0a61">config</a></div><div class="ttdeci">std::string config</div><div class="ttdef"><b>Definition:</b> <a href="ProcessMCMC_8cpp_source.html#l00029">ProcessMCMC.cpp:29</a></div></div>
+<div class="ttc" id="aSampleStructs_8h_html_a300e6cbc6c664b9ae8462c637732cf61"><div class="ttname"><a href="SampleStructs_8h.html#a300e6cbc6c664b9ae8462c637732cf61">TestStatistic_ToString</a></div><div class="ttdeci">std::string TestStatistic_ToString(const TestStatistic TestStat)</div><div class="ttdoc">Convert a LLH type to a string.</div><div class="ttdef"><b>Definition:</b> <a href="SampleStructs_8h_source.html#l00123">SampleStructs.h:123</a></div></div>
 <div class="ttc" id="aSampleStructs_8h_html_a960da89e33ac45a56f7bbfac3068dc67"><div class="ttname"><a href="SampleStructs_8h.html#a960da89e33ac45a56f7bbfac3068dc67">TestStatistic</a></div><div class="ttdeci">TestStatistic</div><div class="ttdoc">Make an enum of the test statistic that we're using.</div><div class="ttdef"><b>Definition:</b> <a href="SampleStructs_8h_source.html#l00112">SampleStructs.h:112</a></div></div>
 <div class="ttc" id="aSampleStructs_8h_html_a960da89e33ac45a56f7bbfac3068dc67a1459dbcc0f1b68b266cf0ddc37c34aee"><div class="ttname"><a href="SampleStructs_8h.html#a960da89e33ac45a56f7bbfac3068dc67a1459dbcc0f1b68b266cf0ddc37c34aee">kNTestStatistics</a></div><div class="ttdeci">@ kNTestStatistics</div><div class="ttdoc">Number of test statistics.</div><div class="ttdef"><b>Definition:</b> <a href="SampleStructs_8h_source.html#l00119">SampleStructs.h:118</a></div></div>
 <div class="ttc" id="aSampleStructs_8h_html_a960da89e33ac45a56f7bbfac3068dc67a82f43d91f1eda213c4b5c486672a32a5"><div class="ttname"><a href="SampleStructs_8h.html#a960da89e33ac45a56f7bbfac3068dc67a82f43d91f1eda213c4b5c486672a32a5">kPoisson</a></div><div class="ttdeci">@ kPoisson</div><div class="ttdoc">Standard Poisson likelihood .</div><div class="ttdef"><b>Definition:</b> <a href="SampleStructs_8h_source.html#l00113">SampleStructs.h:113</a></div></div>
-<div class="ttc" id="aSampleStructs_8h_html_afe33f23691e6b5e3e0f5ab97aaeb7726"><div class="ttname"><a href="SampleStructs_8h.html#afe33f23691e6b5e3e0f5ab97aaeb7726">TestStatistic_ToString</a></div><div class="ttdeci">std::string TestStatistic_ToString(TestStatistic i)</div><div class="ttdoc">Convert a LLH type to a string.</div><div class="ttdef"><b>Definition:</b> <a href="SampleStructs_8h_source.html#l00123">SampleStructs.h:123</a></div></div>
-<div class="ttc" id="aYamlHelper_8h_html_a2d4f3247b6e13ef8c127ff66e699d3cb"><div class="ttname"><a href="YamlHelper_8h.html#a2d4f3247b6e13ef8c127ff66e699d3cb">YAMLtoTMacro</a></div><div class="ttdeci">TMacro YAMLtoTMacro(const YAML::Node &amp;yaml_node, const std::string &amp;name)</div><div class="ttdoc">Convert a YAML node to a ROOT TMacro object.</div><div class="ttdef"><b>Definition:</b> <a href="YamlHelper_8h_source.html#l00161">YamlHelper.h:161</a></div></div>
-<div class="ttc" id="aYamlHelper_8h_html_ad802d5a5acdc16a796b21af74f6f5f59"><div class="ttname"><a href="YamlHelper_8h.html#ad802d5a5acdc16a796b21af74f6f5f59">M3OpenConfig</a></div><div class="ttdeci">#define M3OpenConfig(filename)</div><div class="ttdoc">Macro to simplify calling LoadYaml with file and line info.</div><div class="ttdef"><b>Definition:</b> <a href="YamlHelper_8h_source.html#l00560">YamlHelper.h:560</a></div></div>
+<div class="ttc" id="aYamlHelper_8h_html_a2d4f3247b6e13ef8c127ff66e699d3cb"><div class="ttname"><a href="YamlHelper_8h.html#a2d4f3247b6e13ef8c127ff66e699d3cb">YAMLtoTMacro</a></div><div class="ttdeci">TMacro YAMLtoTMacro(const YAML::Node &amp;yaml_node, const std::string &amp;name)</div><div class="ttdoc">Convert a YAML node to a ROOT TMacro object.</div><div class="ttdef"><b>Definition:</b> <a href="YamlHelper_8h_source.html#l00162">YamlHelper.h:162</a></div></div>
+<div class="ttc" id="aYamlHelper_8h_html_ad802d5a5acdc16a796b21af74f6f5f59"><div class="ttname"><a href="YamlHelper_8h.html#ad802d5a5acdc16a796b21af74f6f5f59">M3OpenConfig</a></div><div class="ttdeci">#define M3OpenConfig(filename)</div><div class="ttdoc">Macro to simplify calling LoadYaml with file and line info.</div><div class="ttdef"><b>Definition:</b> <a href="YamlHelper_8h_source.html#l00561">YamlHelper.h:561</a></div></div>
 <div class="ttc" id="aclassMaCh3Exception_html"><div class="ttname"><a href="classMaCh3Exception.html">MaCh3Exception</a></div><div class="ttdoc">Custom exception class for MaCh3 errors.</div><div class="ttdef"><b>Definition:</b> <a href="MaCh3Exception_8h_source.html#l00013">MaCh3Exception.h:13</a></div></div>
 <div class="ttc" id="aclassmanager_html_a0990af01a220479a19ead5d0231aaf94"><div class="ttname"><a href="classmanager.html#a0990af01a220479a19ead5d0231aaf94">manager::SaveSettings</a></div><div class="ttdeci">void SaveSettings(TFile *const OutputFile)</div><div class="ttdoc">Add manager useful information's to TFile, in most cases to Fitter.</div><div class="ttdef"><b>Definition:</b> <a href="Manager_8cpp_source.html#l00049">Manager.cpp:49</a></div></div>
 <div class="ttc" id="aclassmanager_html_a1004958d1431ff607c08fa795b5953b7"><div class="ttname"><a href="classmanager.html#a1004958d1431ff607c08fa795b5953b7">manager::FileName</a></div><div class="ttdeci">std::string FileName</div><div class="ttdoc">The name of the configuration file.</div><div class="ttdef"><b>Definition:</b> <a href="Manager_8h_source.html#l00062">Manager.h:62</a></div></div>
@@ -238,12 +238,44 @@ $(function() {
 <div class="ttc" id="aclassmanager_html_a7519c9ab5670ae939d18485d31057b46"><div class="ttname"><a href="classmanager.html#a7519c9ab5670ae939d18485d31057b46">manager::config</a></div><div class="ttdeci">YAML::Node config</div><div class="ttdoc">The YAML node containing the configuration data.</div><div class="ttdef"><b>Definition:</b> <a href="Manager_8h_source.html#l00060">Manager.h:60</a></div></div>
 <div class="ttc" id="aclassmanager_html_ab8bdfebb3f4956f11f4dafbda5b1dcd0"><div class="ttname"><a href="classmanager.html#ab8bdfebb3f4956f11f4dafbda5b1dcd0">manager::Initialise</a></div><div class="ttdeci">void Initialise()</div><div class="ttdoc">Common inialiser for both constructors.</div><div class="ttdef"><b>Definition:</b> <a href="Manager_8cpp_source.html#l00027">Manager.cpp:27</a></div></div>
 <div class="ttc" id="aclassmanager_html_ad5f9fad9ba7b6e4ff0d65834a478bfc2"><div class="ttname"><a href="classmanager.html#ad5f9fad9ba7b6e4ff0d65834a478bfc2">manager::~manager</a></div><div class="ttdeci">virtual ~manager()</div><div class="ttdoc">Destroys the manager object.</div><div class="ttdef"><b>Definition:</b> <a href="Manager_8cpp_source.html#l00041">Manager.cpp:41</a></div></div>
-<div class="ttc" id="anamespaceMaCh3Utils_html_aaf39f873ebf93550a417418e583ebcf8"><div class="ttname"><a href="namespaceMaCh3Utils.html#aaf39f873ebf93550a417418e583ebcf8">MaCh3Utils::PrintConfig</a></div><div class="ttdeci">void PrintConfig(const YAML::Node &amp;node)</div><div class="ttdoc">KS: Print Yaml config using logger.</div><div class="ttdef"><b>Definition:</b> <a href="Monitor_8cpp_source.html#l00294">Monitor.cpp:294</a></div></div>
-<div class="ttc" id="anamespaceMaCh3Utils_html_ac6f4a3b6a7749967ff9a011469352f6c"><div class="ttname"><a href="namespaceMaCh3Utils.html#ac6f4a3b6a7749967ff9a011469352f6c">MaCh3Utils::MaCh3Welcome</a></div><div class="ttdeci">void MaCh3Welcome()</div><div class="ttdoc">KS: Prints welcome message with MaCh3 logo.</div><div class="ttdef"><b>Definition:</b> <a href="Monitor_8cpp_source.html#l00011">Monitor.cpp:11</a></div></div>
+<div class="ttc" id="anamespaceMaCh3Utils_html_aaf39f873ebf93550a417418e583ebcf8"><div class="ttname"><a href="namespaceMaCh3Utils.html#aaf39f873ebf93550a417418e583ebcf8">MaCh3Utils::PrintConfig</a></div><div class="ttdeci">void PrintConfig(const YAML::Node &amp;node)</div><div class="ttdoc">KS: Print Yaml config using logger.</div><div class="ttdef"><b>Definition:</b> <a href="Monitor_8cpp_source.html#l00295">Monitor.cpp:295</a></div></div>
+<div class="ttc" id="anamespaceMaCh3Utils_html_ac6f4a3b6a7749967ff9a011469352f6c"><div class="ttname"><a href="namespaceMaCh3Utils.html#ac6f4a3b6a7749967ff9a011469352f6c">MaCh3Utils::MaCh3Welcome</a></div><div class="ttdeci">void MaCh3Welcome()</div><div class="ttdoc">KS: Prints welcome message with MaCh3 logo.</div><div class="ttdef"><b>Definition:</b> <a href="Monitor_8cpp_source.html#l00012">Monitor.cpp:12</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
-<!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6
-</small></address>
-</body>
-</html>
+<!-- Footer for MaCh3 Doxygen documentation -->
+<footer class="mach3-footer" style="text-align: center;">
+    <div style="margin-bottom: 15px;">
+        <span style="font-weight: bold;">The MaCh3 Collaboration</span>
+    </div>
+    <!-- Dropdown to jump between doc versions -->
+    <div style="margin-bottom: 10px;">
+        <span>Select Software Version: </span>
+        <select id="versionSelector" onchange="window.location.href=this.value" style="padding: 5px; border-radius: 4px; border: 1px solid #ccc;">
+            <option value="">-- Select --</option>
+            <option value="https://mach3-software.github.io/MaCh3/">develop</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v2.2.0/index.html">v2.2.0</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v2.1.0/index.html">v2.1.0</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v2.0.0/index.html">v2.0.0</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v1.5.0/index.html">v1.5.0</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v1.4.0/index.html">v1.4.0</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v1.3.0/index.html">v1.3.0</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v1.2.0/index.html">v1.2.0</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v1.1.0/index.html">v1.1.0</option>
+        </select>
+    </div>
+    <!-- Footer info about doxygen -->
+    <div style="font-size: 0.9em; color: #666; margin-top: 10px;">
+        Documentation generated with
+        <a href="https://www.doxygen.nl/" target="_blank" style="color: #666;">Doxygen</a>
+        <span id="doxygenVersion"></span>
+    </div>
+    <!-- Now grab doxygen version from metadata -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const meta = document.querySelector('meta[name="generator"]');
+        if (meta) {
+            const version = meta.getAttribute("content").replace("Doxygen ", "");
+            document.getElementById("doxygenVersion").textContent = " " + version;
+        }
+    });
+    </script>
+</footer>

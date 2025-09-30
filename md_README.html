@@ -30,7 +30,7 @@ MathJax.Hub.Config({
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="mach3logo_small.png"/></td>
   <td id="projectalign">
-   <div id="projectname">MaCh3<span id="projectnumber">&#160;2.2.2</span>
+   <div id="projectname">MaCh3<span id="projectnumber">&#160;2.2.3</span>
    </div>
    <div id="projectbrief">Reference Guide</div>
   </td>
@@ -95,6 +95,7 @@ Cite</h1>
 Help and Guidelines 📄</h1>
 <ul>
 <li><a href="https://github.com/mach3-software/MaCh3Tutorial">Tutorial</a></li>
+<li><a href="https://indico.global/category/1289/">Indico</a> If you need a password, please reach out to MaCh3-leadership for access.</li>
 <li><a href="https://github.com/mach3-software/MaCh3/blob/develop/.github/CONTRIBUTING.md">How to contribute</a></li>
 <li><a href="https://github.com/mach3-software/MaCh3/wiki">Wiki</a></li>
 <li><a href="https://t2k-experiment.slack.com/archives/C06EM0C6D7W/p1705599931356889">Slack</a></li>
@@ -171,10 +172,12 @@ Fitting algorithms</h1>
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Algorithm   </th><th class="markdownTableHeadNone">Reference   </th><th class="markdownTableHeadNone">Need Ext Lib    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">MR2T2   </td><td class="markdownTableBodyNone"><a href="https://doi.org/10.1063/1.1699114">Ref</a>   </td><td class="markdownTableBodyNone">No    </td></tr>
+<td class="markdownTableBodyNone"><a class="el" href="classMR2T2.html" title="MCMC algorithm implementing the Metropolis–Rosenbluth–Rosenbluth–Teller–Teller (MR T ) method.">MR2T2</a>   </td><td class="markdownTableBodyNone"><a href="https://doi.org/10.1063/1.1699114">Ref</a>   </td><td class="markdownTableBodyNone">No    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">MINUIT2   </td><td class="markdownTableBodyNone"><a href="https://cds.cern.ch/record/2296388/">Ref</a>   </td><td class="markdownTableBodyNone">Yes    </td></tr>
+<td class="markdownTableBodyNone"><a class="el" href="classDelayedMR2T2.html" title="Implementation of delayed rejection for MR2T2.">DelayedMR2T2</a>   </td><td class="markdownTableBodyNone"><a href="https://doi.org/10.1007/s11222-006-9438-0">Ref</a>   </td><td class="markdownTableBodyNone">No    </td></tr>
 <tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">MINUIT2   </td><td class="markdownTableBodyNone"><a href="https://cds.cern.ch/record/2296388/">Ref</a>   </td><td class="markdownTableBodyNone">Yes    </td></tr>
+<tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><a class="el" href="classPSO.html" title="Class PSO, consist of a vector of object Class Particle and global best Takes in the size (number of ...">PSO</a>   </td><td class="markdownTableBodyNone"><a href="https://doi.org/10.1162/EVCO_r_00180">Ref</a>   </td><td class="markdownTableBodyNone">No   </td></tr>
 </table>
 <h1><a class="anchor" id="autotoc_md12"></a>
@@ -223,7 +226,7 @@ Supported operational systems</h2>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">Ubuntu22.04   </td><td class="markdownTableBodyNone">✅    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">Ubuntu24.10   </td><td class="markdownTableBodyNone">✅    </td></tr>
+<td class="markdownTableBodyNone">Ubuntu25.04   </td><td class="markdownTableBodyNone">✅    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">Fedora32   </td><td class="markdownTableBodyNone">✅    </td></tr>
 <tr class="markdownTableRowOdd">
@@ -279,13 +282,45 @@ How To Use</h1>
 <div class="line">MarkovChain-&gt;RunLLHScan(); <span class="comment">// can run LLH scan</span></div>
 <div class="line">MarkovChain-&gt;RunMCMC(); <span class="comment">//or run actual fit</span></div>
 <div class="ttc" id="aMaCh3Factory_8cpp_html_a126d15eeabecd1e4ab67422784a9f84a"><div class="ttname"><a href="MaCh3Factory_8cpp.html#a126d15eeabecd1e4ab67422784a9f84a">MaCh3FitterFactory</a></div><div class="ttdeci">std::unique_ptr&lt; FitterBase &gt; MaCh3FitterFactory(manager *fitMan)</div><div class="ttdef"><b>Definition:</b> <a href="MaCh3Factory_8cpp_source.html#l00005">MaCh3Factory.cpp:5</a></div></div>
-<div class="ttc" id="aMaCh3Factory_8cpp_html_aada46b6630f2f29c34c35354973388b3"><div class="ttname"><a href="MaCh3Factory_8cpp.html#aada46b6630f2f29c34c35354973388b3">MaCh3ManagerFactory</a></div><div class="ttdeci">std::unique_ptr&lt; manager &gt; MaCh3ManagerFactory(int argc, char **argv)</div><div class="ttdef"><b>Definition:</b> <a href="MaCh3Factory_8cpp_source.html#l00030">MaCh3Factory.cpp:30</a></div></div>
+<div class="ttc" id="aMaCh3Factory_8cpp_html_aada46b6630f2f29c34c35354973388b3"><div class="ttname"><a href="MaCh3Factory_8cpp.html#aada46b6630f2f29c34c35354973388b3">MaCh3ManagerFactory</a></div><div class="ttdeci">std::unique_ptr&lt; manager &gt; MaCh3ManagerFactory(int argc, char **argv)</div><div class="ttdef"><b>Definition:</b> <a href="MaCh3Factory_8cpp_source.html#l00041">MaCh3Factory.cpp:41</a></div></div>
 </div><!-- fragment --><p> For more see <a href="https://github.com/mach3-software/MaCh3Tutorial/blob/main/Tutorial/MCMCTutorial.cpp">here</a> </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
-<!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6
-</small></address>
-</body>
-</html>
+<!-- Footer for MaCh3 Doxygen documentation -->
+<footer class="mach3-footer" style="text-align: center;">
+    <div style="margin-bottom: 15px;">
+        <span style="font-weight: bold;">The MaCh3 Collaboration</span>
+    </div>
+    <!-- Dropdown to jump between doc versions -->
+    <div style="margin-bottom: 10px;">
+        <span>Select Software Version: </span>
+        <select id="versionSelector" onchange="window.location.href=this.value" style="padding: 5px; border-radius: 4px; border: 1px solid #ccc;">
+            <option value="">-- Select --</option>
+            <option value="https://mach3-software.github.io/MaCh3/">develop</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v2.2.0/index.html">v2.2.0</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v2.1.0/index.html">v2.1.0</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v2.0.0/index.html">v2.0.0</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v1.5.0/index.html">v1.5.0</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v1.4.0/index.html">v1.4.0</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v1.3.0/index.html">v1.3.0</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v1.2.0/index.html">v1.2.0</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v1.1.0/index.html">v1.1.0</option>
+        </select>
+    </div>
+    <!-- Footer info about doxygen -->
+    <div style="font-size: 0.9em; color: #666; margin-top: 10px;">
+        Documentation generated with
+        <a href="https://www.doxygen.nl/" target="_blank" style="color: #666;">Doxygen</a>
+        <span id="doxygenVersion"></span>
+    </div>
+    <!-- Now grab doxygen version from metadata -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const meta = document.querySelector('meta[name="generator"]');
+        if (meta) {
+            const version = meta.getAttribute("content").replace("Doxygen ", "");
+            document.getElementById("doxygenVersion").textContent = " " + version;
+        }
+    });
+    </script>
+</footer>

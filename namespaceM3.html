@@ -30,7 +30,7 @@ MathJax.Hub.Config({
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="mach3logo_small.png"/></td>
   <td id="projectalign">
-   <div id="projectname">MaCh3<span id="projectnumber">&#160;2.2.2</span>
+   <div id="projectname">MaCh3<span id="projectnumber">&#160;2.2.3</span>
    </div>
    <div id="projectbrief">Reference Guide</div>
   </td>
@@ -116,6 +116,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ad1896bacf74c409a461dd1ea43f8bc99"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceM3.html#ad1896bacf74c409a461dd1ea43f8bc99">GetNThreads</a> ()</td></tr>
 <tr class="memdesc:ad1896bacf74c409a461dd1ea43f8bc99"><td class="mdescLeft">&#160;</td><td class="mdescRight">number of threads which we need for example for TRandom3  <br /></td></tr>
 <tr class="separator:ad1896bacf74c409a461dd1ea43f8bc99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7693a9e309503bd894b04443f163f3c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceM3.html#ad7693a9e309503bd894b04443f163f3c">AddPath</a> (std::string &amp;FilePath)</td></tr>
+<tr class="memdesc:ad7693a9e309503bd894b04443f163f3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prepends the MACH3 environment path to FilePath if it is not already present.  <br /></td></tr>
+<tr class="separator:ad7693a9e309503bd894b04443f163f3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5ed0accdbf66626c16b6c3b00bd5d030"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceM3.html#a5ed0accdbf66626c16b6c3b00bd5d030">GetThreadIndex</a> ()</td></tr>
 <tr class="memdesc:a5ed0accdbf66626c16b6c3b00bd5d030"><td class="mdescLeft">&#160;</td><td class="mdescRight">thread index inside parallel loop  <br /></td></tr>
 <tr class="separator:a5ed0accdbf66626c16b6c3b00bd5d030"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -147,18 +150,29 @@ Functions</h2></td></tr>
 <tr class="memitem:a98e6584f7ed16224a221a837551f2c1d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceM3.html#a98e6584f7ed16224a221a837551f2c1d">AddTuneValues</a> (YAML::Node &amp;root, const std::vector&lt; double &gt; &amp;Values, const std::string &amp;Tune, const std::vector&lt; std::string &gt; &amp;FancyNames={})</td></tr>
 <tr class="memdesc:a98e6584f7ed16224a221a837551f2c1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">KS: Add Tune values to YAML covariance matrix.  <br /></td></tr>
 <tr class="separator:a98e6584f7ed16224a221a837551f2c1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9253dc67fd53775fd49d2fe47c4a2203"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceM3.html#a9253dc67fd53775fd49d2fe47c4a2203">MakeCorrelationMatrix</a> (YAML::Node &amp;root, const std::vector&lt; double &gt; &amp;Values, const std::vector&lt; double &gt; &amp;Errors, const std::vector&lt; std::vector&lt; double &gt; &gt; &amp;Correlation, const std::vector&lt; std::string &gt; &amp;FancyNames={})</td></tr>
-<tr class="memdesc:a9253dc67fd53775fd49d2fe47c4a2203"><td class="mdescLeft">&#160;</td><td class="mdescRight">KS: Replace correlation matrix and tune values in YAML covariance matrix.  <br /></td></tr>
-<tr class="separator:a9253dc67fd53775fd49d2fe47c4a2203"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50bc6511eef3b80c8ef0a1cbb45a4eff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceM3.html#a50bc6511eef3b80c8ef0a1cbb45a4eff">MakeCorrelationMatrix</a> (YAML::Node &amp;root, const std::vector&lt; double &gt; &amp;Values, const std::vector&lt; double &gt; &amp;Errors, const std::vector&lt; std::vector&lt; double &gt; &gt; &amp;Correlation, const std::string &amp;OutYAMLName, const std::vector&lt; std::string &gt; &amp;FancyNames={})</td></tr>
+<tr class="memdesc:a50bc6511eef3b80c8ef0a1cbb45a4eff"><td class="mdescLeft">&#160;</td><td class="mdescRight">KS: Replace correlation matrix and tune values in YAML covariance matrix.  <br /></td></tr>
+<tr class="separator:a50bc6511eef3b80c8ef0a1cbb45a4eff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1bb16de3a587023bbfa4b46aa214f7e1"><td class="memItemLeft" align="right" valign="top">TMacro *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceM3.html#a1bb16de3a587023bbfa4b46aa214f7e1">GetConfigMacroFromChain</a> (TDirectory *CovarianceFolder)</td></tr>
 <tr class="memdesc:a1bb16de3a587023bbfa4b46aa214f7e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">KS: We store configuration macros inside the chain. In the past, multiple configs were stored, which required error-prone hardcoding like "Config_xsec_cov". Therefore, this code maintains backward compatibility by checking the number of macros present and using a hardcoded name only if necessary.  <br /></td></tr>
 <tr class="separator:a1bb16de3a587023bbfa4b46aa214f7e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aec8607d7c1f73af5e603af5ee7752c4b"><td class="memItemLeft" align="right" valign="top">TMatrixDSym *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceM3.html#aec8607d7c1f73af5e603af5ee7752c4b">GetCovMatrixFromChain</a> (TDirectory *TempFile)</td></tr>
 <tr class="memdesc:aec8607d7c1f73af5e603af5ee7752c4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">KS: Retrieve the cross-section covariance matrix from the given TDirectory. Historically, multiple covariance matrices could be stored, requiring fragile hardcoded paths like "CovarianceFolder/xsec_cov". This function maintains backward compatibility by:  <br /></td></tr>
 <tr class="separator:aec8607d7c1f73af5e603af5ee7752c4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96f1a7786873c4d04e8a16d42d6c46a1"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::vector&lt; double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceM3.html#a96f1a7786873c4d04e8a16d42d6c46a1">GetCholeskyDecomposedMatrix</a> (const TMatrixDSym &amp;matrix, const std::string &amp;matrixName)</td></tr>
+<tr class="memdesc:a96f1a7786873c4d04e8a16d42d6c46a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes Cholesky decomposition of a symmetric positive definite matrix using custom function which can be even 20 times faster.  <br /></td></tr>
+<tr class="separator:a96f1a7786873c4d04e8a16d42d6c46a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbacd39568f68bda67b301927b8ae22a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceM3.html#acbacd39568f68bda67b301927b8ae22a">CanDecomposeMatrix</a> (const TMatrixDSym &amp;matrix)</td></tr>
+<tr class="memdesc:acbacd39568f68bda67b301927b8ae22a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if a matrix can be Cholesky decomposed.  <br /></td></tr>
+<tr class="separator:acbacd39568f68bda67b301927b8ae22a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9df1d8da337a09adc645f6b4f0e2cf2c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceM3.html#a9df1d8da337a09adc645f6b4f0e2cf2c">MakeMatrixPosDef</a> (TMatrixDSym *cov)</td></tr>
+<tr class="memdesc:a9df1d8da337a09adc645f6b4f0e2cf2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes sure that matrix is positive-definite by adding a small number to on-diagonal elements.  <br /></td></tr>
+<tr class="separator:a9df1d8da337a09adc645f6b4f0e2cf2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
+<tr class="memitem:a1f7f36d023b8c549459b28521e002f6d"><td class="memItemLeft" align="right" valign="top">static constexpr const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceM3.html#a1f7f36d023b8c549459b28521e002f6d">float_t_str_repr</a> = &quot;D&quot;</td></tr>
+<tr class="separator:a1f7f36d023b8c549459b28521e002f6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a32ef26a222f7341e03dcc42cdd2badd3"><td class="memItemLeft" align="right" valign="top">static constexpr const double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceM3.html#a32ef26a222f7341e03dcc42cdd2badd3">_BAD_DOUBLE_</a> = -999.99</td></tr>
 <tr class="memdesc:a32ef26a222f7341e03dcc42cdd2badd3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default value used for double initialisation.  <br /></td></tr>
 <tr class="separator:a32ef26a222f7341e03dcc42cdd2badd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -214,7 +228,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00028">28</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00030">30</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
 
 </div>
 </div>
@@ -230,7 +244,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00029">29</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00031">31</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
 
 </div>
 </div>
@@ -246,7 +260,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00030">30</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00032">32</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
 
 </div>
 </div>
@@ -290,6 +304,52 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="ad7693a9e309503bd894b04443f163f3c" name="ad7693a9e309503bd894b04443f163f3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7693a9e309503bd894b04443f163f3c">&#9670;&#160;</a></span>AddPath()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void M3::AddPath </td>
+          <td>(</td>
+          <td class="paramtype">std::string &amp;&#160;</td>
+          <td class="paramname"><em>FilePath</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Prepends the MACH3 environment path to FilePath if it is not already present. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">FilePath</td><td>Reference to the file path string to be modified. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="Monitor_8cpp_source.html#l00367">367</a> of file <a class="el" href="Monitor_8cpp_source.html">Monitor.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  367</span>                                  {</div>
+<div class="line"><span class="lineno">  368</span><span class="comment">// ***************************************************************************</span></div>
+<div class="line"><span class="lineno">  369</span>  <span class="comment">//KS:Most inputs are in ${MACH3}/inputs/blarb.root</span></div>
+<div class="line"><span class="lineno">  370</span>  <span class="keywordflow">if</span> (std::getenv(<span class="stringliteral">&quot;MACH3&quot;</span>) == <span class="keyword">nullptr</span>) {</div>
+<div class="line"><span class="lineno">  371</span>    <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;MACH3 is not defined&quot;</span>);</div>
+<div class="line"><span class="lineno">  372</span>    <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;Please source your setup script&quot;</span>);</div>
+<div class="line"><span class="lineno">  373</span>    <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;Read more: https://github.com/mach3-software/MaCh3/wiki/0.-FAQ#error-need-mach3-environment-variable&quot;</span>);</div>
+<div class="line"><span class="lineno">  374</span>    <span class="keywordflow">throw</span> <a class="code hl_class" href="classMaCh3Exception.html">MaCh3Exception</a>(__FILE__, __LINE__);</div>
+<div class="line"><span class="lineno">  375</span>  }</div>
+<div class="line"><span class="lineno">  376</span> </div>
+<div class="line"><span class="lineno">  377</span>  std::string MaCh3Path = std::string(std::getenv(<span class="stringliteral">&quot;MACH3&quot;</span>)) + <span class="stringliteral">&quot;/&quot;</span>;</div>
+<div class="line"><span class="lineno">  378</span>   <span class="comment">// Check if FilePath does NOT start with MaCh3Path</span></div>
+<div class="line"><span class="lineno">  379</span>  <span class="keywordflow">if</span> (FilePath.find(MaCh3Path) != 0) {</div>
+<div class="line"><span class="lineno">  380</span>    FilePath.insert(0, MaCh3Path);</div>
+<div class="line"><span class="lineno">  381</span>  }</div>
+<div class="line"><span class="lineno">  382</span>}</div>
+<div class="ttc" id="aMaCh3Logger_8h_html_a61052119a625282d0ec6d4a97adf3ee2"><div class="ttname"><a href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a></div><div class="ttdeci">#define MACH3LOG_ERROR</div><div class="ttdef"><b>Definition:</b> <a href="MaCh3Logger_8h_source.html#l00027">MaCh3Logger.h:27</a></div></div>
+<div class="ttc" id="aclassMaCh3Exception_html"><div class="ttname"><a href="classMaCh3Exception.html">MaCh3Exception</a></div><div class="ttdoc">Custom exception class for MaCh3 errors.</div><div class="ttdef"><b>Definition:</b> <a href="MaCh3Exception_8h_source.html#l00013">MaCh3Exception.h:13</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
 <a id="a98e6584f7ed16224a221a837551f2c1d" name="a98e6584f7ed16224a221a837551f2c1d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a98e6584f7ed16224a221a837551f2c1d">&#9670;&#160;</a></span>AddTuneValues()</h2>
 
@@ -337,82 +397,130 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>KS: Add Tune values to YAML covariance matrix. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">root</td><td>The root YAML node to be updated. </td></tr>
+    <tr><td class="paramname">Values</td><td>The values to add for the specified tune. </td></tr>
+    <tr><td class="paramname">Tune</td><td>The name of the tune (e.g., "PostFit"). </td></tr>
+    <tr><td class="paramname">FancyNames</td><td>Optional list of fancy names to match systematics (must match Values size if provided). </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p class="definition">Definition at line <a class="el" href="ParameterHandlerUtils_8h_source.html#l00181">181</a> of file <a class="el" href="ParameterHandlerUtils_8h_source.html">ParameterHandlerUtils.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  184</span>                                                                   {}) {</div>
-<div class="line"><span class="lineno">  185</span><span class="comment">// *************************************</span></div>
-<div class="line"><span class="lineno">  186</span>  YAML::Node NodeCopy = YAML::Clone(root);</div>
-<div class="line"><span class="lineno">  187</span>  YAML::Node systematics = NodeCopy[<span class="stringliteral">&quot;Systematics&quot;</span>];</div>
-<div class="line"><span class="lineno">  188</span> </div>
-<div class="line"><span class="lineno">  189</span>  <span class="keywordflow">if</span> (!systematics || !systematics.IsSequence()) {</div>
-<div class="line"><span class="lineno">  190</span>    <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;&#39;Systematics&#39; node is missing or not a sequence in the YAML copy&quot;</span>);</div>
-<div class="line"><span class="lineno">  191</span>    <span class="keywordflow">throw</span> <a class="code hl_class" href="classMaCh3Exception.html">MaCh3Exception</a>(__FILE__, __LINE__);</div>
-<div class="line"><span class="lineno">  192</span>  }</div>
-<div class="line"><span class="lineno">  193</span> </div>
-<div class="line"><span class="lineno">  194</span>  <span class="keywordflow">if</span> (!FancyNames.empty() &amp;&amp; FancyNames.size() != Values.size()) {</div>
-<div class="line"><span class="lineno">  195</span>    <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;Mismatch in sizes: FancyNames has {}, but Values has {}&quot;</span>, FancyNames.size(), Values.size());</div>
-<div class="line"><span class="lineno">  196</span>    <span class="keywordflow">throw</span> <a class="code hl_class" href="classMaCh3Exception.html">MaCh3Exception</a>(__FILE__, __LINE__);</div>
-<div class="line"><span class="lineno">  197</span>  }</div>
-<div class="line"><span class="lineno">  198</span> </div>
-<div class="line"><span class="lineno">  199</span>  <span class="keywordflow">if</span> (FancyNames.empty() &amp;&amp; systematics.size() != Values.size()) {</div>
-<div class="line"><span class="lineno">  200</span>    <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;Mismatch in sizes: Values has {}, but YAML &#39;Systematics&#39; has {} entries&quot;</span>,</div>
-<div class="line"><span class="lineno">  201</span>                   Values.size(), systematics.size());</div>
+<p class="definition">Definition at line <a class="el" href="ParameterHandlerUtils_8h_source.html#l00187">187</a> of file <a class="el" href="ParameterHandlerUtils_8h_source.html">ParameterHandlerUtils.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  190</span>                                                                   {}) {</div>
+<div class="line"><span class="lineno">  191</span><span class="comment">// *************************************</span></div>
+<div class="line"><span class="lineno">  192</span>  YAML::Node NodeCopy = YAML::Clone(root);</div>
+<div class="line"><span class="lineno">  193</span>  YAML::Node systematics = NodeCopy[<span class="stringliteral">&quot;Systematics&quot;</span>];</div>
+<div class="line"><span class="lineno">  194</span> </div>
+<div class="line"><span class="lineno">  195</span>  <span class="keywordflow">if</span> (!systematics || !systematics.IsSequence()) {</div>
+<div class="line"><span class="lineno">  196</span>    <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;&#39;Systematics&#39; node is missing or not a sequence in the YAML copy&quot;</span>);</div>
+<div class="line"><span class="lineno">  197</span>    <span class="keywordflow">throw</span> <a class="code hl_class" href="classMaCh3Exception.html">MaCh3Exception</a>(__FILE__, __LINE__);</div>
+<div class="line"><span class="lineno">  198</span>  }</div>
+<div class="line"><span class="lineno">  199</span> </div>
+<div class="line"><span class="lineno">  200</span>  <span class="keywordflow">if</span> (!FancyNames.empty() &amp;&amp; FancyNames.size() != Values.size()) {</div>
+<div class="line"><span class="lineno">  201</span>    <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;Mismatch in sizes: FancyNames has {}, but Values has {}&quot;</span>, FancyNames.size(), Values.size());</div>
 <div class="line"><span class="lineno">  202</span>    <span class="keywordflow">throw</span> <a class="code hl_class" href="classMaCh3Exception.html">MaCh3Exception</a>(__FILE__, __LINE__);</div>
 <div class="line"><span class="lineno">  203</span>  }</div>
 <div class="line"><span class="lineno">  204</span> </div>
-<div class="line"><span class="lineno">  205</span>  <span class="keywordflow">if</span> (!FancyNames.empty()) {</div>
-<div class="line"><span class="lineno">  206</span>    <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; FancyNames.size(); ++i) {</div>
-<div class="line"><span class="lineno">  207</span>      <span class="keywordtype">bool</span> matched = <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">  208</span>      <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; systematics.size(); ++j) {</div>
-<div class="line"><span class="lineno">  209</span>        YAML::Node systematicNode = systematics[j][<span class="stringliteral">&quot;Systematic&quot;</span>];</div>
-<div class="line"><span class="lineno">  210</span>        <span class="keywordflow">if</span> (!systematicNode) <span class="keywordflow">continue</span>;</div>
-<div class="line"><span class="lineno">  211</span>        <span class="keyword">auto</span> nameNode = systematicNode[<span class="stringliteral">&quot;Names&quot;</span>];</div>
-<div class="line"><span class="lineno">  212</span>        <span class="keywordflow">if</span> (!nameNode || !nameNode[<span class="stringliteral">&quot;FancyName&quot;</span>]) <span class="keywordflow">continue</span>;</div>
-<div class="line"><span class="lineno">  213</span>        <span class="keywordflow">if</span> (nameNode[<span class="stringliteral">&quot;FancyName&quot;</span>].as&lt;std::string&gt;() == FancyNames[i]) {</div>
-<div class="line"><span class="lineno">  214</span>          <span class="keywordflow">if</span> (!systematicNode[<span class="stringliteral">&quot;ParameterValues&quot;</span>]) {</div>
-<div class="line"><span class="lineno">  215</span>            <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;Missing &#39;ParameterValues&#39; for matched FancyName &#39;{}&#39;&quot;</span>, FancyNames[i]);</div>
-<div class="line"><span class="lineno">  216</span>            <span class="keywordflow">throw</span> <a class="code hl_class" href="classMaCh3Exception.html">MaCh3Exception</a>(__FILE__, __LINE__);</div>
-<div class="line"><span class="lineno">  217</span>          }</div>
-<div class="line"><span class="lineno">  218</span>          systematicNode[<span class="stringliteral">&quot;ParameterValues&quot;</span>][Tune] = <a class="code hl_function" href="namespaceMaCh3Utils.html#a37d0c54de0b83b71393afca143ab1ec0">MaCh3Utils::FormatDouble</a>(Values[i], 4);</div>
-<div class="line"><span class="lineno">  219</span>          matched = <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">  220</span>          <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  221</span>        }</div>
-<div class="line"><span class="lineno">  222</span>      }</div>
-<div class="line"><span class="lineno">  223</span>      <span class="keywordflow">if</span> (!matched) {</div>
-<div class="line"><span class="lineno">  224</span>        <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;Could not find a matching FancyName &#39;{}&#39; in the systematics&quot;</span>, FancyNames[i]);</div>
-<div class="line"><span class="lineno">  225</span>        <span class="keywordflow">throw</span> <a class="code hl_class" href="classMaCh3Exception.html">MaCh3Exception</a>(__FILE__, __LINE__);</div>
-<div class="line"><span class="lineno">  226</span>      }</div>
-<div class="line"><span class="lineno">  227</span>    }</div>
-<div class="line"><span class="lineno">  228</span>  } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  229</span>    <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; systematics.size(); ++i) {</div>
-<div class="line"><span class="lineno">  230</span>      YAML::Node systematicNode = systematics[i][<span class="stringliteral">&quot;Systematic&quot;</span>];</div>
-<div class="line"><span class="lineno">  231</span>      <span class="keywordflow">if</span> (!systematicNode || !systematicNode[<span class="stringliteral">&quot;ParameterValues&quot;</span>]) {</div>
-<div class="line"><span class="lineno">  232</span>        <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;Missing &#39;Systematic&#39; or &#39;ParameterValues&#39; entry at index {}&quot;</span>, i);</div>
-<div class="line"><span class="lineno">  233</span>        <span class="keywordflow">throw</span> <a class="code hl_class" href="classMaCh3Exception.html">MaCh3Exception</a>(__FILE__, __LINE__);</div>
-<div class="line"><span class="lineno">  234</span>      }</div>
-<div class="line"><span class="lineno">  235</span>      systematicNode[<span class="stringliteral">&quot;ParameterValues&quot;</span>][Tune] = <a class="code hl_function" href="namespaceMaCh3Utils.html#a37d0c54de0b83b71393afca143ab1ec0">MaCh3Utils::FormatDouble</a>(Values[i], 4);</div>
-<div class="line"><span class="lineno">  236</span>    }</div>
-<div class="line"><span class="lineno">  237</span>  }</div>
-<div class="line"><span class="lineno">  238</span> </div>
-<div class="line"><span class="lineno">  239</span>  <span class="comment">// Convert updated copy to string</span></div>
-<div class="line"><span class="lineno">  240</span>  std::string YAMLString = <a class="code hl_function" href="YamlHelper_8h.html#aae72fb06a391f1073add5eed6c6485dd">YAMLtoSTRING</a>(NodeCopy);</div>
-<div class="line"><span class="lineno">  241</span>  <a class="code hl_function" href="namespaceM3.html#a68ab9b6b3d413a94604c740208c7895d">FixSampleNamesQuotes</a>(YAMLString);</div>
-<div class="line"><span class="lineno">  242</span>  <span class="comment">// Write to output file</span></div>
-<div class="line"><span class="lineno">  243</span>  std::string OutName = <span class="stringliteral">&quot;UpdatedMatrixWithTune&quot;</span> + Tune + <span class="stringliteral">&quot;.yaml&quot;</span>;</div>
-<div class="line"><span class="lineno">  244</span>  std::ofstream outFile(OutName);</div>
-<div class="line"><span class="lineno">  245</span>  <span class="keywordflow">if</span> (!outFile) {</div>
-<div class="line"><span class="lineno">  246</span>    <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;Failed to open file for writing: {}&quot;</span>, OutName);</div>
-<div class="line"><span class="lineno">  247</span>    <span class="keywordflow">throw</span> <a class="code hl_class" href="classMaCh3Exception.html">MaCh3Exception</a>(__FILE__, __LINE__);</div>
-<div class="line"><span class="lineno">  248</span>  }</div>
-<div class="line"><span class="lineno">  249</span> </div>
-<div class="line"><span class="lineno">  250</span>  outFile &lt;&lt; YAMLString;</div>
-<div class="line"><span class="lineno">  251</span>  outFile.close();</div>
-<div class="line"><span class="lineno">  252</span>}</div>
-<div class="ttc" id="aMaCh3Logger_8h_html_a61052119a625282d0ec6d4a97adf3ee2"><div class="ttname"><a href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a></div><div class="ttdeci">#define MACH3LOG_ERROR</div><div class="ttdef"><b>Definition:</b> <a href="MaCh3Logger_8h_source.html#l00025">MaCh3Logger.h:25</a></div></div>
-<div class="ttc" id="aYamlHelper_8h_html_aae72fb06a391f1073add5eed6c6485dd"><div class="ttname"><a href="YamlHelper_8h.html#aae72fb06a391f1073add5eed6c6485dd">YAMLtoSTRING</a></div><div class="ttdeci">std::string YAMLtoSTRING(const YAML::Node &amp;node)</div><div class="ttdoc">KS: Convert a YAML node to a string representation.</div><div class="ttdef"><b>Definition:</b> <a href="YamlHelper_8h_source.html#l00106">YamlHelper.h:106</a></div></div>
-<div class="ttc" id="aclassMaCh3Exception_html"><div class="ttname"><a href="classMaCh3Exception.html">MaCh3Exception</a></div><div class="ttdoc">Custom exception class for MaCh3 errors.</div><div class="ttdef"><b>Definition:</b> <a href="MaCh3Exception_8h_source.html#l00013">MaCh3Exception.h:13</a></div></div>
-<div class="ttc" id="anamespaceM3_html_a68ab9b6b3d413a94604c740208c7895d"><div class="ttname"><a href="namespaceM3.html#a68ab9b6b3d413a94604c740208c7895d">M3::FixSampleNamesQuotes</a></div><div class="ttdeci">void FixSampleNamesQuotes(std::string &amp;yamlStr)</div><div class="ttdoc">KS: Yaml emitter has problem and drops &quot;&quot;, if you have special signs in you like * then there is prob...</div><div class="ttdef"><b>Definition:</b> <a href="ParameterHandlerUtils_8h_source.html#l00150">ParameterHandlerUtils.h:150</a></div></div>
-<div class="ttc" id="anamespaceMaCh3Utils_html_a37d0c54de0b83b71393afca143ab1ec0"><div class="ttname"><a href="namespaceMaCh3Utils.html#a37d0c54de0b83b71393afca143ab1ec0">MaCh3Utils::FormatDouble</a></div><div class="ttdeci">std::string FormatDouble(const double value, const int precision)</div><div class="ttdoc">Convert double into string for precision, useful for playing with yaml if you don't want to have in c...</div><div class="ttdef"><b>Definition:</b> <a href="SampleStructs_8h_source.html#l00312">SampleStructs.h:312</a></div></div>
+<div class="line"><span class="lineno">  205</span>  <span class="keywordflow">if</span> (FancyNames.empty() &amp;&amp; systematics.size() != Values.size()) {</div>
+<div class="line"><span class="lineno">  206</span>    <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;Mismatch in sizes: Values has {}, but YAML &#39;Systematics&#39; has {} entries&quot;</span>,</div>
+<div class="line"><span class="lineno">  207</span>                   Values.size(), systematics.size());</div>
+<div class="line"><span class="lineno">  208</span>    <span class="keywordflow">throw</span> <a class="code hl_class" href="classMaCh3Exception.html">MaCh3Exception</a>(__FILE__, __LINE__);</div>
+<div class="line"><span class="lineno">  209</span>  }</div>
+<div class="line"><span class="lineno">  210</span> </div>
+<div class="line"><span class="lineno">  211</span>  <span class="keywordflow">if</span> (!FancyNames.empty()) {</div>
+<div class="line"><span class="lineno">  212</span>    <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; FancyNames.size(); ++i) {</div>
+<div class="line"><span class="lineno">  213</span>      <span class="keywordtype">bool</span> matched = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  214</span>      <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; systematics.size(); ++j) {</div>
+<div class="line"><span class="lineno">  215</span>        YAML::Node systematicNode = systematics[j][<span class="stringliteral">&quot;Systematic&quot;</span>];</div>
+<div class="line"><span class="lineno">  216</span>        <span class="keywordflow">if</span> (!systematicNode) <span class="keywordflow">continue</span>;</div>
+<div class="line"><span class="lineno">  217</span>        <span class="keyword">auto</span> nameNode = systematicNode[<span class="stringliteral">&quot;Names&quot;</span>];</div>
+<div class="line"><span class="lineno">  218</span>        <span class="keywordflow">if</span> (!nameNode || !nameNode[<span class="stringliteral">&quot;FancyName&quot;</span>]) <span class="keywordflow">continue</span>;</div>
+<div class="line"><span class="lineno">  219</span>        <span class="keywordflow">if</span> (nameNode[<span class="stringliteral">&quot;FancyName&quot;</span>].as&lt;std::string&gt;() == FancyNames[i]) {</div>
+<div class="line"><span class="lineno">  220</span>          <span class="keywordflow">if</span> (!systematicNode[<span class="stringliteral">&quot;ParameterValues&quot;</span>]) {</div>
+<div class="line"><span class="lineno">  221</span>            <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;Missing &#39;ParameterValues&#39; for matched FancyName &#39;{}&#39;&quot;</span>, FancyNames[i]);</div>
+<div class="line"><span class="lineno">  222</span>            <span class="keywordflow">throw</span> <a class="code hl_class" href="classMaCh3Exception.html">MaCh3Exception</a>(__FILE__, __LINE__);</div>
+<div class="line"><span class="lineno">  223</span>          }</div>
+<div class="line"><span class="lineno">  224</span>          systematicNode[<span class="stringliteral">&quot;ParameterValues&quot;</span>][Tune] = <a class="code hl_function" href="namespaceMaCh3Utils.html#a37d0c54de0b83b71393afca143ab1ec0">MaCh3Utils::FormatDouble</a>(Values[i], 4);</div>
+<div class="line"><span class="lineno">  225</span>          matched = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  226</span>          <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  227</span>        }</div>
+<div class="line"><span class="lineno">  228</span>      }</div>
+<div class="line"><span class="lineno">  229</span>      <span class="keywordflow">if</span> (!matched) {</div>
+<div class="line"><span class="lineno">  230</span>        <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;Could not find a matching FancyName &#39;{}&#39; in the systematics&quot;</span>, FancyNames[i]);</div>
+<div class="line"><span class="lineno">  231</span>        <span class="keywordflow">throw</span> <a class="code hl_class" href="classMaCh3Exception.html">MaCh3Exception</a>(__FILE__, __LINE__);</div>
+<div class="line"><span class="lineno">  232</span>      }</div>
+<div class="line"><span class="lineno">  233</span>    }</div>
+<div class="line"><span class="lineno">  234</span>  } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  235</span>    <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; systematics.size(); ++i) {</div>
+<div class="line"><span class="lineno">  236</span>      YAML::Node systematicNode = systematics[i][<span class="stringliteral">&quot;Systematic&quot;</span>];</div>
+<div class="line"><span class="lineno">  237</span>      <span class="keywordflow">if</span> (!systematicNode || !systematicNode[<span class="stringliteral">&quot;ParameterValues&quot;</span>]) {</div>
+<div class="line"><span class="lineno">  238</span>        <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;Missing &#39;Systematic&#39; or &#39;ParameterValues&#39; entry at index {}&quot;</span>, i);</div>
+<div class="line"><span class="lineno">  239</span>        <span class="keywordflow">throw</span> <a class="code hl_class" href="classMaCh3Exception.html">MaCh3Exception</a>(__FILE__, __LINE__);</div>
+<div class="line"><span class="lineno">  240</span>      }</div>
+<div class="line"><span class="lineno">  241</span>      systematicNode[<span class="stringliteral">&quot;ParameterValues&quot;</span>][Tune] = <a class="code hl_function" href="namespaceMaCh3Utils.html#a37d0c54de0b83b71393afca143ab1ec0">MaCh3Utils::FormatDouble</a>(Values[i], 4);</div>
+<div class="line"><span class="lineno">  242</span>    }</div>
+<div class="line"><span class="lineno">  243</span>  }</div>
+<div class="line"><span class="lineno">  244</span> </div>
+<div class="line"><span class="lineno">  245</span>  <span class="comment">// Convert updated copy to string</span></div>
+<div class="line"><span class="lineno">  246</span>  std::string YAMLString = <a class="code hl_function" href="YamlHelper_8h.html#aae72fb06a391f1073add5eed6c6485dd">YAMLtoSTRING</a>(NodeCopy);</div>
+<div class="line"><span class="lineno">  247</span>  <a class="code hl_function" href="namespaceM3.html#a68ab9b6b3d413a94604c740208c7895d">FixSampleNamesQuotes</a>(YAMLString);</div>
+<div class="line"><span class="lineno">  248</span>  <span class="comment">// Write to output file</span></div>
+<div class="line"><span class="lineno">  249</span>  std::string OutName = <span class="stringliteral">&quot;UpdatedMatrixWithTune&quot;</span> + Tune + <span class="stringliteral">&quot;.yaml&quot;</span>;</div>
+<div class="line"><span class="lineno">  250</span>  std::ofstream outFile(OutName);</div>
+<div class="line"><span class="lineno">  251</span>  <span class="keywordflow">if</span> (!outFile) {</div>
+<div class="line"><span class="lineno">  252</span>    <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;Failed to open file for writing: {}&quot;</span>, OutName);</div>
+<div class="line"><span class="lineno">  253</span>    <span class="keywordflow">throw</span> <a class="code hl_class" href="classMaCh3Exception.html">MaCh3Exception</a>(__FILE__, __LINE__);</div>
+<div class="line"><span class="lineno">  254</span>  }</div>
+<div class="line"><span class="lineno">  255</span> </div>
+<div class="line"><span class="lineno">  256</span>  outFile &lt;&lt; YAMLString;</div>
+<div class="line"><span class="lineno">  257</span>  outFile.close();</div>
+<div class="line"><span class="lineno">  258</span>}</div>
+<div class="ttc" id="aYamlHelper_8h_html_aae72fb06a391f1073add5eed6c6485dd"><div class="ttname"><a href="YamlHelper_8h.html#aae72fb06a391f1073add5eed6c6485dd">YAMLtoSTRING</a></div><div class="ttdeci">std::string YAMLtoSTRING(const YAML::Node &amp;node)</div><div class="ttdoc">KS: Convert a YAML node to a string representation.</div><div class="ttdef"><b>Definition:</b> <a href="YamlHelper_8h_source.html#l00107">YamlHelper.h:107</a></div></div>
+<div class="ttc" id="anamespaceM3_html_a68ab9b6b3d413a94604c740208c7895d"><div class="ttname"><a href="namespaceM3.html#a68ab9b6b3d413a94604c740208c7895d">M3::FixSampleNamesQuotes</a></div><div class="ttdeci">void FixSampleNamesQuotes(std::string &amp;yamlStr)</div><div class="ttdoc">KS: Yaml emitter has problem and drops &quot;&quot;, if you have special signs in you like * then there is prob...</div><div class="ttdef"><b>Definition:</b> <a href="ParameterHandlerUtils_8h_source.html#l00152">ParameterHandlerUtils.h:152</a></div></div>
+<div class="ttc" id="anamespaceMaCh3Utils_html_a37d0c54de0b83b71393afca143ab1ec0"><div class="ttname"><a href="namespaceMaCh3Utils.html#a37d0c54de0b83b71393afca143ab1ec0">MaCh3Utils::FormatDouble</a></div><div class="ttdeci">std::string FormatDouble(const double value, const int precision)</div><div class="ttdoc">Convert double into string for precision, useful for playing with yaml if you don't want to have in c...</div><div class="ttdef"><b>Definition:</b> <a href="SampleStructs_8h_source.html#l00429">SampleStructs.h:429</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="acbacd39568f68bda67b301927b8ae22a" name="acbacd39568f68bda67b301927b8ae22a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acbacd39568f68bda67b301927b8ae22a">&#9670;&#160;</a></span>CanDecomposeMatrix()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool M3::CanDecomposeMatrix </td>
+          <td>(</td>
+          <td class="paramtype">const TMatrixDSym &amp;&#160;</td>
+          <td class="paramname"><em>matrix</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if a matrix can be Cholesky decomposed. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">matrix</td><td>Input symmetric matrix to test </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="ParameterHandlerUtils_8h_source.html#l00498">498</a> of file <a class="el" href="ParameterHandlerUtils_8h_source.html">ParameterHandlerUtils.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  498</span>                                                          {</div>
+<div class="line"><span class="lineno">  499</span><span class="comment">// *************************************</span></div>
+<div class="line"><span class="lineno">  500</span>  TDecompChol chdcmp(matrix);</div>
+<div class="line"><span class="lineno">  501</span>  <span class="keywordflow">return</span> chdcmp.Decompose();</div>
+<div class="line"><span class="lineno">  502</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -454,21 +562,22 @@ template&lt;typename ObjectType &gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">obj</td><td>Pointer to the object to clone. </td></tr>
+    <tr><td class="paramname">name</td><td>Optional argument allowing to set new name of cloned object </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>std::unique_ptr&lt;ObjectType&gt; Owning pointer to the cloned object. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="HistogramUtils_8h_source.html#l00138">138</a> of file <a class="el" href="HistogramUtils_8h_source.html">HistogramUtils.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  138</span>                                                                                   {</div>
-<div class="line"><span class="lineno">  139</span>  std::string cloneName = name.empty() ? obj-&gt;GetName() : name;</div>
-<div class="line"><span class="lineno">  140</span> </div>
-<div class="line"><span class="lineno">  141</span>  std::unique_ptr&lt;ObjectType&gt; Hist(<span class="keyword">static_cast&lt;</span>ObjectType*<span class="keyword">&gt;</span>(obj-&gt;Clone(cloneName.c_str())));</div>
-<div class="line"><span class="lineno">  142</span>  <span class="comment">// Disable ROOT memory management because it causes lot of headache especially as smart pointers are much smarter</span></div>
-<div class="line"><span class="lineno">  143</span>  Hist-&gt;SetDirectory(<span class="keyword">nullptr</span>);</div>
-<div class="line"><span class="lineno">  144</span> </div>
-<div class="line"><span class="lineno">  145</span>  <span class="keywordflow">return</span> Hist;</div>
-<div class="line"><span class="lineno">  146</span>}</div>
+<p class="definition">Definition at line <a class="el" href="HistogramUtils_8h_source.html#l00139">139</a> of file <a class="el" href="HistogramUtils_8h_source.html">HistogramUtils.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  139</span>                                                                                   {</div>
+<div class="line"><span class="lineno">  140</span>  std::string cloneName = name.empty() ? obj-&gt;GetName() : name;</div>
+<div class="line"><span class="lineno">  141</span> </div>
+<div class="line"><span class="lineno">  142</span>  std::unique_ptr&lt;ObjectType&gt; Hist(<span class="keyword">static_cast&lt;</span>ObjectType*<span class="keyword">&gt;</span>(obj-&gt;Clone(cloneName.c_str())));</div>
+<div class="line"><span class="lineno">  143</span>  <span class="comment">// Disable ROOT memory management because it causes lot of headache especially as smart pointers are much smarter</span></div>
+<div class="line"><span class="lineno">  144</span>  Hist-&gt;SetDirectory(<span class="keyword">nullptr</span>);</div>
+<div class="line"><span class="lineno">  145</span> </div>
+<div class="line"><span class="lineno">  146</span>  <span class="keywordflow">return</span> Hist;</div>
+<div class="line"><span class="lineno">  147</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -497,36 +606,42 @@ template&lt;typename ObjectType &gt; </div>
 </div><div class="memdoc">
 
 <p>KS: Yaml emitter has problem and drops "", if you have special signs in you like * then there is problem. This bit hacky code adds these "". </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">yamlStr</td><td>The YAML string to be processed (modified in-place). </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p class="definition">Definition at line <a class="el" href="ParameterHandlerUtils_8h_source.html#l00150">150</a> of file <a class="el" href="ParameterHandlerUtils_8h_source.html">ParameterHandlerUtils.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  150</span>                                                     {</div>
-<div class="line"><span class="lineno">  151</span><span class="comment">// *************************************</span></div>
-<div class="line"><span class="lineno">  152</span>  std::stringstream input(yamlStr);</div>
-<div class="line"><span class="lineno">  153</span>  std::string line;</div>
-<div class="line"><span class="lineno">  154</span>  std::string fixedYaml;</div>
-<div class="line"><span class="lineno">  155</span>  std::regex sampleNamesRegex(R<span class="stringliteral">&quot;(SampleNames:\s*\[([^\]]+)\])&quot;);</span></div>
-<div class="line"><span class="lineno">  156</span><span class="stringliteral"></span> </div>
-<div class="line"><span class="lineno">  157</span><span class="stringliteral">  </span><span class="keywordflow">while</span> (std::getline(input, line)) {</div>
-<div class="line"><span class="lineno">  158</span>    std::smatch match;</div>
-<div class="line"><span class="lineno">  159</span>    <span class="keywordflow">if</span> (std::regex_search(line, match, sampleNamesRegex)) {</div>
-<div class="line"><span class="lineno">  160</span>      std::string contents = match[1];  <span class="comment">// inside the brackets</span></div>
-<div class="line"><span class="lineno">  161</span>      std::stringstream ss(contents);</div>
-<div class="line"><span class="lineno">  162</span>      std::string item;</div>
-<div class="line"><span class="lineno">  163</span>      std::vector&lt;std::string&gt; quotedItems;</div>
-<div class="line"><span class="lineno">  164</span> </div>
-<div class="line"><span class="lineno">  165</span>      <span class="keywordflow">while</span> (std::getline(ss, item, <span class="charliteral">&#39;,&#39;</span>)) {</div>
-<div class="line"><span class="lineno">  166</span>        item = std::regex_replace(item, std::regex(R<span class="stringliteral">&quot;(^\s+|\s+$)&quot;), </span><span class="stringliteral">&quot;&quot;</span>); <span class="comment">// trim</span></div>
-<div class="line"><span class="lineno">  167</span>        quotedItems.push_back(<span class="stringliteral">&quot;\&quot;&quot;</span> + item + <span class="stringliteral">&quot;\&quot;&quot;</span>);</div>
-<div class="line"><span class="lineno">  168</span>      }</div>
-<div class="line"><span class="lineno">  169</span> </div>
-<div class="line"><span class="lineno">  170</span>      std::string replacement = <span class="stringliteral">&quot;SampleNames: [&quot;</span> + fmt::format(<span class="stringliteral">&quot;{}&quot;</span>, fmt::join(quotedItems, <span class="stringliteral">&quot;, &quot;</span>)) + <span class="stringliteral">&quot;]&quot;</span>;</div>
-<div class="line"><span class="lineno">  171</span>      line = std::regex_replace(line, sampleNamesRegex, replacement);</div>
-<div class="line"><span class="lineno">  172</span>    }</div>
-<div class="line"><span class="lineno">  173</span>    fixedYaml += line + <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><span class="lineno">  174</span>  }</div>
-<div class="line"><span class="lineno">  175</span> </div>
-<div class="line"><span class="lineno">  176</span>  yamlStr = fixedYaml;</div>
-<div class="line"><span class="lineno">  177</span>}</div>
+<p class="definition">Definition at line <a class="el" href="ParameterHandlerUtils_8h_source.html#l00152">152</a> of file <a class="el" href="ParameterHandlerUtils_8h_source.html">ParameterHandlerUtils.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  152</span>                                                     {</div>
+<div class="line"><span class="lineno">  153</span><span class="comment">// *************************************</span></div>
+<div class="line"><span class="lineno">  154</span>  std::stringstream input(yamlStr);</div>
+<div class="line"><span class="lineno">  155</span>  std::string line;</div>
+<div class="line"><span class="lineno">  156</span>  std::string fixedYaml;</div>
+<div class="line"><span class="lineno">  157</span>  std::regex sampleNamesRegex(R<span class="stringliteral">&quot;(SampleNames:\s*\[([^\]]+)\])&quot;);</span></div>
+<div class="line"><span class="lineno">  158</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  159</span><span class="stringliteral">  </span><span class="keywordflow">while</span> (std::getline(input, line)) {</div>
+<div class="line"><span class="lineno">  160</span>    std::smatch match;</div>
+<div class="line"><span class="lineno">  161</span>    <span class="keywordflow">if</span> (std::regex_search(line, match, sampleNamesRegex)) {</div>
+<div class="line"><span class="lineno">  162</span>      std::string contents = match[1];  <span class="comment">// inside the brackets</span></div>
+<div class="line"><span class="lineno">  163</span>      std::stringstream ss(contents);</div>
+<div class="line"><span class="lineno">  164</span>      std::string item;</div>
+<div class="line"><span class="lineno">  165</span>      std::vector&lt;std::string&gt; quotedItems;</div>
+<div class="line"><span class="lineno">  166</span> </div>
+<div class="line"><span class="lineno">  167</span>      <span class="keywordflow">while</span> (std::getline(ss, item, <span class="charliteral">&#39;,&#39;</span>)) {</div>
+<div class="line"><span class="lineno">  168</span>        item = std::regex_replace(item, std::regex(R<span class="stringliteral">&quot;(^\s+|\s+$)&quot;), </span><span class="stringliteral">&quot;&quot;</span>); <span class="comment">// trim</span></div>
+<div class="line"><span class="lineno">  169</span>        quotedItems.push_back(<span class="stringliteral">&quot;\&quot;&quot;</span> + item + <span class="stringliteral">&quot;\&quot;&quot;</span>);</div>
+<div class="line"><span class="lineno">  170</span>      }</div>
+<div class="line"><span class="lineno">  171</span> </div>
+<div class="line"><span class="lineno">  172</span>      std::string replacement = <span class="stringliteral">&quot;SampleNames: [&quot;</span> + fmt::format(<span class="stringliteral">&quot;{}&quot;</span>, fmt::join(quotedItems, <span class="stringliteral">&quot;, &quot;</span>)) + <span class="stringliteral">&quot;]&quot;</span>;</div>
+<div class="line"><span class="lineno">  173</span>      line = std::regex_replace(line, sampleNamesRegex, replacement);</div>
+<div class="line"><span class="lineno">  174</span>    }</div>
+<div class="line"><span class="lineno">  175</span>    fixedYaml += line + <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><span class="lineno">  176</span>  }</div>
+<div class="line"><span class="lineno">  177</span> </div>
+<div class="line"><span class="lineno">  178</span>  yamlStr = fixedYaml;</div>
+<div class="line"><span class="lineno">  179</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -574,14 +689,93 @@ template&lt;typename T &gt; </div>
 
 <p>Function template for fused multiply-add. </p>
 
-<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00035">35</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   35</span>                                    {</div>
-<div class="line"><span class="lineno">   36</span><span class="preprocessor">    #ifdef _LOW_MEMORY_STRUCTS_</span></div>
-<div class="line"><span class="lineno">   37</span>    <span class="keywordflow">return</span> std::fmaf(x, y, z);</div>
-<div class="line"><span class="lineno">   38</span><span class="preprocessor">    #else</span></div>
-<div class="line"><span class="lineno">   39</span>    <span class="keywordflow">return</span> std::fma(x, y, z);</div>
-<div class="line"><span class="lineno">   40</span><span class="preprocessor">    #endif</span></div>
-<div class="line"><span class="lineno">   41</span>  }</div>
+<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00038">38</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   38</span>                                    {</div>
+<div class="line"><span class="lineno">   39</span><span class="preprocessor">    #ifdef _LOW_MEMORY_STRUCTS_</span></div>
+<div class="line"><span class="lineno">   40</span>    <span class="keywordflow">return</span> std::fmaf(x, y, z);</div>
+<div class="line"><span class="lineno">   41</span><span class="preprocessor">    #else</span></div>
+<div class="line"><span class="lineno">   42</span>    <span class="keywordflow">return</span> std::fma(x, y, z);</div>
+<div class="line"><span class="lineno">   43</span><span class="preprocessor">    #endif</span></div>
+<div class="line"><span class="lineno">   44</span>  }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a96f1a7786873c4d04e8a16d42d6c46a1" name="a96f1a7786873c4d04e8a16d42d6c46a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96f1a7786873c4d04e8a16d42d6c46a1">&#9670;&#160;</a></span>GetCholeskyDecomposedMatrix()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::vector&lt; double &gt; &gt; M3::GetCholeskyDecomposedMatrix </td>
+          <td>(</td>
+          <td class="paramtype">const TMatrixDSym &amp;&#160;</td>
+          <td class="paramname"><em>matrix</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>matrixName</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes Cholesky decomposition of a symmetric positive definite matrix using custom function which can be even 20 times faster. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">matrix</td><td>Input symmetric positive definite matrix </td></tr>
+    <tr><td class="paramname">matrixName</td><td>Identifier for error reporting </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="ParameterHandlerUtils_8h_source.html#l00462">462</a> of file <a class="el" href="ParameterHandlerUtils_8h_source.html">ParameterHandlerUtils.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  462</span>                                                                                                                        {</div>
+<div class="line"><span class="lineno">  463</span><span class="comment">// *************************************</span></div>
+<div class="line"><span class="lineno">  464</span>  <span class="keyword">const</span> Int_t n = matrix.GetNrows();</div>
+<div class="line"><span class="lineno">  465</span>  std::vector&lt;std::vector&lt;double&gt;&gt; L(n, std::vector&lt;double&gt;(n, 0.0));</div>
+<div class="line"><span class="lineno">  466</span> </div>
+<div class="line"><span class="lineno">  467</span>  <span class="keywordflow">for</span> (Int_t j = 0; j &lt; n; ++j) {</div>
+<div class="line"><span class="lineno">  468</span>    <span class="comment">// Compute diagonal element (must be serial)</span></div>
+<div class="line"><span class="lineno">  469</span>    <span class="keywordtype">double</span> sum_diag = matrix(j, j);</div>
+<div class="line"><span class="lineno">  470</span>    <span class="keywordflow">for</span> (Int_t k = 0; k &lt; j; ++k) {</div>
+<div class="line"><span class="lineno">  471</span>      sum_diag -= L[j][k] * L[j][k];</div>
+<div class="line"><span class="lineno">  472</span>    }</div>
+<div class="line"><span class="lineno">  473</span>    <span class="keyword">const</span> <span class="keywordtype">double</span> tol = 1e-15;</div>
+<div class="line"><span class="lineno">  474</span>    <span class="keywordflow">if</span> (sum_diag &lt;= tol) {</div>
+<div class="line"><span class="lineno">  475</span>      <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;Cholesky decomposition failed for {} (non-positive diagonal)&quot;</span>, matrixName);</div>
+<div class="line"><span class="lineno">  476</span>      <span class="keywordflow">throw</span> <a class="code hl_class" href="classMaCh3Exception.html">MaCh3Exception</a>(__FILE__, __LINE__);</div>
+<div class="line"><span class="lineno">  477</span>    }</div>
+<div class="line"><span class="lineno">  478</span>    L[j][j] = std::sqrt(sum_diag);</div>
+<div class="line"><span class="lineno">  479</span> </div>
+<div class="line"><span class="lineno">  480</span>    <span class="comment">// Compute the rest of the column in parallel</span></div>
+<div class="line"><span class="lineno">  481</span><span class="preprocessor">    #ifdef MULTITHREAD</span></div>
+<div class="line"><span class="lineno">  482</span><span class="preprocessor">    #pragma omp parallel for</span></div>
+<div class="line"><span class="lineno">  483</span><span class="preprocessor">    #endif</span></div>
+<div class="line"><span class="lineno">  484</span>    <span class="keywordflow">for</span> (Int_t i = j + 1; i &lt; n; ++i) {</div>
+<div class="line"><span class="lineno">  485</span>      <span class="keywordtype">double</span> sum = matrix(i, j);</div>
+<div class="line"><span class="lineno">  486</span>      <span class="keywordflow">for</span> (Int_t k = 0; k &lt; j; ++k) {</div>
+<div class="line"><span class="lineno">  487</span>        sum -= L[i][k] * L[j][k];</div>
+<div class="line"><span class="lineno">  488</span>      }</div>
+<div class="line"><span class="lineno">  489</span>      L[i][j] = sum / L[j][j];</div>
+<div class="line"><span class="lineno">  490</span>    }</div>
+<div class="line"><span class="lineno">  491</span>  }</div>
+<div class="line"><span class="lineno">  492</span>  <span class="keywordflow">return</span> L;</div>
+<div class="line"><span class="lineno">  493</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -611,42 +805,42 @@ template&lt;typename T &gt; </div>
 
 <p>KS: We store configuration macros inside the chain. In the past, multiple configs were stored, which required error-prone hardcoding like "Config_xsec_cov". Therefore, this code maintains backward compatibility by checking the number of macros present and using a hardcoded name only if necessary. </p>
 
-<p class="definition">Definition at line <a class="el" href="ParameterHandlerUtils_8h_source.html#l00366">366</a> of file <a class="el" href="ParameterHandlerUtils_8h_source.html">ParameterHandlerUtils.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  366</span>                                                                     {</div>
-<div class="line"><span class="lineno">  367</span><span class="comment">// *************************************</span></div>
-<div class="line"><span class="lineno">  368</span>  <span class="keywordflow">if</span> (!CovarianceFolder) {</div>
-<div class="line"><span class="lineno">  369</span>    <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;Null TDirectory passed to {}&quot;</span>, __func__);</div>
-<div class="line"><span class="lineno">  370</span>    <span class="keywordflow">throw</span> <a class="code hl_class" href="classMaCh3Exception.html">MaCh3Exception</a>(__FILE__, __LINE__);</div>
-<div class="line"><span class="lineno">  371</span>  }</div>
-<div class="line"><span class="lineno">  372</span> </div>
-<div class="line"><span class="lineno">  373</span>  TMacro* foundMacro = <span class="keyword">nullptr</span>;</div>
-<div class="line"><span class="lineno">  374</span>  <span class="keywordtype">int</span> macroCount = 0;</div>
-<div class="line"><span class="lineno">  375</span> </div>
-<div class="line"><span class="lineno">  376</span>  TIter next(CovarianceFolder-&gt;GetListOfKeys());</div>
-<div class="line"><span class="lineno">  377</span>  TKey* key;</div>
-<div class="line"><span class="lineno">  378</span>  <span class="keywordflow">while</span> ((key = <span class="keyword">dynamic_cast&lt;</span>TKey*<span class="keyword">&gt;</span>(next()))) {</div>
-<div class="line"><span class="lineno">  379</span>    <span class="keywordflow">if</span> (std::string(key-&gt;GetClassName()) == <span class="stringliteral">&quot;TMacro&quot;</span>) {</div>
-<div class="line"><span class="lineno">  380</span>      ++macroCount;</div>
-<div class="line"><span class="lineno">  381</span>      <span class="keywordflow">if</span> (macroCount == 1) {</div>
-<div class="line"><span class="lineno">  382</span>        foundMacro = <span class="keyword">dynamic_cast&lt;</span>TMacro*<span class="keyword">&gt;</span>(key-&gt;ReadObj());</div>
-<div class="line"><span class="lineno">  383</span>      }</div>
-<div class="line"><span class="lineno">  384</span>    }</div>
-<div class="line"><span class="lineno">  385</span>  }</div>
-<div class="line"><span class="lineno">  386</span> </div>
-<div class="line"><span class="lineno">  387</span>  <span class="keywordflow">if</span> (macroCount == 1 &amp;&amp; foundMacro) {</div>
-<div class="line"><span class="lineno">  388</span>    <a class="code hl_define" href="MaCh3Logger_8h.html#a95fa4dffc648e4c5536c9292c2bdcac3">MACH3LOG_INFO</a>(<span class="stringliteral">&quot;Found single TMacro in directory: using it.&quot;</span>);</div>
-<div class="line"><span class="lineno">  389</span>    <span class="keywordflow">return</span> foundMacro;</div>
-<div class="line"><span class="lineno">  390</span>  } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  391</span>    <a class="code hl_define" href="MaCh3Logger_8h.html#ad5b2eb6377721e3ac95def22c2386bb1">MACH3LOG_WARN</a>(<span class="stringliteral">&quot;Found {} TMacro objects. Using hardcoded macro name: Config_xsec_cov.&quot;</span>, macroCount);</div>
-<div class="line"><span class="lineno">  392</span>    TMacro* fallback = CovarianceFolder-&gt;Get&lt;TMacro&gt;(<span class="stringliteral">&quot;Config_xsec_cov&quot;</span>);</div>
-<div class="line"><span class="lineno">  393</span>    <span class="keywordflow">if</span> (!fallback) {</div>
-<div class="line"><span class="lineno">  394</span>      <a class="code hl_define" href="MaCh3Logger_8h.html#ad5b2eb6377721e3ac95def22c2386bb1">MACH3LOG_WARN</a>(<span class="stringliteral">&quot;Fallback macro &#39;Config_xsec_cov&#39; not found in directory.&quot;</span>);</div>
-<div class="line"><span class="lineno">  395</span>    }</div>
-<div class="line"><span class="lineno">  396</span>    <span class="keywordflow">return</span> fallback;</div>
-<div class="line"><span class="lineno">  397</span>  }</div>
-<div class="line"><span class="lineno">  398</span>}</div>
-<div class="ttc" id="aMaCh3Logger_8h_html_a95fa4dffc648e4c5536c9292c2bdcac3"><div class="ttname"><a href="MaCh3Logger_8h.html#a95fa4dffc648e4c5536c9292c2bdcac3">MACH3LOG_INFO</a></div><div class="ttdeci">#define MACH3LOG_INFO</div><div class="ttdef"><b>Definition:</b> <a href="MaCh3Logger_8h_source.html#l00023">MaCh3Logger.h:23</a></div></div>
-<div class="ttc" id="aMaCh3Logger_8h_html_ad5b2eb6377721e3ac95def22c2386bb1"><div class="ttname"><a href="MaCh3Logger_8h.html#ad5b2eb6377721e3ac95def22c2386bb1">MACH3LOG_WARN</a></div><div class="ttdeci">#define MACH3LOG_WARN</div><div class="ttdef"><b>Definition:</b> <a href="MaCh3Logger_8h_source.html#l00024">MaCh3Logger.h:24</a></div></div>
+<p class="definition">Definition at line <a class="el" href="ParameterHandlerUtils_8h_source.html#l00382">382</a> of file <a class="el" href="ParameterHandlerUtils_8h_source.html">ParameterHandlerUtils.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  382</span>                                                                     {</div>
+<div class="line"><span class="lineno">  383</span><span class="comment">// *************************************</span></div>
+<div class="line"><span class="lineno">  384</span>  <span class="keywordflow">if</span> (!CovarianceFolder) {</div>
+<div class="line"><span class="lineno">  385</span>    <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;Null TDirectory passed to {}&quot;</span>, __func__);</div>
+<div class="line"><span class="lineno">  386</span>    <span class="keywordflow">throw</span> <a class="code hl_class" href="classMaCh3Exception.html">MaCh3Exception</a>(__FILE__, __LINE__);</div>
+<div class="line"><span class="lineno">  387</span>  }</div>
+<div class="line"><span class="lineno">  388</span> </div>
+<div class="line"><span class="lineno">  389</span>  TMacro* foundMacro = <span class="keyword">nullptr</span>;</div>
+<div class="line"><span class="lineno">  390</span>  <span class="keywordtype">int</span> macroCount = 0;</div>
+<div class="line"><span class="lineno">  391</span> </div>
+<div class="line"><span class="lineno">  392</span>  TIter next(CovarianceFolder-&gt;GetListOfKeys());</div>
+<div class="line"><span class="lineno">  393</span>  TKey* key;</div>
+<div class="line"><span class="lineno">  394</span>  <span class="keywordflow">while</span> ((key = <span class="keyword">dynamic_cast&lt;</span>TKey*<span class="keyword">&gt;</span>(next()))) {</div>
+<div class="line"><span class="lineno">  395</span>    <span class="keywordflow">if</span> (std::string(key-&gt;GetClassName()) == <span class="stringliteral">&quot;TMacro&quot;</span>) {</div>
+<div class="line"><span class="lineno">  396</span>      ++macroCount;</div>
+<div class="line"><span class="lineno">  397</span>      <span class="keywordflow">if</span> (macroCount == 1) {</div>
+<div class="line"><span class="lineno">  398</span>        foundMacro = <span class="keyword">dynamic_cast&lt;</span>TMacro*<span class="keyword">&gt;</span>(key-&gt;ReadObj());</div>
+<div class="line"><span class="lineno">  399</span>      }</div>
+<div class="line"><span class="lineno">  400</span>    }</div>
+<div class="line"><span class="lineno">  401</span>  }</div>
+<div class="line"><span class="lineno">  402</span> </div>
+<div class="line"><span class="lineno">  403</span>  <span class="keywordflow">if</span> (macroCount == 1 &amp;&amp; foundMacro) {</div>
+<div class="line"><span class="lineno">  404</span>    <a class="code hl_define" href="MaCh3Logger_8h.html#a95fa4dffc648e4c5536c9292c2bdcac3">MACH3LOG_INFO</a>(<span class="stringliteral">&quot;Found single TMacro in directory: using it.&quot;</span>);</div>
+<div class="line"><span class="lineno">  405</span>    <span class="keywordflow">return</span> foundMacro;</div>
+<div class="line"><span class="lineno">  406</span>  } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  407</span>    <a class="code hl_define" href="MaCh3Logger_8h.html#ad5b2eb6377721e3ac95def22c2386bb1">MACH3LOG_WARN</a>(<span class="stringliteral">&quot;Found {} TMacro objects. Using hardcoded macro name: Config_xsec_cov.&quot;</span>, macroCount);</div>
+<div class="line"><span class="lineno">  408</span>    TMacro* fallback = CovarianceFolder-&gt;Get&lt;TMacro&gt;(<span class="stringliteral">&quot;Config_xsec_cov&quot;</span>);</div>
+<div class="line"><span class="lineno">  409</span>    <span class="keywordflow">if</span> (!fallback) {</div>
+<div class="line"><span class="lineno">  410</span>      <a class="code hl_define" href="MaCh3Logger_8h.html#ad5b2eb6377721e3ac95def22c2386bb1">MACH3LOG_WARN</a>(<span class="stringliteral">&quot;Fallback macro &#39;Config_xsec_cov&#39; not found in directory.&quot;</span>);</div>
+<div class="line"><span class="lineno">  411</span>    }</div>
+<div class="line"><span class="lineno">  412</span>    <span class="keywordflow">return</span> fallback;</div>
+<div class="line"><span class="lineno">  413</span>  }</div>
+<div class="line"><span class="lineno">  414</span>}</div>
+<div class="ttc" id="aMaCh3Logger_8h_html_a95fa4dffc648e4c5536c9292c2bdcac3"><div class="ttname"><a href="MaCh3Logger_8h.html#a95fa4dffc648e4c5536c9292c2bdcac3">MACH3LOG_INFO</a></div><div class="ttdeci">#define MACH3LOG_INFO</div><div class="ttdef"><b>Definition:</b> <a href="MaCh3Logger_8h_source.html#l00025">MaCh3Logger.h:25</a></div></div>
+<div class="ttc" id="aMaCh3Logger_8h_html_ad5b2eb6377721e3ac95def22c2386bb1"><div class="ttname"><a href="MaCh3Logger_8h.html#ad5b2eb6377721e3ac95def22c2386bb1">MACH3LOG_WARN</a></div><div class="ttdeci">#define MACH3LOG_WARN</div><div class="ttdef"><b>Definition:</b> <a href="MaCh3Logger_8h_source.html#l00026">MaCh3Logger.h:26</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -680,41 +874,41 @@ template&lt;typename T &gt; </div>
 <li>Otherwise falling back to the hardcoded path. This avoids error-prone assumptions while supporting both old and new formats. </li>
 </ul>
 
-<p class="definition">Definition at line <a class="el" href="ParameterHandlerUtils_8h_source.html#l00407">407</a> of file <a class="el" href="ParameterHandlerUtils_8h_source.html">ParameterHandlerUtils.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  407</span>                                                                {</div>
-<div class="line"><span class="lineno">  408</span><span class="comment">// *************************************</span></div>
-<div class="line"><span class="lineno">  409</span>  <span class="keywordflow">if</span> (!TempFile) {</div>
-<div class="line"><span class="lineno">  410</span>    <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;Null TDirectory passed to {}.&quot;</span>, __func__);</div>
-<div class="line"><span class="lineno">  411</span>    <span class="keywordflow">throw</span> <a class="code hl_class" href="classMaCh3Exception.html">MaCh3Exception</a>(__FILE__, __LINE__);</div>
-<div class="line"><span class="lineno">  412</span>  }</div>
-<div class="line"><span class="lineno">  413</span> </div>
-<div class="line"><span class="lineno">  414</span>  TMatrixDSym* foundMatrix = <span class="keyword">nullptr</span>;</div>
-<div class="line"><span class="lineno">  415</span>  <span class="keywordtype">int</span> matrixCount = 0;</div>
-<div class="line"><span class="lineno">  416</span> </div>
-<div class="line"><span class="lineno">  417</span>  TIter next(TempFile-&gt;GetListOfKeys());</div>
-<div class="line"><span class="lineno">  418</span>  TKey* key;</div>
-<div class="line"><span class="lineno">  419</span>  <span class="keywordflow">while</span> ((key = <span class="keyword">dynamic_cast&lt;</span>TKey*<span class="keyword">&gt;</span>(next()))) {</div>
-<div class="line"><span class="lineno">  420</span>    std::string className = key-&gt;GetClassName();</div>
-<div class="line"><span class="lineno">  421</span>    <span class="keywordflow">if</span> (className.find(<span class="stringliteral">&quot;TMatrix&quot;</span>) != std::string::npos) {</div>
-<div class="line"><span class="lineno">  422</span>      ++matrixCount;</div>
-<div class="line"><span class="lineno">  423</span>      <span class="keywordflow">if</span> (matrixCount == 1) {</div>
-<div class="line"><span class="lineno">  424</span>        foundMatrix = <span class="keyword">dynamic_cast&lt;</span>TMatrixDSym*<span class="keyword">&gt;</span>(key-&gt;ReadObj());</div>
-<div class="line"><span class="lineno">  425</span>      }</div>
-<div class="line"><span class="lineno">  426</span>    }</div>
-<div class="line"><span class="lineno">  427</span>  }</div>
-<div class="line"><span class="lineno">  428</span> </div>
-<div class="line"><span class="lineno">  429</span>  <span class="keywordflow">if</span> (matrixCount == 1 &amp;&amp; foundMatrix) {</div>
-<div class="line"><span class="lineno">  430</span>    <a class="code hl_define" href="MaCh3Logger_8h.html#a95fa4dffc648e4c5536c9292c2bdcac3">MACH3LOG_INFO</a>(<span class="stringliteral">&quot;Found single TMatrixDSym in directory: using it.&quot;</span>);</div>
-<div class="line"><span class="lineno">  431</span>    <span class="keywordflow">return</span> foundMatrix;</div>
-<div class="line"><span class="lineno">  432</span>  } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  433</span>    <a class="code hl_define" href="MaCh3Logger_8h.html#ad5b2eb6377721e3ac95def22c2386bb1">MACH3LOG_WARN</a>(<span class="stringliteral">&quot;Found {} TMatrixDSym objects. Using hardcoded path: xsec_cov.&quot;</span>, matrixCount);</div>
-<div class="line"><span class="lineno">  434</span>    TMatrixDSym* fallback = TempFile-&gt;Get&lt;TMatrixDSym&gt;(<span class="stringliteral">&quot;xsec_cov&quot;</span>);</div>
-<div class="line"><span class="lineno">  435</span>    <span class="keywordflow">if</span> (!fallback) {</div>
-<div class="line"><span class="lineno">  436</span>      <a class="code hl_define" href="MaCh3Logger_8h.html#ad5b2eb6377721e3ac95def22c2386bb1">MACH3LOG_WARN</a>(<span class="stringliteral">&quot;Fallback matrix &#39;xsec_cov&#39; not found.&quot;</span>);</div>
-<div class="line"><span class="lineno">  437</span>    }</div>
-<div class="line"><span class="lineno">  438</span>    <span class="keywordflow">return</span> fallback;</div>
-<div class="line"><span class="lineno">  439</span>  }</div>
-<div class="line"><span class="lineno">  440</span>}</div>
+<p class="definition">Definition at line <a class="el" href="ParameterHandlerUtils_8h_source.html#l00423">423</a> of file <a class="el" href="ParameterHandlerUtils_8h_source.html">ParameterHandlerUtils.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  423</span>                                                                {</div>
+<div class="line"><span class="lineno">  424</span><span class="comment">// *************************************</span></div>
+<div class="line"><span class="lineno">  425</span>  <span class="keywordflow">if</span> (!TempFile) {</div>
+<div class="line"><span class="lineno">  426</span>    <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;Null TDirectory passed to {}.&quot;</span>, __func__);</div>
+<div class="line"><span class="lineno">  427</span>    <span class="keywordflow">throw</span> <a class="code hl_class" href="classMaCh3Exception.html">MaCh3Exception</a>(__FILE__, __LINE__);</div>
+<div class="line"><span class="lineno">  428</span>  }</div>
+<div class="line"><span class="lineno">  429</span> </div>
+<div class="line"><span class="lineno">  430</span>  TMatrixDSym* foundMatrix = <span class="keyword">nullptr</span>;</div>
+<div class="line"><span class="lineno">  431</span>  <span class="keywordtype">int</span> matrixCount = 0;</div>
+<div class="line"><span class="lineno">  432</span> </div>
+<div class="line"><span class="lineno">  433</span>  TIter next(TempFile-&gt;GetListOfKeys());</div>
+<div class="line"><span class="lineno">  434</span>  TKey* key;</div>
+<div class="line"><span class="lineno">  435</span>  <span class="keywordflow">while</span> ((key = <span class="keyword">dynamic_cast&lt;</span>TKey*<span class="keyword">&gt;</span>(next()))) {</div>
+<div class="line"><span class="lineno">  436</span>    std::string className = key-&gt;GetClassName();</div>
+<div class="line"><span class="lineno">  437</span>    <span class="keywordflow">if</span> (className.find(<span class="stringliteral">&quot;TMatrix&quot;</span>) != std::string::npos) {</div>
+<div class="line"><span class="lineno">  438</span>      ++matrixCount;</div>
+<div class="line"><span class="lineno">  439</span>      <span class="keywordflow">if</span> (matrixCount == 1) {</div>
+<div class="line"><span class="lineno">  440</span>        foundMatrix = <span class="keyword">dynamic_cast&lt;</span>TMatrixDSym*<span class="keyword">&gt;</span>(key-&gt;ReadObj());</div>
+<div class="line"><span class="lineno">  441</span>      }</div>
+<div class="line"><span class="lineno">  442</span>    }</div>
+<div class="line"><span class="lineno">  443</span>  }</div>
+<div class="line"><span class="lineno">  444</span> </div>
+<div class="line"><span class="lineno">  445</span>  <span class="keywordflow">if</span> (matrixCount == 1 &amp;&amp; foundMatrix) {</div>
+<div class="line"><span class="lineno">  446</span>    <a class="code hl_define" href="MaCh3Logger_8h.html#a95fa4dffc648e4c5536c9292c2bdcac3">MACH3LOG_INFO</a>(<span class="stringliteral">&quot;Found single TMatrixDSym in directory: using it.&quot;</span>);</div>
+<div class="line"><span class="lineno">  447</span>    <span class="keywordflow">return</span> foundMatrix;</div>
+<div class="line"><span class="lineno">  448</span>  } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  449</span>    <a class="code hl_define" href="MaCh3Logger_8h.html#ad5b2eb6377721e3ac95def22c2386bb1">MACH3LOG_WARN</a>(<span class="stringliteral">&quot;Found {} TMatrixDSym objects. Using hardcoded path: xsec_cov.&quot;</span>, matrixCount);</div>
+<div class="line"><span class="lineno">  450</span>    TMatrixDSym* fallback = TempFile-&gt;Get&lt;TMatrixDSym&gt;(<span class="stringliteral">&quot;xsec_cov&quot;</span>);</div>
+<div class="line"><span class="lineno">  451</span>    <span class="keywordflow">if</span> (!fallback) {</div>
+<div class="line"><span class="lineno">  452</span>      <a class="code hl_define" href="MaCh3Logger_8h.html#ad5b2eb6377721e3ac95def22c2386bb1">MACH3LOG_WARN</a>(<span class="stringliteral">&quot;Fallback matrix &#39;xsec_cov&#39; not found.&quot;</span>);</div>
+<div class="line"><span class="lineno">  453</span>    }</div>
+<div class="line"><span class="lineno">  454</span>    <span class="keywordflow">return</span> fallback;</div>
+<div class="line"><span class="lineno">  455</span>  }</div>
+<div class="line"><span class="lineno">  456</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -735,15 +929,15 @@ template&lt;typename T &gt; </div>
 
 <p>number of threads which we need for example for TRandom3 </p>
 
-<p class="definition">Definition at line <a class="el" href="Monitor_8cpp_source.html#l00322">322</a> of file <a class="el" href="Monitor_8cpp_source.html">Monitor.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  322</span>                  {</div>
-<div class="line"><span class="lineno">  323</span><span class="comment">// ***************************************************************************</span></div>
-<div class="line"><span class="lineno">  324</span><span class="preprocessor">  #ifdef MULTITHREAD</span></div>
-<div class="line"><span class="lineno">  325</span>  <span class="keywordflow">return</span> omp_get_max_threads();</div>
-<div class="line"><span class="lineno">  326</span><span class="preprocessor">  #else</span></div>
-<div class="line"><span class="lineno">  327</span>  <span class="keywordflow">return</span> 1;</div>
-<div class="line"><span class="lineno">  328</span><span class="preprocessor">  #endif</span></div>
-<div class="line"><span class="lineno">  329</span>}</div>
+<p class="definition">Definition at line <a class="el" href="Monitor_8cpp_source.html#l00357">357</a> of file <a class="el" href="Monitor_8cpp_source.html">Monitor.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  357</span>                  {</div>
+<div class="line"><span class="lineno">  358</span><span class="comment">// ***************************************************************************</span></div>
+<div class="line"><span class="lineno">  359</span><span class="preprocessor">  #ifdef MULTITHREAD</span></div>
+<div class="line"><span class="lineno">  360</span>  <span class="keywordflow">return</span> omp_get_max_threads();</div>
+<div class="line"><span class="lineno">  361</span><span class="preprocessor">  #else</span></div>
+<div class="line"><span class="lineno">  362</span>  <span class="keywordflow">return</span> 1;</div>
+<div class="line"><span class="lineno">  363</span><span class="preprocessor">  #endif</span></div>
+<div class="line"><span class="lineno">  364</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -772,19 +966,19 @@ template&lt;typename T &gt; </div>
 
 <p>thread index inside parallel loop </p>
 
-<p class="definition">Definition at line <a class="el" href="Monitor_8h_source.html#l00082">82</a> of file <a class="el" href="Monitor_8h_source.html">Monitor.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   82</span>                              {</div>
-<div class="line"><span class="lineno">   83</span><span class="preprocessor">    #ifdef MULTITHREAD</span></div>
-<div class="line"><span class="lineno">   84</span>    <span class="keywordflow">return</span> omp_get_thread_num();</div>
-<div class="line"><span class="lineno">   85</span><span class="preprocessor">    #else</span></div>
-<div class="line"><span class="lineno">   86</span>    <span class="keywordflow">return</span> 0;</div>
-<div class="line"><span class="lineno">   87</span><span class="preprocessor">    #endif</span></div>
-<div class="line"><span class="lineno">   88</span>  }</div>
+<p class="definition">Definition at line <a class="el" href="Monitor_8h_source.html#l00086">86</a> of file <a class="el" href="Monitor_8h_source.html">Monitor.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   86</span>                              {</div>
+<div class="line"><span class="lineno">   87</span><span class="preprocessor">    #ifdef MULTITHREAD</span></div>
+<div class="line"><span class="lineno">   88</span>    <span class="keywordflow">return</span> omp_get_thread_num();</div>
+<div class="line"><span class="lineno">   89</span><span class="preprocessor">    #else</span></div>
+<div class="line"><span class="lineno">   90</span>    <span class="keywordflow">return</span> 0;</div>
+<div class="line"><span class="lineno">   91</span><span class="preprocessor">    #endif</span></div>
+<div class="line"><span class="lineno">   92</span>  }</div>
 </div><!-- fragment -->
 </div>
 </div>
-<a id="a9253dc67fd53775fd49d2fe47c4a2203" name="a9253dc67fd53775fd49d2fe47c4a2203"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9253dc67fd53775fd49d2fe47c4a2203">&#9670;&#160;</a></span>MakeCorrelationMatrix()</h2>
+<a id="a50bc6511eef3b80c8ef0a1cbb45a4eff" name="a50bc6511eef3b80c8ef0a1cbb45a4eff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a50bc6511eef3b80c8ef0a1cbb45a4eff">&#9670;&#160;</a></span>MakeCorrelationMatrix()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -819,6 +1013,12 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>OutYAMLName</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
           <td class="paramname"><em>FancyNames</em> = <code>{}</code>&#160;</td>
         </tr>
@@ -836,108 +1036,189 @@ template&lt;typename T &gt; </div>
 </div><div class="memdoc">
 
 <p>KS: Replace correlation matrix and tune values in YAML covariance matrix. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">root</td><td>The root YAML node to be updated. </td></tr>
+    <tr><td class="paramname">Values</td><td>The new values for each systematic. </td></tr>
+    <tr><td class="paramname">Errors</td><td>The new errors for each systematic. </td></tr>
+    <tr><td class="paramname">Correlation</td><td>The new correlation matrix (must be square and match Values size). </td></tr>
+    <tr><td class="paramname">OutYAMLName</td><td>The output filename for the updated YAML. </td></tr>
+    <tr><td class="paramname">FancyNames</td><td>Optional list of fancy names to match systematics (must match Values size if provided). </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p class="definition">Definition at line <a class="el" href="ParameterHandlerUtils_8h_source.html#l00256">256</a> of file <a class="el" href="ParameterHandlerUtils_8h_source.html">ParameterHandlerUtils.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  260</span>                                                                           {}) {</div>
-<div class="line"><span class="lineno">  261</span><span class="comment">// *************************************</span></div>
-<div class="line"><span class="lineno">  262</span>  <span class="keywordflow">if</span> (Values.size() != Errors.size() || Values.size() != Correlation.size()) {</div>
-<div class="line"><span class="lineno">  263</span>    <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;Size mismatch between Values, Errors, and Correlation matrix&quot;</span>);</div>
-<div class="line"><span class="lineno">  264</span>    <span class="keywordflow">throw</span> <a class="code hl_class" href="classMaCh3Exception.html">MaCh3Exception</a>(__FILE__, __LINE__);</div>
-<div class="line"><span class="lineno">  265</span>  }</div>
-<div class="line"><span class="lineno">  266</span> </div>
-<div class="line"><span class="lineno">  267</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; row : Correlation) {</div>
-<div class="line"><span class="lineno">  268</span>    <span class="keywordflow">if</span> (row.size() != Correlation.size()) {</div>
-<div class="line"><span class="lineno">  269</span>      <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;Correlation matrix is not square&quot;</span>);</div>
-<div class="line"><span class="lineno">  270</span>      <span class="keywordflow">throw</span> <a class="code hl_class" href="classMaCh3Exception.html">MaCh3Exception</a>(__FILE__, __LINE__);</div>
-<div class="line"><span class="lineno">  271</span>    }</div>
-<div class="line"><span class="lineno">  272</span>  }</div>
-<div class="line"><span class="lineno">  273</span> </div>
-<div class="line"><span class="lineno">  274</span>  YAML::Node NodeCopy = YAML::Clone(root);</div>
-<div class="line"><span class="lineno">  275</span>  YAML::Node systematics = NodeCopy[<span class="stringliteral">&quot;Systematics&quot;</span>];</div>
-<div class="line"><span class="lineno">  276</span> </div>
-<div class="line"><span class="lineno">  277</span>  <span class="keywordflow">if</span> (!systematics || !systematics.IsSequence()) {</div>
-<div class="line"><span class="lineno">  278</span>    <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;&#39;Systematics&#39; node is missing or not a sequence&quot;</span>);</div>
-<div class="line"><span class="lineno">  279</span>    <span class="keywordflow">throw</span> <a class="code hl_class" href="classMaCh3Exception.html">MaCh3Exception</a>(__FILE__, __LINE__);</div>
-<div class="line"><span class="lineno">  280</span>  }</div>
-<div class="line"><span class="lineno">  281</span> </div>
-<div class="line"><span class="lineno">  282</span>  <span class="keywordflow">if</span> (!FancyNames.empty() &amp;&amp; FancyNames.size() != Values.size()) {</div>
-<div class="line"><span class="lineno">  283</span>    <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;FancyNames size ({}) does not match Values size ({})&quot;</span>, FancyNames.size(), Values.size());</div>
-<div class="line"><span class="lineno">  284</span>    <span class="keywordflow">throw</span> <a class="code hl_class" href="classMaCh3Exception.html">MaCh3Exception</a>(__FILE__, __LINE__);</div>
+<p class="definition">Definition at line <a class="el" href="ParameterHandlerUtils_8h_source.html#l00268">268</a> of file <a class="el" href="ParameterHandlerUtils_8h_source.html">ParameterHandlerUtils.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  273</span>                                                                           {}) {</div>
+<div class="line"><span class="lineno">  274</span><span class="comment">// *************************************</span></div>
+<div class="line"><span class="lineno">  275</span>  <span class="keywordflow">if</span> (Values.size() != Errors.size() || Values.size() != Correlation.size()) {</div>
+<div class="line"><span class="lineno">  276</span>    <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;Size mismatch between Values, Errors, and Correlation matrix&quot;</span>);</div>
+<div class="line"><span class="lineno">  277</span>    <span class="keywordflow">throw</span> <a class="code hl_class" href="classMaCh3Exception.html">MaCh3Exception</a>(__FILE__, __LINE__);</div>
+<div class="line"><span class="lineno">  278</span>  }</div>
+<div class="line"><span class="lineno">  279</span> </div>
+<div class="line"><span class="lineno">  280</span>  <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; row : Correlation) {</div>
+<div class="line"><span class="lineno">  281</span>    <span class="keywordflow">if</span> (row.size() != Correlation.size()) {</div>
+<div class="line"><span class="lineno">  282</span>      <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;Correlation matrix is not square&quot;</span>);</div>
+<div class="line"><span class="lineno">  283</span>      <span class="keywordflow">throw</span> <a class="code hl_class" href="classMaCh3Exception.html">MaCh3Exception</a>(__FILE__, __LINE__);</div>
+<div class="line"><span class="lineno">  284</span>    }</div>
 <div class="line"><span class="lineno">  285</span>  }</div>
 <div class="line"><span class="lineno">  286</span> </div>
-<div class="line"><span class="lineno">  287</span>  <span class="comment">// Map from FancyName to Systematic node</span></div>
-<div class="line"><span class="lineno">  288</span>  std::unordered_map&lt;std::string, YAML::Node&gt; nameToNode;</div>
-<div class="line"><span class="lineno">  289</span>  <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; systematics.size(); ++i) {</div>
-<div class="line"><span class="lineno">  290</span>    YAML::Node syst = systematics[i][<span class="stringliteral">&quot;Systematic&quot;</span>];</div>
-<div class="line"><span class="lineno">  291</span>    <span class="keywordflow">if</span> (!syst || !syst[<span class="stringliteral">&quot;Names&quot;</span>] || !syst[<span class="stringliteral">&quot;Names&quot;</span>][<span class="stringliteral">&quot;FancyName&quot;</span>]) <span class="keywordflow">continue</span>;</div>
-<div class="line"><span class="lineno">  292</span>    std::string name = syst[<span class="stringliteral">&quot;Names&quot;</span>][<span class="stringliteral">&quot;FancyName&quot;</span>].as&lt;std::string&gt;();</div>
-<div class="line"><span class="lineno">  293</span>    nameToNode[name] = syst;</div>
-<div class="line"><span class="lineno">  294</span>  }</div>
-<div class="line"><span class="lineno">  295</span> </div>
-<div class="line"><span class="lineno">  296</span>  <span class="keywordflow">if</span> (!FancyNames.empty()) {</div>
-<div class="line"><span class="lineno">  297</span>    <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; FancyNames.size(); ++i) {</div>
-<div class="line"><span class="lineno">  298</span>      <span class="keyword">const</span> std::string&amp; name_i = FancyNames[i];</div>
-<div class="line"><span class="lineno">  299</span>      <span class="keyword">auto</span> it_i = nameToNode.find(name_i);</div>
-<div class="line"><span class="lineno">  300</span>      <span class="keywordflow">if</span> (it_i == nameToNode.end()) {</div>
-<div class="line"><span class="lineno">  301</span>        <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;Could not find FancyName &#39;{}&#39; in YAML&quot;</span>, name_i);</div>
-<div class="line"><span class="lineno">  302</span>        <span class="keywordflow">throw</span> <a class="code hl_class" href="classMaCh3Exception.html">MaCh3Exception</a>(__FILE__, __LINE__);</div>
-<div class="line"><span class="lineno">  303</span>      }</div>
-<div class="line"><span class="lineno">  304</span>      YAML::Node&amp; syst_i = it_i-&gt;second;</div>
-<div class="line"><span class="lineno">  305</span> </div>
-<div class="line"><span class="lineno">  306</span>      syst_i[<span class="stringliteral">&quot;ParameterValues&quot;</span>][<span class="stringliteral">&quot;PreFitValue&quot;</span>] = <a class="code hl_function" href="namespaceMaCh3Utils.html#a37d0c54de0b83b71393afca143ab1ec0">MaCh3Utils::FormatDouble</a>(Values[i], 4);</div>
-<div class="line"><span class="lineno">  307</span>      syst_i[<span class="stringliteral">&quot;Error&quot;</span>] = std::round(Errors[i] * 100.0) / 100.0;</div>
+<div class="line"><span class="lineno">  287</span>  YAML::Node NodeCopy = YAML::Clone(root);</div>
+<div class="line"><span class="lineno">  288</span>  YAML::Node systematics = NodeCopy[<span class="stringliteral">&quot;Systematics&quot;</span>];</div>
+<div class="line"><span class="lineno">  289</span> </div>
+<div class="line"><span class="lineno">  290</span>  <span class="keywordflow">if</span> (!systematics || !systematics.IsSequence()) {</div>
+<div class="line"><span class="lineno">  291</span>    <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;&#39;Systematics&#39; node is missing or not a sequence&quot;</span>);</div>
+<div class="line"><span class="lineno">  292</span>    <span class="keywordflow">throw</span> <a class="code hl_class" href="classMaCh3Exception.html">MaCh3Exception</a>(__FILE__, __LINE__);</div>
+<div class="line"><span class="lineno">  293</span>  }</div>
+<div class="line"><span class="lineno">  294</span> </div>
+<div class="line"><span class="lineno">  295</span>  <span class="keywordflow">if</span> (!FancyNames.empty() &amp;&amp; FancyNames.size() != Values.size()) {</div>
+<div class="line"><span class="lineno">  296</span>    <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;FancyNames size ({}) does not match Values size ({})&quot;</span>, FancyNames.size(), Values.size());</div>
+<div class="line"><span class="lineno">  297</span>    <span class="keywordflow">throw</span> <a class="code hl_class" href="classMaCh3Exception.html">MaCh3Exception</a>(__FILE__, __LINE__);</div>
+<div class="line"><span class="lineno">  298</span>  }</div>
+<div class="line"><span class="lineno">  299</span> </div>
+<div class="line"><span class="lineno">  300</span>  <span class="comment">// Map from FancyName to Systematic node</span></div>
+<div class="line"><span class="lineno">  301</span>  std::unordered_map&lt;std::string, YAML::Node&gt; nameToNode;</div>
+<div class="line"><span class="lineno">  302</span>  <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; systematics.size(); ++i) {</div>
+<div class="line"><span class="lineno">  303</span>    YAML::Node syst = systematics[i][<span class="stringliteral">&quot;Systematic&quot;</span>];</div>
+<div class="line"><span class="lineno">  304</span>    <span class="keywordflow">if</span> (!syst || !syst[<span class="stringliteral">&quot;Names&quot;</span>] || !syst[<span class="stringliteral">&quot;Names&quot;</span>][<span class="stringliteral">&quot;FancyName&quot;</span>]) <span class="keywordflow">continue</span>;</div>
+<div class="line"><span class="lineno">  305</span>    std::string name = syst[<span class="stringliteral">&quot;Names&quot;</span>][<span class="stringliteral">&quot;FancyName&quot;</span>].as&lt;std::string&gt;();</div>
+<div class="line"><span class="lineno">  306</span>    nameToNode[name] = syst;</div>
+<div class="line"><span class="lineno">  307</span>  }</div>
 <div class="line"><span class="lineno">  308</span> </div>
-<div class="line"><span class="lineno">  309</span>      YAML::Node correlationsNode = YAML::Node(YAML::NodeType::Sequence);</div>
-<div class="line"><span class="lineno">  310</span>      <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; FancyNames.size(); ++j) {</div>
-<div class="line"><span class="lineno">  311</span>        <span class="keywordflow">if</span> (i == j) <span class="keywordflow">continue</span>;</div>
-<div class="line"><span class="lineno">  312</span>        YAML::Node singleEntry;</div>
-<div class="line"><span class="lineno">  313</span>        singleEntry[FancyNames[j]] = <a class="code hl_function" href="namespaceMaCh3Utils.html#a37d0c54de0b83b71393afca143ab1ec0">MaCh3Utils::FormatDouble</a>(Correlation[i][j], 4);</div>
-<div class="line"><span class="lineno">  314</span>        correlationsNode.push_back(singleEntry);</div>
-<div class="line"><span class="lineno">  315</span>      }</div>
-<div class="line"><span class="lineno">  316</span>      syst_i[<span class="stringliteral">&quot;Correlations&quot;</span>] = correlationsNode;</div>
-<div class="line"><span class="lineno">  317</span>    }</div>
-<div class="line"><span class="lineno">  318</span>  } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  319</span>    <span class="keywordflow">if</span> (systematics.size() != Values.size()) {</div>
-<div class="line"><span class="lineno">  320</span>      <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;Mismatch in sizes: Values has {}, but YAML &#39;Systematics&#39; has {} entries&quot;</span>,</div>
-<div class="line"><span class="lineno">  321</span>                     Values.size(), systematics.size());</div>
-<div class="line"><span class="lineno">  322</span>      <span class="keywordflow">throw</span> <a class="code hl_class" href="classMaCh3Exception.html">MaCh3Exception</a>(__FILE__, __LINE__);</div>
-<div class="line"><span class="lineno">  323</span>    }</div>
-<div class="line"><span class="lineno">  324</span> </div>
-<div class="line"><span class="lineno">  325</span>    <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; systematics.size(); ++i) {</div>
-<div class="line"><span class="lineno">  326</span>      YAML::Node syst = systematics[i][<span class="stringliteral">&quot;Systematic&quot;</span>];</div>
-<div class="line"><span class="lineno">  327</span>      <span class="keywordflow">if</span> (!syst) {</div>
-<div class="line"><span class="lineno">  328</span>        <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;Missing &#39;Systematic&#39; node at index {}&quot;</span>, i);</div>
-<div class="line"><span class="lineno">  329</span>        <span class="keywordflow">throw</span> <a class="code hl_class" href="classMaCh3Exception.html">MaCh3Exception</a>(__FILE__, __LINE__);</div>
+<div class="line"><span class="lineno">  309</span>  <span class="keywordflow">if</span> (!FancyNames.empty()) {</div>
+<div class="line"><span class="lineno">  310</span>    <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; FancyNames.size(); ++i) {</div>
+<div class="line"><span class="lineno">  311</span>      <span class="keyword">const</span> std::string&amp; name_i = FancyNames[i];</div>
+<div class="line"><span class="lineno">  312</span>      <span class="keyword">auto</span> it_i = nameToNode.find(name_i);</div>
+<div class="line"><span class="lineno">  313</span>      <span class="keywordflow">if</span> (it_i == nameToNode.end()) {</div>
+<div class="line"><span class="lineno">  314</span>        <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;Could not find FancyName &#39;{}&#39; in YAML&quot;</span>, name_i);</div>
+<div class="line"><span class="lineno">  315</span>        <span class="keywordflow">throw</span> <a class="code hl_class" href="classMaCh3Exception.html">MaCh3Exception</a>(__FILE__, __LINE__);</div>
+<div class="line"><span class="lineno">  316</span>      }</div>
+<div class="line"><span class="lineno">  317</span>      YAML::Node&amp; syst_i = it_i-&gt;second;</div>
+<div class="line"><span class="lineno">  318</span> </div>
+<div class="line"><span class="lineno">  319</span>      syst_i[<span class="stringliteral">&quot;ParameterValues&quot;</span>][<span class="stringliteral">&quot;PreFitValue&quot;</span>] = <a class="code hl_function" href="namespaceMaCh3Utils.html#a37d0c54de0b83b71393afca143ab1ec0">MaCh3Utils::FormatDouble</a>(Values[i], 4);</div>
+<div class="line"><span class="lineno">  320</span>      syst_i[<span class="stringliteral">&quot;Error&quot;</span>] = std::round(Errors[i] * 100.0) / 100.0;</div>
+<div class="line"><span class="lineno">  321</span> </div>
+<div class="line"><span class="lineno">  322</span>      YAML::Node correlationsNode = YAML::Node(YAML::NodeType::Sequence);</div>
+<div class="line"><span class="lineno">  323</span>      <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; FancyNames.size(); ++j) {</div>
+<div class="line"><span class="lineno">  324</span>        <span class="keywordflow">if</span> (i == j) <span class="keywordflow">continue</span>;</div>
+<div class="line"><span class="lineno">  325</span>        <span class="comment">// KS: Skip if value close to 0</span></div>
+<div class="line"><span class="lineno">  326</span>        <span class="keywordflow">if</span> (std::abs(Correlation[i][j]) &lt; 1e-8) <span class="keywordflow">continue</span>;</div>
+<div class="line"><span class="lineno">  327</span>        YAML::Node singleEntry;</div>
+<div class="line"><span class="lineno">  328</span>        singleEntry[FancyNames[j]] = <a class="code hl_function" href="namespaceMaCh3Utils.html#a37d0c54de0b83b71393afca143ab1ec0">MaCh3Utils::FormatDouble</a>(Correlation[i][j], 4);</div>
+<div class="line"><span class="lineno">  329</span>        correlationsNode.push_back(singleEntry);</div>
 <div class="line"><span class="lineno">  330</span>      }</div>
-<div class="line"><span class="lineno">  331</span> </div>
-<div class="line"><span class="lineno">  332</span>      syst[<span class="stringliteral">&quot;ParameterValues&quot;</span>][<span class="stringliteral">&quot;PreFitValue&quot;</span>] = <a class="code hl_function" href="namespaceMaCh3Utils.html#a37d0c54de0b83b71393afca143ab1ec0">MaCh3Utils::FormatDouble</a>(Values[i], 4);</div>
-<div class="line"><span class="lineno">  333</span>      syst[<span class="stringliteral">&quot;Error&quot;</span>] = std::round(Errors[i] * 100.0) / 100.0;</div>
-<div class="line"><span class="lineno">  334</span> </div>
-<div class="line"><span class="lineno">  335</span>      YAML::Node correlationsNode = YAML::Node(YAML::NodeType::Sequence);</div>
-<div class="line"><span class="lineno">  336</span>      <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; Correlation[i].size(); ++j) {</div>
-<div class="line"><span class="lineno">  337</span>        <span class="keywordflow">if</span> (i == j) <span class="keywordflow">continue</span>;</div>
-<div class="line"><span class="lineno">  338</span>        YAML::Node singleEntry;</div>
-<div class="line"><span class="lineno">  339</span>        <span class="keyword">const</span> std::string&amp; otherName = systematics[j][<span class="stringliteral">&quot;Systematic&quot;</span>][<span class="stringliteral">&quot;Names&quot;</span>][<span class="stringliteral">&quot;FancyName&quot;</span>].as&lt;std::string&gt;();</div>
-<div class="line"><span class="lineno">  340</span>        singleEntry[otherName] = <a class="code hl_function" href="namespaceMaCh3Utils.html#a37d0c54de0b83b71393afca143ab1ec0">MaCh3Utils::FormatDouble</a>(Correlation[i][j], 4);</div>
-<div class="line"><span class="lineno">  341</span>        correlationsNode.push_back(singleEntry);</div>
-<div class="line"><span class="lineno">  342</span>      }</div>
-<div class="line"><span class="lineno">  343</span>      syst[<span class="stringliteral">&quot;Correlations&quot;</span>] = correlationsNode;</div>
-<div class="line"><span class="lineno">  344</span>    }</div>
-<div class="line"><span class="lineno">  345</span>  }</div>
+<div class="line"><span class="lineno">  331</span>      syst_i[<span class="stringliteral">&quot;Correlations&quot;</span>] = correlationsNode;</div>
+<div class="line"><span class="lineno">  332</span>    }</div>
+<div class="line"><span class="lineno">  333</span>  } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  334</span>    <span class="keywordflow">if</span> (systematics.size() != Values.size()) {</div>
+<div class="line"><span class="lineno">  335</span>      <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;Mismatch in sizes: Values has {}, but YAML &#39;Systematics&#39; has {} entries&quot;</span>,</div>
+<div class="line"><span class="lineno">  336</span>                     Values.size(), systematics.size());</div>
+<div class="line"><span class="lineno">  337</span>      <span class="keywordflow">throw</span> <a class="code hl_class" href="classMaCh3Exception.html">MaCh3Exception</a>(__FILE__, __LINE__);</div>
+<div class="line"><span class="lineno">  338</span>    }</div>
+<div class="line"><span class="lineno">  339</span> </div>
+<div class="line"><span class="lineno">  340</span>    <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; systematics.size(); ++i) {</div>
+<div class="line"><span class="lineno">  341</span>      YAML::Node syst = systematics[i][<span class="stringliteral">&quot;Systematic&quot;</span>];</div>
+<div class="line"><span class="lineno">  342</span>      <span class="keywordflow">if</span> (!syst) {</div>
+<div class="line"><span class="lineno">  343</span>        <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;Missing &#39;Systematic&#39; node at index {}&quot;</span>, i);</div>
+<div class="line"><span class="lineno">  344</span>        <span class="keywordflow">throw</span> <a class="code hl_class" href="classMaCh3Exception.html">MaCh3Exception</a>(__FILE__, __LINE__);</div>
+<div class="line"><span class="lineno">  345</span>      }</div>
 <div class="line"><span class="lineno">  346</span> </div>
-<div class="line"><span class="lineno">  347</span>  <span class="comment">// Convert and write</span></div>
-<div class="line"><span class="lineno">  348</span>  std::string YAMLString = <a class="code hl_function" href="YamlHelper_8h.html#aae72fb06a391f1073add5eed6c6485dd">YAMLtoSTRING</a>(NodeCopy);</div>
-<div class="line"><span class="lineno">  349</span>  <a class="code hl_function" href="namespaceM3.html#a68ab9b6b3d413a94604c740208c7895d">FixSampleNamesQuotes</a>(YAMLString);</div>
-<div class="line"><span class="lineno">  350</span>  std::string OutName = <span class="stringliteral">&quot;UpdatedCorrelationMatrix.yaml&quot;</span>;</div>
-<div class="line"><span class="lineno">  351</span>  std::ofstream outFile(OutName);</div>
-<div class="line"><span class="lineno">  352</span>  <span class="keywordflow">if</span> (!outFile) {</div>
-<div class="line"><span class="lineno">  353</span>    <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;Failed to open file for writing: {}&quot;</span>, OutName);</div>
-<div class="line"><span class="lineno">  354</span>    <span class="keywordflow">throw</span> <a class="code hl_class" href="classMaCh3Exception.html">MaCh3Exception</a>(__FILE__, __LINE__);</div>
-<div class="line"><span class="lineno">  355</span>  }</div>
-<div class="line"><span class="lineno">  356</span> </div>
-<div class="line"><span class="lineno">  357</span>  outFile &lt;&lt; YAMLString;</div>
-<div class="line"><span class="lineno">  358</span>  outFile.close();</div>
-<div class="line"><span class="lineno">  359</span>}</div>
+<div class="line"><span class="lineno">  347</span>      syst[<span class="stringliteral">&quot;ParameterValues&quot;</span>][<span class="stringliteral">&quot;PreFitValue&quot;</span>] = <a class="code hl_function" href="namespaceMaCh3Utils.html#a37d0c54de0b83b71393afca143ab1ec0">MaCh3Utils::FormatDouble</a>(Values[i], 4);</div>
+<div class="line"><span class="lineno">  348</span>      syst[<span class="stringliteral">&quot;Error&quot;</span>] = std::round(Errors[i] * 100.0) / 100.0;</div>
+<div class="line"><span class="lineno">  349</span> </div>
+<div class="line"><span class="lineno">  350</span>      YAML::Node correlationsNode = YAML::Node(YAML::NodeType::Sequence);</div>
+<div class="line"><span class="lineno">  351</span>      <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; Correlation[i].size(); ++j) {</div>
+<div class="line"><span class="lineno">  352</span>        <span class="keywordflow">if</span> (i == j) <span class="keywordflow">continue</span>;</div>
+<div class="line"><span class="lineno">  353</span>        <span class="comment">// KS: Skip if value close to 0</span></div>
+<div class="line"><span class="lineno">  354</span>        <span class="keywordflow">if</span> (std::abs(Correlation[i][j]) &lt; 1e-8) <span class="keywordflow">continue</span>;</div>
+<div class="line"><span class="lineno">  355</span>        YAML::Node singleEntry;</div>
+<div class="line"><span class="lineno">  356</span>        <span class="keyword">const</span> std::string&amp; otherName = systematics[j][<span class="stringliteral">&quot;Systematic&quot;</span>][<span class="stringliteral">&quot;Names&quot;</span>][<span class="stringliteral">&quot;FancyName&quot;</span>].as&lt;std::string&gt;();</div>
+<div class="line"><span class="lineno">  357</span>        singleEntry[otherName] = <a class="code hl_function" href="namespaceMaCh3Utils.html#a37d0c54de0b83b71393afca143ab1ec0">MaCh3Utils::FormatDouble</a>(Correlation[i][j], 4);</div>
+<div class="line"><span class="lineno">  358</span>        correlationsNode.push_back(singleEntry);</div>
+<div class="line"><span class="lineno">  359</span>      }</div>
+<div class="line"><span class="lineno">  360</span>      syst[<span class="stringliteral">&quot;Correlations&quot;</span>] = correlationsNode;</div>
+<div class="line"><span class="lineno">  361</span>    }</div>
+<div class="line"><span class="lineno">  362</span>  }</div>
+<div class="line"><span class="lineno">  363</span> </div>
+<div class="line"><span class="lineno">  364</span>  <span class="comment">// Convert and write</span></div>
+<div class="line"><span class="lineno">  365</span>  std::string YAMLString = <a class="code hl_function" href="YamlHelper_8h.html#aae72fb06a391f1073add5eed6c6485dd">YAMLtoSTRING</a>(NodeCopy);</div>
+<div class="line"><span class="lineno">  366</span>  <a class="code hl_function" href="namespaceM3.html#a68ab9b6b3d413a94604c740208c7895d">FixSampleNamesQuotes</a>(YAMLString);</div>
+<div class="line"><span class="lineno">  367</span>  std::ofstream outFile(OutYAMLName);</div>
+<div class="line"><span class="lineno">  368</span>  <span class="keywordflow">if</span> (!outFile) {</div>
+<div class="line"><span class="lineno">  369</span>    <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;Failed to open file for writing: {}&quot;</span>, OutYAMLName);</div>
+<div class="line"><span class="lineno">  370</span>    <span class="keywordflow">throw</span> <a class="code hl_class" href="classMaCh3Exception.html">MaCh3Exception</a>(__FILE__, __LINE__);</div>
+<div class="line"><span class="lineno">  371</span>  }</div>
+<div class="line"><span class="lineno">  372</span> </div>
+<div class="line"><span class="lineno">  373</span>  outFile &lt;&lt; YAMLString;</div>
+<div class="line"><span class="lineno">  374</span>  outFile.close();</div>
+<div class="line"><span class="lineno">  375</span>}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a9df1d8da337a09adc645f6b4f0e2cf2c" name="a9df1d8da337a09adc645f6b4f0e2cf2c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9df1d8da337a09adc645f6b4f0e2cf2c">&#9670;&#160;</a></span>MakeMatrixPosDef()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void M3::MakeMatrixPosDef </td>
+          <td>(</td>
+          <td class="paramtype">TMatrixDSym *&#160;</td>
+          <td class="paramname"><em>cov</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Makes sure that matrix is positive-definite by adding a small number to on-diagonal elements. </p>
+
+<p class="definition">Definition at line <a class="el" href="ParameterHandlerUtils_8h_source.html#l00506">506</a> of file <a class="el" href="ParameterHandlerUtils_8h_source.html">ParameterHandlerUtils.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  506</span>                                               {</div>
+<div class="line"><span class="lineno">  507</span><span class="comment">// *************************************</span></div>
+<div class="line"><span class="lineno">  508</span>  <span class="comment">//DB Save original warning state and then increase it in this function to suppress &#39;matrix not positive definite&#39; messages</span></div>
+<div class="line"><span class="lineno">  509</span>  <span class="comment">//Means we no longer need to overload</span></div>
+<div class="line"><span class="lineno">  510</span>  <span class="keywordtype">int</span> originalErrorWarning = gErrorIgnoreLevel;</div>
+<div class="line"><span class="lineno">  511</span>  gErrorIgnoreLevel = kFatal;</div>
+<div class="line"><span class="lineno">  512</span> </div>
+<div class="line"><span class="lineno">  513</span>  <span class="comment">//DB Loop 1000 times adding 1e-9 which tops out at 1e-6 shift on the diagonal before throwing error</span></div>
+<div class="line"><span class="lineno">  514</span>  <span class="keyword">constexpr</span> <span class="keywordtype">int</span> MaxAttempts = 1e5;</div>
+<div class="line"><span class="lineno">  515</span>  <span class="keyword">const</span> <span class="keywordtype">int</span> matrixSize = cov-&gt;GetNrows();</div>
+<div class="line"><span class="lineno">  516</span>  <span class="keywordtype">int</span> iAttempt = 0;</div>
+<div class="line"><span class="lineno">  517</span>  <span class="keywordtype">bool</span> CanDecomp = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  518</span> </div>
+<div class="line"><span class="lineno">  519</span>  <span class="keywordflow">for</span> (iAttempt = 0; iAttempt &lt; MaxAttempts; iAttempt++) {</div>
+<div class="line"><span class="lineno">  520</span>    <span class="keywordflow">if</span> (<a class="code hl_function" href="namespaceM3.html#acbacd39568f68bda67b301927b8ae22a">CanDecomposeMatrix</a>(*cov)) {</div>
+<div class="line"><span class="lineno">  521</span>      CanDecomp = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  522</span>      <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  523</span>    } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  524</span><span class="preprocessor">      #ifdef MULTITHREAD</span></div>
+<div class="line"><span class="lineno">  525</span><span class="preprocessor">      #pragma omp parallel for</span></div>
+<div class="line"><span class="lineno">  526</span><span class="preprocessor">      #endif</span></div>
+<div class="line"><span class="lineno">  527</span>      <span class="keywordflow">for</span> (<span class="keywordtype">int</span> iVar = 0 ; iVar &lt; matrixSize; iVar++) {</div>
+<div class="line"><span class="lineno">  528</span>        (*cov)(iVar,iVar) += pow(10, -9);</div>
+<div class="line"><span class="lineno">  529</span>      }</div>
+<div class="line"><span class="lineno">  530</span>    }</div>
+<div class="line"><span class="lineno">  531</span>  }</div>
+<div class="line"><span class="lineno">  532</span> </div>
+<div class="line"><span class="lineno">  533</span>  <span class="keywordflow">if</span> (!CanDecomp) {</div>
+<div class="line"><span class="lineno">  534</span>    <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;Tried {} times to shift diagonal but still can not decompose the matrix&quot;</span>, MaxAttempts);</div>
+<div class="line"><span class="lineno">  535</span>    <a class="code hl_define" href="MaCh3Logger_8h.html#a61052119a625282d0ec6d4a97adf3ee2">MACH3LOG_ERROR</a>(<span class="stringliteral">&quot;This indicates that something is wrong with the input matrix&quot;</span>);</div>
+<div class="line"><span class="lineno">  536</span>    <span class="keywordflow">throw</span> <a class="code hl_class" href="classMaCh3Exception.html">MaCh3Exception</a>(__FILE__ , __LINE__ );</div>
+<div class="line"><span class="lineno">  537</span>  }</div>
+<div class="line"><span class="lineno">  538</span> </div>
+<div class="line"><span class="lineno">  539</span>  <span class="comment">//DB Resetting warning level</span></div>
+<div class="line"><span class="lineno">  540</span>  gErrorIgnoreLevel = originalErrorWarning;</div>
+<div class="line"><span class="lineno">  541</span>}</div>
+<div class="ttc" id="anamespaceM3_html_acbacd39568f68bda67b301927b8ae22a"><div class="ttname"><a href="namespaceM3.html#acbacd39568f68bda67b301927b8ae22a">M3::CanDecomposeMatrix</a></div><div class="ttdeci">bool CanDecomposeMatrix(const TMatrixDSym &amp;matrix)</div><div class="ttdoc">Checks if a matrix can be Cholesky decomposed.</div><div class="ttdef"><b>Definition:</b> <a href="ParameterHandlerUtils_8h_source.html#l00498">ParameterHandlerUtils.h:498</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1195,7 +1476,7 @@ template&lt;typename T &gt; </div>
   <table class="params">
     <tr><td class="paramname">VecMulti</td><td>Output Vector, VecMulti = matrix x vector </td></tr>
     <tr><td class="paramname">matrix</td><td>This matrix is used for multiplication VecMulti = matrix x vector </td></tr>
-    <tr><td class="paramname">VecMulti</td><td>This vector is used for multiplication VecMulti = matrix x vector </td></tr>
+    <tr><td class="paramname">vector</td><td>This vector is used for multiplication VecMulti = matrix x vector </td></tr>
     <tr><td class="paramname">n</td><td>this is size of matrix and vector, we assume matrix is symmetric </td></tr>
   </table>
   </dd>
@@ -1273,24 +1554,25 @@ template&lt;typename T &gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">matrix</td><td>This matrix is used for multiplication VecMulti = matrix x vector </td></tr>
+    <tr><td class="paramname">vector</td><td>This vector is used for multiplication VecMulti = matrix x vector </td></tr>
     <tr><td class="paramname">Length</td><td>this is size of matrix and vector, we assume matrix is symmetric </td></tr>
     <tr><td class="paramname">i</td><td>Element of matrix that we want to multiply </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="ParameterHandlerUtils_8h_source.html#l00136">136</a> of file <a class="el" href="ParameterHandlerUtils_8h_source.html">ParameterHandlerUtils.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  136</span>                                                                                                                                  {</div>
-<div class="line"><span class="lineno">  137</span><span class="comment">// ********************************************</span></div>
-<div class="line"><span class="lineno">  138</span>  <span class="keywordtype">double</span> Element = 0.0;</div>
-<div class="line"><span class="lineno">  139</span><span class="preprocessor">  #ifdef MULTITHREAD</span></div>
-<div class="line"><span class="lineno">  140</span><span class="preprocessor">  #pragma omp simd</span></div>
-<div class="line"><span class="lineno">  141</span><span class="preprocessor">  #endif</span></div>
-<div class="line"><span class="lineno">  142</span>  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; Length; ++j) {</div>
-<div class="line"><span class="lineno">  143</span>    Element += matrix[i][j]*vector[j];</div>
-<div class="line"><span class="lineno">  144</span>  }</div>
-<div class="line"><span class="lineno">  145</span>  <span class="keywordflow">return</span> Element;</div>
-<div class="line"><span class="lineno">  146</span>}</div>
+<p class="definition">Definition at line <a class="el" href="ParameterHandlerUtils_8h_source.html#l00137">137</a> of file <a class="el" href="ParameterHandlerUtils_8h_source.html">ParameterHandlerUtils.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  137</span>                                                                                                                                  {</div>
+<div class="line"><span class="lineno">  138</span><span class="comment">// ********************************************</span></div>
+<div class="line"><span class="lineno">  139</span>  <span class="keywordtype">double</span> Element = 0.0;</div>
+<div class="line"><span class="lineno">  140</span><span class="preprocessor">  #ifdef MULTITHREAD</span></div>
+<div class="line"><span class="lineno">  141</span><span class="preprocessor">  #pragma omp simd</span></div>
+<div class="line"><span class="lineno">  142</span><span class="preprocessor">  #endif</span></div>
+<div class="line"><span class="lineno">  143</span>  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; Length; ++j) {</div>
+<div class="line"><span class="lineno">  144</span>    Element += matrix[i][j]*vector[j];</div>
+<div class="line"><span class="lineno">  145</span>  }</div>
+<div class="line"><span class="lineno">  146</span>  <span class="keywordflow">return</span> Element;</div>
+<div class="line"><span class="lineno">  147</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1385,7 +1667,7 @@ template&lt;typename T &gt; </div>
 
 <p>Default value used for double initialisation. </p>
 
-<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00043">43</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00046">46</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
 
 </div>
 </div>
@@ -1411,7 +1693,7 @@ template&lt;typename T &gt; </div>
 
 <p>Default value used for int initialisation. </p>
 
-<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00045">45</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00048">48</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
 
 </div>
 </div>
@@ -1435,7 +1717,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00046">46</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00049">49</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
 
 </div>
 </div>
@@ -1461,7 +1743,7 @@ template&lt;typename T &gt; </div>
 
 <p>Large Likelihood is used it parameter go out of physical boundary, this indicates in MCMC that such step should be removed. </p>
 
-<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00070">70</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00073">73</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
 
 </div>
 </div>
@@ -1487,7 +1769,7 @@ template&lt;typename T &gt; </div>
 
 <p>MC prediction lower bound in bin to identify problematic binning definitions and handle LogL calculation. </p>
 
-<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00073">73</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00076">76</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
 
 </div>
 </div>
@@ -1513,7 +1795,7 @@ template&lt;typename T &gt; </div>
 
 <p>Default value for spline knot capping, default mean not capping is being applied. </p>
 
-<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00078">78</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00081">81</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
 
 </div>
 </div>
@@ -1539,7 +1821,31 @@ template&lt;typename T &gt; </div>
 
 <p>Default value for spline knot capping, default mean not capping is being applied. </p>
 
-<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00076">76</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00079">79</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
+
+</div>
+</div>
+<a id="a1f7f36d023b8c549459b28521e002f6d" name="a1f7f36d023b8c549459b28521e002f6d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1f7f36d023b8c549459b28521e002f6d">&#9670;&#160;</a></span>float_t_str_repr</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr const char* M3::float_t_str_repr = &quot;D&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00033">33</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
 
 </div>
 </div>
@@ -1565,7 +1871,7 @@ template&lt;typename T &gt; </div>
 
 <p>When parameter has no bound this serves as it. Lowest possible value the system. </p>
 
-<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00065">65</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00068">68</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
 
 </div>
 </div>
@@ -1591,7 +1897,7 @@ template&lt;typename T &gt; </div>
 
 <p>When parameter has no bound this serves as it. Highest possible value the system. </p>
 
-<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00067">67</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00070">70</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
 
 </div>
 </div>
@@ -1615,7 +1921,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00054">54</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00057">57</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
 
 </div>
 </div>
@@ -1641,7 +1947,7 @@ template&lt;typename T &gt; </div>
 
 <p>Some commonly used variables to which we set pointers to. </p>
 
-<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00049">49</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00052">52</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
 
 </div>
 </div>
@@ -1665,7 +1971,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00050">50</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00053">53</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
 
 </div>
 </div>
@@ -1689,7 +1995,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00061">61</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00064">64</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
 
 </div>
 </div>
@@ -1713,7 +2019,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00056">56</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00059">59</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
 
 </div>
 </div>
@@ -1737,14 +2043,46 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00057">57</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Core_8h_source.html#l00060">60</a> of file <a class="el" href="Core_8h_source.html">Core.h</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
-<!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6
-</small></address>
-</body>
-</html>
+<!-- Footer for MaCh3 Doxygen documentation -->
+<footer class="mach3-footer" style="text-align: center;">
+    <div style="margin-bottom: 15px;">
+        <span style="font-weight: bold;">The MaCh3 Collaboration</span>
+    </div>
+    <!-- Dropdown to jump between doc versions -->
+    <div style="margin-bottom: 10px;">
+        <span>Select Software Version: </span>
+        <select id="versionSelector" onchange="window.location.href=this.value" style="padding: 5px; border-radius: 4px; border: 1px solid #ccc;">
+            <option value="">-- Select --</option>
+            <option value="https://mach3-software.github.io/MaCh3/">develop</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v2.2.0/index.html">v2.2.0</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v2.1.0/index.html">v2.1.0</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v2.0.0/index.html">v2.0.0</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v1.5.0/index.html">v1.5.0</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v1.4.0/index.html">v1.4.0</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v1.3.0/index.html">v1.3.0</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v1.2.0/index.html">v1.2.0</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v1.1.0/index.html">v1.1.0</option>
+        </select>
+    </div>
+    <!-- Footer info about doxygen -->
+    <div style="font-size: 0.9em; color: #666; margin-top: 10px;">
+        Documentation generated with
+        <a href="https://www.doxygen.nl/" target="_blank" style="color: #666;">Doxygen</a>
+        <span id="doxygenVersion"></span>
+    </div>
+    <!-- Now grab doxygen version from metadata -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const meta = document.querySelector('meta[name="generator"]');
+        if (meta) {
+            const version = meta.getAttribute("content").replace("Doxygen ", "");
+            document.getElementById("doxygenVersion").textContent = " " + version;
+        }
+    });
+    </script>
+</footer>

@@ -30,7 +30,7 @@ MathJax.Hub.Config({
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="mach3logo_small.png"/></td>
   <td id="projectalign">
-   <div id="projectname">MaCh3<span id="projectnumber">&#160;2.2.2</span>
+   <div id="projectname">MaCh3<span id="projectnumber">&#160;2.2.3</span>
    </div>
    <div id="projectbrief">Reference Guide</div>
   </td>
@@ -161,9 +161,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ga87101a44351ba26d01d3f4449dd12b89 inherit pub_methods_classParameterHandlerBase"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ParameterHandlerSetters.html#ga87101a44351ba26d01d3f4449dd12b89">SetBranches</a> (TTree &amp;tree, const bool SaveProposal=false)</td></tr>
 <tr class="memdesc:ga87101a44351ba26d01d3f4449dd12b89 inherit pub_methods_classParameterHandlerBase"><td class="mdescLeft">&#160;</td><td class="mdescRight">set branches for output file  <br /></td></tr>
 <tr class="separator:ga87101a44351ba26d01d3f4449dd12b89 inherit pub_methods_classParameterHandlerBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga57817c9b766891ab3bddfc8edfbd4677 inherit pub_methods_classParameterHandlerBase"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ParameterHandlerSetters.html#ga57817c9b766891ab3bddfc8edfbd4677">SetStepScale</a> (const double scale)</td></tr>
-<tr class="memdesc:ga57817c9b766891ab3bddfc8edfbd4677 inherit pub_methods_classParameterHandlerBase"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set global step scale for covariance object.  <br /></td></tr>
-<tr class="separator:ga57817c9b766891ab3bddfc8edfbd4677 inherit pub_methods_classParameterHandlerBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga26193930618749f64edc1f3bf0b9dcb8 inherit pub_methods_classParameterHandlerBase"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ParameterHandlerSetters.html#ga26193930618749f64edc1f3bf0b9dcb8">SetStepScale</a> (const double scale, const bool verbose=true)</td></tr>
+<tr class="memdesc:ga26193930618749f64edc1f3bf0b9dcb8 inherit pub_methods_classParameterHandlerBase"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set global step scale for covariance object.  <br /></td></tr>
+<tr class="separator:ga26193930618749f64edc1f3bf0b9dcb8 inherit pub_methods_classParameterHandlerBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad67854b2d6b51ae20e8196cdbdaae6d8 inherit pub_methods_classParameterHandlerBase"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ParameterHandlerSetters.html#gad67854b2d6b51ae20e8196cdbdaae6d8">SetIndivStepScale</a> (const int ParameterIndex, const double StepScale)</td></tr>
 <tr class="memdesc:gad67854b2d6b51ae20e8196cdbdaae6d8 inherit pub_methods_classParameterHandlerBase"><td class="mdescLeft">&#160;</td><td class="mdescRight">DB Function to set fIndivStepScale from a vector (Can be used from execs and inside covariance constructors)  <br /></td></tr>
 <tr class="separator:gad67854b2d6b51ae20e8196cdbdaae6d8 inherit pub_methods_classParameterHandlerBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -259,9 +259,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ga62ac06a7fa3ed717fcc250099c55f02a inherit pub_methods_classParameterHandlerBase"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ParameterHandlerGetters.html#ga62ac06a7fa3ed717fcc250099c55f02a">GetThrowMatrix</a> (const int i, const int j) const</td></tr>
 <tr class="memdesc:ga62ac06a7fa3ed717fcc250099c55f02a inherit pub_methods_classParameterHandlerBase"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get matrix used for step proposal.  <br /></td></tr>
 <tr class="separator:ga62ac06a7fa3ed717fcc250099c55f02a inherit pub_methods_classParameterHandlerBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3f27f4b70a3aef47b106c7dfe48af94f inherit pub_methods_classParameterHandlerBase"><td class="memItemLeft" align="right" valign="top">TMatrixD *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ParameterHandlerGetters.html#ga3f27f4b70a3aef47b106c7dfe48af94f">GetThrowMatrix_CholDecomp</a> () const</td></tr>
-<tr class="memdesc:ga3f27f4b70a3aef47b106c7dfe48af94f inherit pub_methods_classParameterHandlerBase"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Cholesky decomposition of the throw matrix.  <br /></td></tr>
-<tr class="separator:ga3f27f4b70a3aef47b106c7dfe48af94f inherit pub_methods_classParameterHandlerBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6745aac0b811863722e4030421adee92 inherit pub_methods_classParameterHandlerBase"><td class="memItemLeft" align="right" valign="top">TH2D *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ParameterHandlerGetters.html#ga6745aac0b811863722e4030421adee92">GetCorrelationMatrix</a> ()</td></tr>
 <tr class="memdesc:ga6745aac0b811863722e4030421adee92 inherit pub_methods_classParameterHandlerBase"><td class="mdescLeft">&#160;</td><td class="mdescRight">KS: Convert covariance matrix to correlation matrix and return TH2D which can be used for fancy plotting.  <br /></td></tr>
 <tr class="separator:ga6745aac0b811863722e4030421adee92 inherit pub_methods_classParameterHandlerBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -286,6 +283,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:gaf60bfd36b72a176071f05a0c11a9f1ce inherit pub_methods_classParameterHandlerBase"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ParameterHandlerGetters.html#gaf60bfd36b72a176071f05a0c11a9f1ce">GetParCurr</a> (const int i) const</td></tr>
 <tr class="memdesc:gaf60bfd36b72a176071f05a0c11a9f1ce inherit pub_methods_classParameterHandlerBase"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get current parameter value.  <br /></td></tr>
 <tr class="separator:gaf60bfd36b72a176071f05a0c11a9f1ce inherit pub_methods_classParameterHandlerBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5e247c202cd68d2a23043532c7ce30bd inherit pub_methods_classParameterHandlerBase"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; double &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ParameterHandlerGetters.html#ga5e247c202cd68d2a23043532c7ce30bd">GetParCurrVec</a> () const</td></tr>
+<tr class="memdesc:ga5e247c202cd68d2a23043532c7ce30bd inherit pub_methods_classParameterHandlerBase"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get vector of current parameter values.  <br /></td></tr>
+<tr class="separator:ga5e247c202cd68d2a23043532c7ce30bd inherit pub_methods_classParameterHandlerBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad1397b3bc7853bceefab290fdd0f0fa9 inherit pub_methods_classParameterHandlerBase"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ParameterHandlerGetters.html#gad1397b3bc7853bceefab290fdd0f0fa9">GetParInit</a> (const int i) const</td></tr>
 <tr class="memdesc:gad1397b3bc7853bceefab290fdd0f0fa9 inherit pub_methods_classParameterHandlerBase"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get prior parameter value.  <br /></td></tr>
 <tr class="separator:gad1397b3bc7853bceefab290fdd0f0fa9 inherit pub_methods_classParameterHandlerBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -479,9 +479,6 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:a4d8ded766dcf6941bea584b098e45e22 inherit pro_attribs_classParameterHandlerBase"><td class="memItemLeft" align="right" valign="top">TMatrixDSym *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParameterHandlerBase.html#a4d8ded766dcf6941bea584b098e45e22">throwMatrix</a></td></tr>
 <tr class="memdesc:a4d8ded766dcf6941bea584b098e45e22 inherit pro_attribs_classParameterHandlerBase"><td class="mdescLeft">&#160;</td><td class="mdescRight">Matrix which we use for step proposal before Cholesky decomposition (not actually used for step proposal)  <br /></td></tr>
 <tr class="separator:a4d8ded766dcf6941bea584b098e45e22 inherit pro_attribs_classParameterHandlerBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a63d70f267b76b2795fa780e73144f6cc inherit pro_attribs_classParameterHandlerBase"><td class="memItemLeft" align="right" valign="top">TMatrixD *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParameterHandlerBase.html#a63d70f267b76b2795fa780e73144f6cc">throwMatrix_CholDecomp</a></td></tr>
-<tr class="memdesc:a63d70f267b76b2795fa780e73144f6cc inherit pro_attribs_classParameterHandlerBase"><td class="mdescLeft">&#160;</td><td class="mdescRight">Matrix which we use for step proposal after Cholesky decomposition.  <br /></td></tr>
-<tr class="separator:a63d70f267b76b2795fa780e73144f6cc inherit pro_attribs_classParameterHandlerBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1e916de10380d0860d890601fa87c107 inherit pro_attribs_classParameterHandlerBase"><td class="memItemLeft" align="right" valign="top">double **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classParameterHandlerBase.html#a1e916de10380d0860d890601fa87c107">throwMatrixCholDecomp</a></td></tr>
 <tr class="memdesc:a1e916de10380d0860d890601fa87c107 inherit pro_attribs_classParameterHandlerBase"><td class="mdescLeft">&#160;</td><td class="mdescRight">Throw matrix that is being used in the fit, much faster as TMatrixDSym cache miss.  <br /></td></tr>
 <tr class="separator:a1e916de10380d0860d890601fa87c107 inherit pro_attribs_classParameterHandlerBase"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -638,12 +635,12 @@ Additional Inherited Members</h2></td></tr>
 <div class="line"><span class="lineno">   44</span>  <span class="comment">// Call the innocent helper function</span></div>
 <div class="line"><span class="lineno">   45</span>  <span class="keywordflow">if</span> (<a class="code hl_variable" href="classParameterHandlerBase.html#ae036dc62d3a3710b78d5d767f280fa4b">pca</a>) <a class="code hl_function" href="classParameterHandlerBase.html#a908856d9a183c32015fb3c3ef7b47cd9">ConstructPCA</a>(threshold, FirstPCA, LastPCA);</div>
 <div class="line"><span class="lineno">   46</span>}</div>
-<div class="ttc" id="aMaCh3Logger_8h_html_a95fa4dffc648e4c5536c9292c2bdcac3"><div class="ttname"><a href="MaCh3Logger_8h.html#a95fa4dffc648e4c5536c9292c2bdcac3">MACH3LOG_INFO</a></div><div class="ttdeci">#define MACH3LOG_INFO</div><div class="ttdef"><b>Definition:</b> <a href="MaCh3Logger_8h_source.html#l00023">MaCh3Logger.h:23</a></div></div>
-<div class="ttc" id="aclassParameterHandlerBase_html_a5914b4a260b907e5a355e53db7e72466"><div class="ttname"><a href="classParameterHandlerBase.html#a5914b4a260b907e5a355e53db7e72466">ParameterHandlerBase::doSpecialStepProposal</a></div><div class="ttdeci">bool doSpecialStepProposal</div><div class="ttdoc">Check if any of special step proposal were enabled.</div><div class="ttdef"><b>Definition:</b> <a href="ParameterHandlerBase_8h_source.html#l00419">ParameterHandlerBase.h:419</a></div></div>
-<div class="ttc" id="aclassParameterHandlerBase_html_a5e5bce6f487e7214be680a9b4adf6b6c"><div class="ttname"><a href="classParameterHandlerBase.html#a5e5bce6f487e7214be680a9b4adf6b6c">ParameterHandlerBase::Init</a></div><div class="ttdeci">void Init(const std::string &amp;name, const std::string &amp;file)</div><div class="ttdoc">Initialisation of the class using matrix from root file.</div><div class="ttdef"><b>Definition:</b> <a href="ParameterHandlerBase_8cpp_source.html#l00093">ParameterHandlerBase.cpp:93</a></div></div>
-<div class="ttc" id="aclassParameterHandlerBase_html_a5e9226aa216252b1ef195c7f91c76df2"><div class="ttname"><a href="classParameterHandlerBase.html#a5e9226aa216252b1ef195c7f91c76df2">ParameterHandlerBase::matrixName</a></div><div class="ttdeci">std::string matrixName</div><div class="ttdoc">Name of cov matrix.</div><div class="ttdef"><b>Definition:</b> <a href="ParameterHandlerBase_8h_source.html#l00425">ParameterHandlerBase.h:425</a></div></div>
-<div class="ttc" id="aclassParameterHandlerBase_html_a908856d9a183c32015fb3c3ef7b47cd9"><div class="ttname"><a href="classParameterHandlerBase.html#a908856d9a183c32015fb3c3ef7b47cd9">ParameterHandlerBase::ConstructPCA</a></div><div class="ttdeci">void ConstructPCA(const double eigen_threshold, int FirstPCAdpar, int LastPCAdpar)</div><div class="ttdoc">CW: Calculate eigen values, prepare transition matrices and remove param based on defined threshold.</div><div class="ttdef"><b>Definition:</b> <a href="ParameterHandlerBase_8cpp_source.html#l00066">ParameterHandlerBase.cpp:66</a></div></div>
-<div class="ttc" id="aclassParameterHandlerBase_html_adb2f867014619b5c38b67cd981e40dcb"><div class="ttname"><a href="classParameterHandlerBase.html#adb2f867014619b5c38b67cd981e40dcb">ParameterHandlerBase::inputFile</a></div><div class="ttdeci">const std::string inputFile</div><div class="ttdoc">The input root file we read in.</div><div class="ttdef"><b>Definition:</b> <a href="ParameterHandlerBase_8h_source.html#l00422">ParameterHandlerBase.h:422</a></div></div>
+<div class="ttc" id="aMaCh3Logger_8h_html_a95fa4dffc648e4c5536c9292c2bdcac3"><div class="ttname"><a href="MaCh3Logger_8h.html#a95fa4dffc648e4c5536c9292c2bdcac3">MACH3LOG_INFO</a></div><div class="ttdeci">#define MACH3LOG_INFO</div><div class="ttdef"><b>Definition:</b> <a href="MaCh3Logger_8h_source.html#l00025">MaCh3Logger.h:25</a></div></div>
+<div class="ttc" id="aclassParameterHandlerBase_html_a5914b4a260b907e5a355e53db7e72466"><div class="ttname"><a href="classParameterHandlerBase.html#a5914b4a260b907e5a355e53db7e72466">ParameterHandlerBase::doSpecialStepProposal</a></div><div class="ttdeci">bool doSpecialStepProposal</div><div class="ttdoc">Check if any of special step proposal were enabled.</div><div class="ttdef"><b>Definition:</b> <a href="ParameterHandlerBase_8h_source.html#l00421">ParameterHandlerBase.h:421</a></div></div>
+<div class="ttc" id="aclassParameterHandlerBase_html_a5e5bce6f487e7214be680a9b4adf6b6c"><div class="ttname"><a href="classParameterHandlerBase.html#a5e5bce6f487e7214be680a9b4adf6b6c">ParameterHandlerBase::Init</a></div><div class="ttdeci">void Init(const std::string &amp;name, const std::string &amp;file)</div><div class="ttdoc">Initialisation of the class using matrix from root file.</div><div class="ttdef"><b>Definition:</b> <a href="ParameterHandlerBase_8cpp_source.html#l00092">ParameterHandlerBase.cpp:92</a></div></div>
+<div class="ttc" id="aclassParameterHandlerBase_html_a5e9226aa216252b1ef195c7f91c76df2"><div class="ttname"><a href="classParameterHandlerBase.html#a5e9226aa216252b1ef195c7f91c76df2">ParameterHandlerBase::matrixName</a></div><div class="ttdeci">std::string matrixName</div><div class="ttdoc">Name of cov matrix.</div><div class="ttdef"><b>Definition:</b> <a href="ParameterHandlerBase_8h_source.html#l00427">ParameterHandlerBase.h:427</a></div></div>
+<div class="ttc" id="aclassParameterHandlerBase_html_a908856d9a183c32015fb3c3ef7b47cd9"><div class="ttname"><a href="classParameterHandlerBase.html#a908856d9a183c32015fb3c3ef7b47cd9">ParameterHandlerBase::ConstructPCA</a></div><div class="ttdeci">void ConstructPCA(const double eigen_threshold, int FirstPCAdpar, int LastPCAdpar)</div><div class="ttdoc">CW: Calculate eigen values, prepare transition matrices and remove param based on defined threshold.</div><div class="ttdef"><b>Definition:</b> <a href="ParameterHandlerBase_8cpp_source.html#l00065">ParameterHandlerBase.cpp:65</a></div></div>
+<div class="ttc" id="aclassParameterHandlerBase_html_adb2f867014619b5c38b67cd981e40dcb"><div class="ttname"><a href="classParameterHandlerBase.html#adb2f867014619b5c38b67cd981e40dcb">ParameterHandlerBase::inputFile</a></div><div class="ttdeci">const std::string inputFile</div><div class="ttdoc">The input root file we read in.</div><div class="ttdef"><b>Definition:</b> <a href="ParameterHandlerBase_8h_source.html#l00424">ParameterHandlerBase.h:424</a></div></div>
 <div class="ttc" id="aclassParameterHandlerBase_html_ae036dc62d3a3710b78d5d767f280fa4b"><div class="ttname"><a href="classParameterHandlerBase.html#ae036dc62d3a3710b78d5d767f280fa4b">ParameterHandlerBase::pca</a></div><div class="ttdeci">bool pca</div><div class="ttdoc">perform PCA or not</div><div class="ttdef"><b>Definition:</b> <a href="ParameterHandlerBase_8h_source.html#l00481">ParameterHandlerBase.h:481</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -719,7 +716,7 @@ Additional Inherited Members</h2></td></tr>
 <div class="line"><span class="lineno">   20</span>  <span class="comment">// Call the innocent helper function</span></div>
 <div class="line"><span class="lineno">   21</span>  <span class="keywordflow">if</span> (<a class="code hl_variable" href="classParameterHandlerBase.html#ae036dc62d3a3710b78d5d767f280fa4b">pca</a>) <a class="code hl_function" href="classParameterHandlerBase.html#a908856d9a183c32015fb3c3ef7b47cd9">ConstructPCA</a>(threshold, FirstPCA, LastPCA);</div>
 <div class="line"><span class="lineno">   22</span>}</div>
-<div class="ttc" id="aMaCh3Logger_8h_html_a4db4657acad5c79ac4bbb66a9d1c5905"><div class="ttname"><a href="MaCh3Logger_8h.html#a4db4657acad5c79ac4bbb66a9d1c5905">MACH3LOG_DEBUG</a></div><div class="ttdeci">#define MACH3LOG_DEBUG</div><div class="ttdef"><b>Definition:</b> <a href="MaCh3Logger_8h_source.html#l00022">MaCh3Logger.h:22</a></div></div>
+<div class="ttc" id="aMaCh3Logger_8h_html_a4db4657acad5c79ac4bbb66a9d1c5905"><div class="ttname"><a href="MaCh3Logger_8h.html#a4db4657acad5c79ac4bbb66a9d1c5905">MACH3LOG_DEBUG</a></div><div class="ttdeci">#define MACH3LOG_DEBUG</div><div class="ttdef"><b>Definition:</b> <a href="MaCh3Logger_8h_source.html#l00024">MaCh3Logger.h:24</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -767,9 +764,41 @@ Additional Inherited Members</h2></td></tr>
 <li>python/<a class="el" href="parameters_8cpp_source.html">parameters.cpp</a></li>
 </ul>
 </div><!-- contents -->
-<!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.6
-</small></address>
-</body>
-</html>
+<!-- Footer for MaCh3 Doxygen documentation -->
+<footer class="mach3-footer" style="text-align: center;">
+    <div style="margin-bottom: 15px;">
+        <span style="font-weight: bold;">The MaCh3 Collaboration</span>
+    </div>
+    <!-- Dropdown to jump between doc versions -->
+    <div style="margin-bottom: 10px;">
+        <span>Select Software Version: </span>
+        <select id="versionSelector" onchange="window.location.href=this.value" style="padding: 5px; border-radius: 4px; border: 1px solid #ccc;">
+            <option value="">-- Select --</option>
+            <option value="https://mach3-software.github.io/MaCh3/">develop</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v2.2.0/index.html">v2.2.0</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v2.1.0/index.html">v2.1.0</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v2.0.0/index.html">v2.0.0</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v1.5.0/index.html">v1.5.0</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v1.4.0/index.html">v1.4.0</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v1.3.0/index.html">v1.3.0</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v1.2.0/index.html">v1.2.0</option>
+            <option value="https://mach3-software.github.io/MaCh3/.Archive/v1.1.0/index.html">v1.1.0</option>
+        </select>
+    </div>
+    <!-- Footer info about doxygen -->
+    <div style="font-size: 0.9em; color: #666; margin-top: 10px;">
+        Documentation generated with
+        <a href="https://www.doxygen.nl/" target="_blank" style="color: #666;">Doxygen</a>
+        <span id="doxygenVersion"></span>
+    </div>
+    <!-- Now grab doxygen version from metadata -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const meta = document.querySelector('meta[name="generator"]');
+        if (meta) {
+            const version = meta.getAttribute("content").replace("Doxygen ", "");
+            document.getElementById("doxygenVersion").textContent = " " + version;
+        }
+    });
+    </script>
+</footer>
