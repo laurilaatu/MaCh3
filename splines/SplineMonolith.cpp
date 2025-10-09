@@ -304,24 +304,7 @@ void SMonolith::PrepareForGPU(std::vector<std::vector<TResponseFunction_red*> > 
   gpu_spline_handler->InitGPU_Vals(&ParamValues);
   #elif USE_FPGA
     std::cout<<"CHECK!!! USE_FPGA active in PrepareForGPU"<<std::endl;
-    /*
-    #if FPGA_SIMULATOR
-      auto selector = sycl::ext::intel::fpga_simulator_selector_v;
-    #elif FPGA_HARDWARE
-      std::cout<<"CHECKEDDDD!!! FPGA_HARDWARE active"<<std::endl;
-      auto selector = sycl::ext::intel::fpga_selector_v;
-    #elif FPGA_EMULATOR
-      std::cout<<"CHECKEDDDD!!! FPGA_EMULATOR active"<<std::endl;
-      auto selector = sycl::ext::intel::fpga_emulator_selector_v;
-    #else
-      auto selector = sycl::default_selector{};
-    #endif
 
-    
-    queue = sycl::queue(selector);//, fpga_tools::exception_handler, sycl::property::queue::enable_profiling{});
-    */
-    //queue = sycl::queue(sycl::default_selector{});
-    //segments = sycl::malloc_host<short int>(nParams, queue);
     
     SplineSegments = sycl::malloc_host<short int>(nParams, queue);
     ParamValues = sycl::malloc_host<float>(nParams, queue);
@@ -854,26 +837,7 @@ void SMonolith::LoadSplineFile(std::string FileName) {
   gpu_spline_handler->InitGPU_Vals(&ParamValues);
 #elif USE_FPGA
 
-  /*
-  std::cout<<"CHECK!!! USE_FPGA active in LoadSplineFile"<<std::endl;
-   
-  #if FPGA_SIMULATOR
-    auto selector = sycl::ext::intel::fpga_simulator_selector_v;
-  #elif FPGA_HARDWARE
-   //-Xshardware -fsycl-link=early -DFPGA_HARDWARE
-    auto selector = sycl::ext::intel::fpga_selector_v;
-  #elif FPGA_EMULATOR
-    std::cout<<"CHECK TWO!!! FPGA_EMULATOR active"<<std::endl;
 
-    auto selector = sycl::ext::intel::fpga_emulator_selector_v;
-  #else
-    auto selector = sycl::default_selector{};
-  #endif
-  queue = sycl::queue(selector);//, fpga_tools::exception_handler, sycl::property::queue::enable_profiling{});
-
-  */
-  
-   
   //segments = sycl::malloc_host<short int>(nParams, queue);
   SplineSegments = sycl::malloc_host<short int>(nParams, queue);
   ParamValues = sycl::malloc_host<float>(nParams, queue);
@@ -897,6 +861,7 @@ void SMonolith::LoadSplineFile(std::string FileName) {
 
 
     cpu_nParamPerEvent = sycl::malloc_host<unsigned int>(2*NEvents, queue);
+    cpu_nParamPerEvent_tf1.resize(2*NEvents);
     
 
 
