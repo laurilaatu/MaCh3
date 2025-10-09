@@ -7,6 +7,7 @@ on:
   push:
     branches:
       - intel_icpx
+  workflow_dispatch:      
 
 concurrency:
   group: ${{ github.ref }}
