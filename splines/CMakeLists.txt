@@ -70,7 +70,7 @@ if (USE_FPGA)
 	-fintelfpga
 	-Xshardware
 	-Xstarget=${FPGA_DEVICE}
-	# -fsycl-link=early
+	-fsycl-link=early
       )
     endif()
 endif()
