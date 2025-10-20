@@ -57,8 +57,8 @@ void FPGACalcSplineWeights(short int *SplineSegments,
         paramvalues_bram[i] = paramvalues_host[i];
     }
 
-    [[intel::initiation_interval(1)]]
     #pragma unroll 2
+    [[intel::initiation_interval(1)]]
     for (unsigned int splineNum = 0; splineNum < NSplines_valid; ++splineNum){
         const short int Param = params_host[splineNum];
         const short int segment = segments_bram[Param];
