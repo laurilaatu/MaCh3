@@ -79,8 +79,7 @@ void FPGACalcSplineWeights(short int *SplineSegments,
         const float fD = coeffs[3];
         const float dx = paramvalues_bram[Param] - coeff_x_host[segment_X];
 
-        bool success = false;
-        while (!success) SplinePipe::write((fA+dx*(fB+dx*(fC+dx*fD))), success);
+        SplinePipe::write((fA+dx*(fB+dx*(fC+dx*fD))));
     }
 }
 //********************************************************************
@@ -134,34 +133,19 @@ void FPGAModifyWeights(int NEvents,
         const unsigned int numParams = nParamPerEvent_host[Offset];
         //const unsigned int startIndex_tf1 = nParamPerEvent_tf1_host[Offset + 1];
         //const unsigned int numParams_tf1 = nParamPerEvent_tf1_host[Offset];
-        int current_spline_param = 0;
-        int current_tf1_param = 0;
+        //int current_tf1_param = 0;
 
-        bool spline_success = false;
+        //bool spline_success = false;
         //bool tf1_success = false;
         float spline_val;
         //float tf1_val;
         //while (current_spline_param < numParams || current_tf1_param < numParams_tf1){
-        while (current_spline_param < numParams){
+	[[intel::initiation_interval(1)]]
+	for (int current_spline_param=0; current_spline_param < numParams; current_spline_param++){
 
-            if (current_spline_param < numParams){
-                spline_val = SplinePipe::read(spline_success);
-                if (spline_success){
-                    totalWeight *= spline_val;
-                    current_spline_param++;
-                    spline_success = false;
-                }
-            }
+                spline_val = SplinePipe::read();
+                totalWeight *= spline_val;
 
-              /*
-            if (current_tf1_param < numParams_tf1){
-                tf1_val = TF1Pipe::read(tf1_success);
-                if (tf1_success){
-                    totalWeight *= tf1_val;
-                    current_tf1_param++;
-                    tf1_success = false;
-                }
-            }*/
         }
 
         // // Compute total weight for the current event
