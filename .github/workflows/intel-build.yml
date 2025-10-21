@@ -94,8 +94,8 @@ jobs:
           ./CIValidations/SplineValidations
 
           export runtime=$(date +%s)
-          cp out.txt /home/hep/llaatu/mach3/output/out_hw_$(runtime).txt
-          zip -r /home/hep/llaatu/mach3/output/reports/report_hw_$(runtime) ~/gh-runner/_work/MaCh3/MaCh3/build/splines/libSplines.so.prj/report
-          echo $runtime `grep -a elapsed ~/mach3/output/out_hw_$(runtime).txt` >> ~/mach3/output/runtimes
+          cp out.txt /home/hep/llaatu/mach3/output/out_hw_$runtime.txt
+          zip -r /home/hep/llaatu/mach3/output/reports/report_hw_$runtime ~/gh-runner/_work/MaCh3/MaCh3/build/splines/libSplines.so.prj/report
+          echo $runtime `grep -a elapsed ~/mach3/output/out_hw_$runtime.txt` >> ~/mach3/output/runtimes
 
         shell: bash        
