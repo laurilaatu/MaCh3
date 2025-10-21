@@ -144,6 +144,7 @@ void FPGAModifyWeights(int NEvents,
 	for (int current_spline_param=0; current_spline_param < numParams; current_spline_param++){
 
                 spline_val = SplinePipe::read();
+                
                 totalWeight *= spline_val;
 
         }
