@@ -57,7 +57,7 @@ void FPGACalcSplineWeights(short int *SplineSegments,
         paramvalues_bram[i] = paramvalues_host[i];
     }
 
-    #pragma unroll 2
+    //#pragma unroll 2
     [[intel::initiation_interval(1)]]
     for (unsigned int splineNum = 0; splineNum < NSplines_valid; ++splineNum){
         const short int Param = params_host[splineNum];
@@ -140,11 +140,11 @@ void FPGAModifyWeights(int NEvents,
         float spline_val;
         //float tf1_val;
         //while (current_spline_param < numParams || current_tf1_param < numParams_tf1){
-	[[intel::initiation_interval(1)]]
+	//[[intel::initiation_interval(1)]]
 	for (int current_spline_param=0; current_spline_param < numParams; current_spline_param++){
 
                 spline_val = SplinePipe::read();
-                
+
                 totalWeight *= spline_val;
 
         }
