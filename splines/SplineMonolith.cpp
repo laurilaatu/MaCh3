@@ -131,36 +131,45 @@ void FPGAModifyWeights(int NEvents,
         // Extract the parameters for the current event
         const unsigned int startIndex = nParamPerEvent_host[Offset + 1];
         const unsigned int numParams = nParamPerEvent_host[Offset];
-        //const unsigned int startIndex_tf1 = nParamPerEvent_tf1_host[Offset + 1];
-        //const unsigned int numParams_tf1 = nParamPerEvent_tf1_host[Offset];
-        //int current_tf1_param = 0;
 
-        //bool spline_success = false;
-        //bool tf1_success = false;
         float spline_val;
-        //float tf1_val;
-        //while (current_spline_param < numParams || current_tf1_param < numParams_tf1){
-	//[[intel::initiation_interval(1)]]
-	for (int current_spline_param=0; current_spline_param < numParams; current_spline_param++){
+ 
 
-                spline_val = SplinePipe::read();
+      int pipeline_length = 3;
+      float partial_product;
+      float result_array[pipeline_length];
 
-                totalWeight *= spline_val;
+      [[intel::initiation_interval(1)]]
+      #pragma ivdep
+      for (int current_spline_param=0; current_spline_param < numParams+pipeline_length; current_spline_param++){
 
+        float pipeline_feedback;
+
+        if (current_spline_param < pipeline_length) {
+          float pipeline_feedback = 1;
+        }
+          
+        else {
+          pipeline_feedback = partial_product;
+        }
+        
+        if (current_spline_param < numParams) {
+          spline_val = SplinePipe::read();
+        } else {
+          spline_val = 0.0f;
         }
 
-        // // Compute total weight for the current event
-        // for (unsigned int id = 0; id < numParams; ++id) {
-        //     totalWeight *= cpu_weights_spline_var[startIndex + id];
-        // }
-        // // Compute total weight for the current event
-        // for (unsigned int id = 0; id < numParams_tf1; ++id) {
-        //     totalWeight *= cpu_weights_tf1_var[startIndex_tf1 + id];
-        // }
-
-        // Store the total weight for the current event
-        total_weights_host[EventNum] = totalWeight;
-    }
+        partial_product = spline_val * pipeline_feedback;
+        if (current_spline_param >= numParams) {
+          result_array[current_spline_param-numParams]=partial_product;
+        }
+          
+        // totalWeight *= spline_val;
+      }        // Store the total weight for the current event
+            
+      total_weights_host[EventNum] = result_array[0]* result_array[1]* result_array[2];
+            //total_weights_host[EventNum] = totalWeight;
+      }
 }
 
 #endif
