@@ -136,7 +136,7 @@ void FPGAModifyWeights(int NEvents,
 
     const int pipeline_length = 16;
     //float partial_product;
-    float result_array[pipeline_length];
+    float result_array[pipeline_length] = {1.0f};
 
     
     #pragma ivdep
@@ -147,10 +147,7 @@ void FPGAModifyWeights(int NEvents,
       for (int i=0; i<pipeline_length; i++){
         if (current_spline_param + i < numParams){
           result_array[i] = SplinePipe::read();
-        } else {
-          result_array[i] = 1.0f;
-        }
-        
+        } 
       }
 
       float partial_product = 1.0f;
