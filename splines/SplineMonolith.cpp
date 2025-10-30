@@ -140,7 +140,6 @@ void FPGAModifyWeights(int NEvents,
 
     
     #pragma ivdep
-    [[intel::initiation_interval(16)]]
     for (int current_spline_param=0; current_spline_param < numParams; current_spline_param = current_spline_param + pipeline_length){
 
       [[intel::initiation_interval(1)]]
