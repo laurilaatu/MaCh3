@@ -135,12 +135,12 @@ void FPGAModifyWeights(int NEvents,
     float spline_val;
 
 
-    const int pipeline_length = 4;
+    const int pipeline_length = 16;
     //float partial_product;
     float result_array[pipeline_length];
 
-    #pragma ii 1
     #pragma ivdep
+    [[intel::initiation_interval(1)]]
     for (int current_spline_param=0; current_spline_param < numParams; current_spline_param++){
 
       //float pipeline_feedback;
@@ -170,8 +170,9 @@ void FPGAModifyWeights(int NEvents,
       //if (current_spline_param >= numParams) {
       //  result_array[current_spline_param-numParams]=partial_product;
       //}
+      float tmpRes = spline_val*result_array[res_idx];
 
-      result_array[res_idx] *= spline_val;
+      result_array[res_idx] = tmpRes;
         
       // totalWeight *= spline_val;
     }        // Store the total weight for the current event
