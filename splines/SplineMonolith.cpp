@@ -135,7 +135,7 @@ void FPGAModifyWeights(int NEvents,
         float spline_val;
  
 
-      int pipeline_length = 3;
+      const int pipeline_length = 3;
       float partial_product;
       float result_array[pipeline_length];
 
