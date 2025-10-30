@@ -134,53 +134,35 @@ void FPGAModifyWeights(int NEvents,
 
     float spline_val;
 
-
     const int pipeline_length = 16;
     //float partial_product;
     float result_array[pipeline_length];
 
+    
     #pragma ivdep
-    [[intel::initiation_interval(1)]]
-    for (int current_spline_param=0; current_spline_param < numParams; current_spline_param++){
+    [[intel::initiation_interval(16)]]
+    for (int current_spline_param=0; current_spline_param < numParams; current_spline_param = current_spline_param + pipeline_length){
 
-      //float pipeline_feedback;
-
-      int res_idx = current_spline_param % pipeline_length;
-
-      /*
-      if (current_spline_param < pipeline_length) {
-        pipeline_feedback = 1;
-      }
+      [[intel::initiation_interval(1)]]
+      for (int i=0; i<pipeline_length; i++){
+        if (current_spline_param + i < numParams){
+          result_array[i] = SplinePipe::read();
+        } else {
+          result_array[i] = 1.0f;
+        }
         
-      else {
-        pipeline_feedback = partial_product;
-      }
-      
-      if (current_spline_param < numParams) {
-      */
-        spline_val = SplinePipe::read();
-
-      /*
-      } else {
-        spline_val = 0.0f;
       }
 
-      partial_product = spline_val * pipeline_feedback;
-      */
-      //if (current_spline_param >= numParams) {
-      //  result_array[current_spline_param-numParams]=partial_product;
-      //}
-      float tmpRes = spline_val*result_array[res_idx];
+      float partial_product = 1.0f;
 
-      result_array[res_idx] = tmpRes;
-        
-      // totalWeight *= spline_val;
+      #pragma unroll
+      for (int i=0; i<pipeline_length; i++){
+        partial_product *= result_array[i];
+      }
+
+      totalWeight *= partial_product;//spline_val;
     }        // Store the total weight for the current event
 
-    #pragma unroll
-    for (int i=0; i<pipeline_length; i++){
-      totalWeight *= result_array[i];
-    }
     
     total_weights_host[EventNum] = totalWeight;
     }
