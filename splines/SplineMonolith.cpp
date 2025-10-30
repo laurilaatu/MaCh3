@@ -119,66 +119,70 @@ void FPGAModifyWeights(int NEvents,
                        unsigned int *cpu_nParamPerEvent
                       // unsigned int *cpu_nParamPerEvent_tf1
                       ){
-    sycl::ext::intel::host_ptr<float> total_weights_host(cpu_total_weights);
-    sycl::ext::intel::host_ptr<const unsigned int> nParamPerEvent_host(cpu_nParamPerEvent);
-    //sycl::ext::intel::host_ptr<const unsigned int> nParamPerEvent_tf1_host(cpu_nParamPerEvent_tf1);
+  sycl::ext::intel::host_ptr<float> total_weights_host(cpu_total_weights);
+  sycl::ext::intel::host_ptr<const unsigned int> nParamPerEvent_host(cpu_nParamPerEvent);
+  //sycl::ext::intel::host_ptr<const unsigned int> nParamPerEvent_tf1_host(cpu_nParamPerEvent_tf1);
 
-    for (unsigned int EventNum = 0; EventNum < NEvents; ++EventNum){
-        float totalWeight = 1.0f; // Initialize total weight for each event
+  for (unsigned int EventNum = 0; EventNum < NEvents; ++EventNum){
+    float totalWeight = 1.0f; // Initialize total weight for each event
 
-        const unsigned int Offset = 2 * EventNum;
+    const unsigned int Offset = 2 * EventNum;
 
-        // Extract the parameters for the current event
-        const unsigned int startIndex = nParamPerEvent_host[Offset + 1];
-        const unsigned int numParams = nParamPerEvent_host[Offset];
+    // Extract the parameters for the current event
+    const unsigned int startIndex = nParamPerEvent_host[Offset + 1];
+    const unsigned int numParams = nParamPerEvent_host[Offset];
 
-        float spline_val;
- 
+    float spline_val;
 
-      const int pipeline_length = 3;
-      //float partial_product;
-      float result_array[pipeline_length];
 
-      #pragma ivdep
-      [[intel::initiation_interval(1)]]
-      for (int current_spline_param=0; current_spline_param < numParams; current_spline_param++){
+    const int pipeline_length = 4;
+    //float partial_product;
+    float result_array[pipeline_length];
 
-        //float pipeline_feedback;
+    #pragma ii 1
+    #pragma ivdep
+    for (int current_spline_param=0; current_spline_param < numParams; current_spline_param++){
 
-        int res_idx = current_spline_param % pipeline_length;
+      //float pipeline_feedback;
 
-        /*
-        if (current_spline_param < pipeline_length) {
-          pipeline_feedback = 1;
-        }
-          
-        else {
-          pipeline_feedback = partial_product;
-        }
-        
-        if (current_spline_param < numParams) {
-        */
-          spline_val = SplinePipe::read();
+      int res_idx = current_spline_param % pipeline_length;
 
-        /*
-        } else {
-          spline_val = 0.0f;
-        }
-
-        partial_product = spline_val * pipeline_feedback;
-        */
-        //if (current_spline_param >= numParams) {
-        //  result_array[current_spline_param-numParams]=partial_product;
-        //}
-
-        result_array[res_idx] *= spline_val;
-          
-        // totalWeight *= spline_val;
-      }        // Store the total weight for the current event
-            
-      total_weights_host[EventNum] = result_array[0]* result_array[1]* result_array[2];
-            //total_weights_host[EventNum] = totalWeight;
+      /*
+      if (current_spline_param < pipeline_length) {
+        pipeline_feedback = 1;
       }
+        
+      else {
+        pipeline_feedback = partial_product;
+      }
+      
+      if (current_spline_param < numParams) {
+      */
+        spline_val = SplinePipe::read();
+
+      /*
+      } else {
+        spline_val = 0.0f;
+      }
+
+      partial_product = spline_val * pipeline_feedback;
+      */
+      //if (current_spline_param >= numParams) {
+      //  result_array[current_spline_param-numParams]=partial_product;
+      //}
+
+      result_array[res_idx] *= spline_val;
+        
+      // totalWeight *= spline_val;
+    }        // Store the total weight for the current event
+
+    #pragma unroll
+    for (int i=0; i<pipeline_length; i++){
+      totalWeight *= result_array[i];
+    }
+    
+    total_weights_host[EventNum] = totalWeight;
+    }
 }
 
 #endif
