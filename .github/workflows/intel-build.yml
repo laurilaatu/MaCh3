@@ -55,7 +55,7 @@ jobs:
           cd /home/hep/llaatu/mach3/MaCh3Tutorial/build/
           ./CIValidations/SplineValidations
           export runtime=$(date +%s)
-          cp out.txt /home/hep/llaatu/mach3/output/out_emu_$(runtime).txt
+          cp out.txt /home/hep/llaatu/mach3/output/out_emu_$runtime.txt
         shell: bash
 
 
