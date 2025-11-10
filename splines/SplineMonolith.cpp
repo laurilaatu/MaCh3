@@ -153,7 +153,9 @@ void FPGAModifyWeights(int NEvents,
 
       #pragma unroll
       for (int i=0; i<pipeline_length; i++){
-        partial_product *= result_array[i];
+        if (current_spline_param + i < numParams){
+	  partial_product *= result_array[i];
+	}
       }
 
       totalWeight *= partial_product;//spline_val;
