@@ -113,6 +113,7 @@ void FPGACalcSplineWeights(short int *SplineSegments,
 }*/
 
 //*********************************************************
+
 [[intel::use_stall_enable_clusters]]
 void FPGAModifyWeights(int NEvents,
                        float *cpu_total_weights,
@@ -149,13 +150,13 @@ void FPGAModifyWeights(int NEvents,
         } 
       }
 
-      #pragma clang fp reassociate(on)
-      #pragma clang fp contract(fast)
       float partial_product = 1.0f;
 
       #pragma unroll
       for (int i=0; i<pipeline_length; i++){
         if (current_spline_param + i < numParams){
+	  #pragma clang fp reassociate(on)
+          #pragma clang fp contract(fast)
 	  partial_product *= result_array[i];
 	}
       }
