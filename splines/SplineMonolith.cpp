@@ -149,6 +149,8 @@ void FPGAModifyWeights(int NEvents,
         } 
       }
 
+      #pragma clang fp reassociate(on)
+      #pragma clang fp contract(fast)
       float partial_product = 1.0f;
 
       #pragma unroll
