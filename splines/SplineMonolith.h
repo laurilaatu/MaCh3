@@ -2,6 +2,8 @@
 #ifdef USE_FPGA
 #include <sycl/sycl.hpp>
 #include "splines/oneAPIUtils.dp.hpp"
+#include <sycl/ext/intel/fpga_extensions.hpp>
+
 #endif
 
 #include "splines/SplineBase.h"
@@ -142,7 +144,17 @@ class SMonolith : public SplineBase {
     std::vector<unsigned int> cpu_nParamPerEvent_tf1;
 
     #ifdef USE_FPGA
-      sycl::queue queue;
+      static sycl::queue queue;
+      #if FPGA_SIMULATOR
+        static constexpr auto selector = sycl::ext::intel::fpga_simulator_selector_v;
+      #elif FPGA_HARDWARE
+        static constexpr auto selector = sycl::ext::intel::fpga_selector_v;
+      #elif FPGA_EMULATOR
+        static constexpr auto selector = sycl::ext::intel::fpga_emulator_selector_v;
+      #else
+        static constexpr auto selector = sycl::default_selector{};
+      #endif
+
       SplineMonoUSM* cpu_spline_handler;
       float* cpu_coeff_TF1_many;
 

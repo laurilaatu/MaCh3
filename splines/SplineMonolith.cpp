@@ -29,6 +29,10 @@ using SplinePipe = sycl::ext::intel::pipe<IDSplinePipe,        // An identifier 
                                        >;
 */
 
+
+sycl::queue SMonolith::queue = sycl::queue(SMonolith::selector);//, fpga_tools::exception_handler, sycl::property::queue::enable_profiling{});
+
+
 //*********************************************************
 //*********************************************************
 [[intel::use_stall_enable_clusters]]
@@ -208,34 +212,8 @@ void SMonolith::Initialise() {
 #ifdef USE_FPGA
 
 
-  std::cout<<"CHECK!!! USE_FPGA in Initialise"<<std::endl;
-
   
-   
-  #if FPGA_SIMULATOR
-    std::cout<<"CHECK TWO!!! FPGA_SIMULATOR active"<<std::endl;
-    auto selector = sycl::ext::intel::fpga_simulator_selector_v;
-        
-
-  #elif FPGA_HARDWARE
-   //-Xshardware -fsycl-link=early -DFPGA_HARDWARE
-    std::cout<<"CHECK TWO!!! FPGA_HARDWARE active"<<std::endl;
-    auto selector = sycl::ext::intel::fpga_selector_v;
-
-  #elif FPGA_EMULATOR
-
-    std::cout<<"CHECK TWO!!! FPGA_EMULATOR active"<<std::endl;
-    auto selector = sycl::ext::intel::fpga_emulator_selector_v;
-
-  #else
-    std::cout<<"CHECK TWO!!! default selector active"<<std::endl;  
-    auto selector = sycl::default_selector{};
-
-  #endif
-  queue = sycl::queue(selector);//, fpga_tools::exception_handler, sycl::property::queue::enable_profiling{});
-
-  
-  auto device = queue.get_device();
+  auto device = SMonolith::queue.get_device();
 
   std::cout << "Running on device: "
             << device.get_info<sycl::info::device::name>().c_str()
@@ -298,8 +276,8 @@ void SMonolith::PrepareForGPU(std::vector<std::vector<TResponseFunction_red*> > 
     std::cout<<"CHECK!!! USE_FPGA active in PrepareForGPU"<<std::endl;
 
     
-    SplineSegments = sycl::malloc_host<short int>(nParams, queue);
-    ParamValues = sycl::malloc_host<float>(nParams, queue);
+    SplineSegments = sycl::malloc_host<short int>(nParams, SMonolith::queue);
+    ParamValues = sycl::malloc_host<float>(nParams, SMonolith::queue);
   #else
     SplineSegments = new short int[nParams]();
     ParamValues = new float[nParams]();
@@ -326,12 +304,12 @@ void SMonolith::PrepareForGPU(std::vector<std::vector<TResponseFunction_red*> > 
 
 
   #ifdef USE_FPGA
-    cpu_spline_handler = new SplineMonoUSM(queue, event_size_max, nKnots*_nCoeff_, NSplines_valid, NSplines_valid, NEvents);
+  cpu_spline_handler = new SplineMonoUSM(SMonolith::queue, event_size_max, nKnots*_nCoeff_, NSplines_valid, NSplines_valid, NEvents);
 
     //cpu_coeff_TF1_many = sycl::malloc_host<float>(nTF1coeff, queue);
     //cpu_paramNo_TF1_arr = sycl::malloc_host<short int>(NTF1_valid, queue);
-    cpu_total_weights = sycl::malloc_host<float>(NEvents, queue);
-    cpu_nParamPerEvent = sycl::malloc_host<unsigned int>(2*NEvents, queue);
+  cpu_total_weights = sycl::malloc_host<float>(NEvents, SMonolith::queue);
+  cpu_nParamPerEvent = sycl::malloc_host<unsigned int>(2*NEvents, SMonolith::queue);
     cpu_nParamPerEvent_tf1.resize(2*NEvents);
 
     std::cout<<"CHECK!!! After new SplineMonoUSM"<<std::endl;
@@ -831,8 +809,8 @@ void SMonolith::LoadSplineFile(std::string FileName) {
 
 
   //segments = sycl::malloc_host<short int>(nParams, queue);
-  SplineSegments = sycl::malloc_host<short int>(nParams, queue);
-  ParamValues = sycl::malloc_host<float>(nParams, queue);
+  SplineSegments = sycl::malloc_host<short int>(nParams, SMonolith::queue);
+  ParamValues = sycl::malloc_host<float>(nParams, SMonolith::queue);
   
 #else
   SplineSegments = new short int[nParams]();
@@ -847,12 +825,12 @@ void SMonolith::LoadSplineFile(std::string FileName) {
 
 
   #ifdef USE_FPGA
-    cpu_spline_handler = new SplineMonoUSM(queue, event_size_max, nKnots*_nCoeff_, NSplines_valid, NSplines_valid, NEvents);
+  cpu_spline_handler = new SplineMonoUSM(SMonolith::queue, event_size_max, nKnots*_nCoeff_, NSplines_valid, NSplines_valid, NEvents);
     //cpu_coeff_TF1_many = sycl::malloc_host<float>(nTF1coeff, queue);
     //cpu_paramNo_TF1_arr = sycl::malloc_host<short int>(NTF1_valid, queue);
 
 
-    cpu_nParamPerEvent = sycl::malloc_host<unsigned int>(2*NEvents, queue);
+  cpu_nParamPerEvent = sycl::malloc_host<unsigned int>(2*NEvents, SMonolith::queue);
     cpu_nParamPerEvent_tf1.resize(2*NEvents);
     
 
@@ -874,8 +852,8 @@ void SMonolith::LoadSplineFile(std::string FileName) {
   //KS: This is tricky as this variable use both by CPU and GPU, however if use CUDA we use cudaMallocHost
 #ifndef CUDA
   #ifdef USE_FPGA
-    cpu_total_weights = sycl::malloc_host<float>(NEvents, queue);
-    cpu_weights_spline_var = sycl::malloc_host<float>(NSplines_valid, queue);
+    cpu_total_weights = sycl::malloc_host<float>(NEvents, SMonolith::queue);
+    cpu_weights_spline_var = sycl::malloc_host<float>(NSplines_valid, SMonolith::queue);
     //cpu_weights_tf1_var = sycl::malloc_host<float>(NTF1_valid, queue);
   #else
     cpu_total_weights = new float[NEvents]();
@@ -1121,9 +1099,9 @@ SMonolith::~SMonolith() {
   delete gpu_spline_handler;
   #else
     #ifdef USE_FPGA
-      if(SplineSegments != nullptr) sycl::free(SplineSegments, queue);
-      if(ParamValues != nullptr) sycl::free(ParamValues, queue);
-      if(cpu_total_weights != nullptr) sycl::free(cpu_total_weights, queue);
+  if(SplineSegments != nullptr) sycl::free(SplineSegments, SMonolith::queue);
+  if(ParamValues != nullptr) sycl::free(ParamValues, SMonolith::queue);
+  if(cpu_total_weights != nullptr) sycl::free(cpu_total_weights, SMonolith::queue);
     #else
       if(SplineSegments != nullptr) delete[] SplineSegments;
       if(ParamValues != nullptr) delete[] ParamValues;
@@ -1134,7 +1112,7 @@ SMonolith::~SMonolith() {
 
   if(cpu_weights != nullptr) delete[] cpu_weights;
   #ifdef USE_FPGA
-    if(cpu_weights_spline_var != nullptr) sycl::free(cpu_weights_spline_var, queue);
+  if(cpu_weights_spline_var != nullptr) sycl::free(cpu_weights_spline_var, SMonolith::queue);
     //if(cpu_weights_tf1_var != nullptr) sycl::free(cpu_weights_tf1_var, queue);
     //sycl::free(cpu_coeff_TF1_many, queue);
     //sycl::free(cpu_paramNo_TF1_arr, queue);
@@ -1373,7 +1351,7 @@ void SMonolith::Evaluate() {
     start = std::chrono::system_clock::now();    
 
     // Call the kernel
-    auto e = queue.single_task<IDOptimized>(OptimizedKernel{SplineSegments,
+    auto e = SMonolith::queue.single_task<IDOptimized>(OptimizedKernel{SplineSegments,
                                                             cpu_spline_handler->coeff_many,
                                                             ParamValues,
                                                             cpu_spline_handler->coeff_x,
