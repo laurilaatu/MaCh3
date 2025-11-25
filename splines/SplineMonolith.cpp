@@ -496,7 +496,9 @@ void SMonolith::PrepareForGPU(std::vector<std::vector<TResponseFunction_red*> > 
 
     // Store the number of splines which affect that event
     // This will only count the number of non-NULL splines (i.e. the valid splines)
+    #ifdef USE_FPGA
     cpu_spline_handler->splines_per_event_arr[EventCounter] = SplinePerEventCounter;
+    #endif
 
   } // End the loop over the number of events
   delete[] many_tmp;
