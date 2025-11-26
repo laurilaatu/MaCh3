@@ -48,7 +48,7 @@ void FPGACalcSplineWeights(short int *SplineSegments,
                            int nParams) {
 //*********************************************************
     sycl::ext::intel::host_ptr<const short int> segments_host(SplineSegments);
-    sycl::ext::intel::host_ptr<const float> coeff_many_host(coeff_many);
+    sycl::ext::intel::device_ptr<const float> coeff_many_host(coeff_many);
     sycl::ext::intel::host_ptr<const float> paramvalues_host(ParamValues);
     sycl::ext::intel::host_ptr<const float> coeff_x_host(coeff_x);
     sycl::ext::intel::host_ptr<const unsigned int> knots_host(nKnots_arr);
@@ -56,6 +56,9 @@ void FPGACalcSplineWeights(short int *SplineSegments,
     
     [[intel::fpga_memory("BLOCK_RAM")]] int segments_bram[200];
     [[intel::max_replicates(4)]] float paramvalues_bram[200];
+    //[[intel::fpga_memory("BLOCK_RAM")]] int coeff_x[200]; // TODO: coeff x into bram
+
+
     for (int i = 0; i < nParams; i++) {
         segments_bram[i] = segments_host[i];
         paramvalues_bram[i] = paramvalues_host[i];
