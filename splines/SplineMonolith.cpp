@@ -1003,7 +1003,12 @@ void SMonolith::PrepareSplineFile() {
   Monolith->Branch("cpu_coeff_many", &coeff, "cpu_coeff_many/F");
   for(unsigned int i = 0; i < nKnots*_nCoeff_; i++)
   {
-    coeff = cpu_spline_handler->coeff_many[i];
+    #ifndef USE_FPGA
+      coeff = cpu_spline_handler->coeff_many[i];
+    #else
+      queue.memcpy(&coeff, &cpu_spline_handler->coeff_many[i], sizeof(float));
+    #endif
+      
     Monolith->Fill();
   }
   SplineFile->cd();
