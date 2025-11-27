@@ -29,15 +29,16 @@ jobs:
         run: |
           chmod +x /home/hep/llaatu/mach3/MaCh3Utils/start_build.sh
           
-          # Using 'build_emu' directory
+          # 1. Build MaCh3 Base (build_emu)
           /home/hep/llaatu/mach3/MaCh3Utils/start_build.sh emulator /home/hep/llaatu/gh-runner/_work/MaCh3/MaCh3/ build_emu
 
           chmod +x /home/hep/llaatu/mach3/MaCh3Utils/tutorial_build.sh
           
-          # Source setup from build_emu
+          # Source setup from base build_emu
           source /home/hep/llaatu/gh-runner/_work/MaCh3/MaCh3/build_emu/bin/setup.MaCh3.sh
 
-          /home/hep/llaatu/mach3/MaCh3Utils/tutorial_build.sh emulator
+          # 2. Build Tutorial (build_emu)
+          /home/hep/llaatu/mach3/MaCh3Utils/tutorial_build.sh emulator build_emu
         shell: bash
 
       - name: Run Tutorial (Emulator)
@@ -47,11 +48,12 @@ jobs:
 
           . /opt/intel/oneapi/2025.0/oneapi-vars.sh --force
 
-          # Source setup from build_emu
+          # Source setups from build_emu
           source /home/hep/llaatu/gh-runner/_work/MaCh3/MaCh3/build_emu/bin/setup.MaCh3.sh
-          source /home/hep/llaatu/mach3/MaCh3Tutorial/build/bin/setup.MaCh3Tutorial.sh
+          source /home/hep/llaatu/mach3/MaCh3Tutorial/build_emu/bin/setup.MaCh3Tutorial.sh
 
-          cd /home/hep/llaatu/mach3/MaCh3Tutorial/build/
+          # Run from build_emu
+          cd /home/hep/llaatu/mach3/MaCh3Tutorial/build_emu/
           ./CIValidations/SplineValidations
           export runtime=$(date +%s)
           cp out.txt /home/hep/llaatu/mach3/output/out_emu_$runtime.txt
@@ -64,15 +66,16 @@ jobs:
         run: |
           chmod +x /home/hep/llaatu/mach3/MaCh3Utils/start_build.sh
           
-          # Using 'build_hw' directory
+          # 1. Build MaCh3 Base (build_hw)
           /home/hep/llaatu/mach3/MaCh3Utils/start_build.sh hardware /home/hep/llaatu/gh-runner/_work/MaCh3/MaCh3/ build_hw
 
           chmod +x /home/hep/llaatu/mach3/MaCh3Utils/tutorial_build.sh
           
-          # Source setup from build_hw
+          # Source setup from base build_hw
           source /home/hep/llaatu/gh-runner/_work/MaCh3/MaCh3/build_hw/bin/setup.MaCh3.sh
 
-          /home/hep/llaatu/mach3/MaCh3Utils/tutorial_build.sh hardware
+          # 2. Build Tutorial (build_hw)
+          /home/hep/llaatu/mach3/MaCh3Utils/tutorial_build.sh hardware build_hw
         shell: bash
 
       - name: Run Tutorial on hardware
@@ -84,11 +87,12 @@ jobs:
           aocl program acl0 /opt/oneapi-asp/ia840f/bringup/aocxs/ofs_ia840f_usm.aocx
           aocl program acl1 /opt/oneapi-asp/ia840f/bringup/aocxs/ofs_ia840f_usm.aocx
           
-          # Source setup from build_hw
+          # Source setups from build_hw
           source /home/hep/llaatu/gh-runner/_work/MaCh3/MaCh3/build_hw/bin/setup.MaCh3.sh
-          source /home/hep/llaatu/mach3/MaCh3Tutorial/build/bin/setup.MaCh3Tutorial.sh
+          source /home/hep/llaatu/mach3/MaCh3Tutorial/build_hw/bin/setup.MaCh3Tutorial.sh
 
-          cd /home/hep/llaatu/mach3/MaCh3Tutorial/build/
+          # Run from build_hw
+          cd /home/hep/llaatu/mach3/MaCh3Tutorial/build_hw/
           export SYCL_UR_TRACE=-1
           export ACL_CONTEXT_CALLBACK_DEBUG=1          
           ./CIValidations/SplineValidations
@@ -108,15 +112,16 @@ jobs:
         run: |
           chmod +x /home/hep/llaatu/mach3/MaCh3Utils/start_build.sh
           
-          # Using 'build_cpu' directory
+          # 1. Build MaCh3 Base (build_cpu)
           /home/hep/llaatu/mach3/MaCh3Utils/start_build.sh cpu /home/hep/llaatu/gh-runner/_work/MaCh3/MaCh3/ build_cpu
 
           chmod +x /home/hep/llaatu/mach3/MaCh3Utils/tutorial_build.sh
           
-          # Source setup from build_cpu
+          # Source setup from base build_cpu
           source /home/hep/llaatu/gh-runner/_work/MaCh3/MaCh3/build_cpu/bin/setup.MaCh3.sh
 
-          /home/hep/llaatu/mach3/MaCh3Utils/tutorial_build.sh cpu
+          # 2. Build Tutorial (build_cpu)
+          /home/hep/llaatu/mach3/MaCh3Utils/tutorial_build.sh cpu build_cpu
         shell: bash
 
       - name: Run Tutorial on CPU
@@ -124,16 +129,17 @@ jobs:
           export QUARTUS_ROOTDIR_OVERRIDE=/opt/intelFPGA_pro/23.1.0/quartus/
           export LM_LICENSE_FILE=5280@licsrv00.hep.ph.ic.ac.uk
 
-          # Source setup from build_cpu
-          source /home/hep/llaatu/gh-runner/_work/MaCh3/MaCh3/build_cpu/bin/setup.MaCh3.sh
-          source /home/hep/llaatu/mach3/MaCh3Tutorial/build/bin/setup.MaCh3Tutorial.sh
+          . /opt/intel/oneapi/2025.0/oneapi-vars.sh --force
 
-          cd /home/hep/llaatu/mach3/MaCh3Tutorial/build/
+          # Source setups from build_cpu
+          source /home/hep/llaatu/gh-runner/_work/MaCh3/MaCh3/build_cpu/bin/setup.MaCh3.sh
+          source /home/hep/llaatu/mach3/MaCh3Tutorial/build_cpu/bin/setup.MaCh3Tutorial.sh
+
+          # Run from build_cpu
+          cd /home/hep/llaatu/mach3/MaCh3Tutorial/build_cpu/
           
           ./CIValidations/SplineValidations
 
           export runtime=$(date +%s)
           cp out.txt /home/hep/llaatu/mach3/output/out_cpu_$runtime.txt
-          echo $runtime `grep -a elapsed ~/mach3/output/out_hw_$runtime.txt` >> ~/mach3/output/runtimes_cpu
-          
         shell: bash
