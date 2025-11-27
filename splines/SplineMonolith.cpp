@@ -433,7 +433,11 @@ void SMonolith::PrepareForGPU(std::vector<std::vector<TResponseFunction_red*> > 
         //KS: Contrary to X coeff we keep for other coeff only filled knots, there is no much gain for doing so for x coeff
         for (int j = 0; j < nPoints_tmp; ++j) {
           for (int k = 0; k < _nCoeff_; k++) {
-            cpu_spline_handler->coeff_many[KnotCounter*_nCoeff_ + j*_nCoeff_ + k] = many_tmp[j*_nCoeff_+k];
+            #ifndef USE_FPGA
+              cpu_spline_handler->coeff_many[KnotCounter*_nCoeff_ + j*_nCoeff_ + k] = many_tmp[j*_nCoeff_+k];
+            #else
+              queue.memcpy(&cpu_spline_handler->coeff_many[KnotCounter*_nCoeff_ + j*_nCoeff_ + k], &many_tmp[j*_nCoeff_+k], sizeof(float)).wait();
+            #endif
           }
         }
         // Set the parameter number for this spline
