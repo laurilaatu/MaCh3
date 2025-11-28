@@ -20,6 +20,7 @@ SplineMonoUSM::SplineMonoUSM(sycl::queue& queue,
 SplineMonoUSM::~SplineMonoUSM(){
     sycl::free(coeff_x, m_queue);
     sycl::free(coeff_many, m_queue);
+    sycl::free(coeff_many_device, m_queue);
     sycl::free(nKnots_arr, m_queue);
     sycl::free(paramNo_arr, m_queue);
     sycl::free(splines_per_event_arr, m_queue);

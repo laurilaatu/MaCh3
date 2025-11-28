@@ -19,6 +19,7 @@ struct SplineMonoUSM {
 
     /// CPU arrays to hold other coefficients
     float* coeff_many;
+    float* coeff_many_device;
 
     /// CPU Number of knots per spline
     unsigned int* nKnots_arr;
