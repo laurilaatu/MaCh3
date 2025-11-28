@@ -433,13 +433,14 @@ void SMonolith::PrepareForGPU(std::vector<std::vector<TResponseFunction_red*> > 
         //KS: Contrary to X coeff we keep for other coeff only filled knots, there is no much gain for doing so for x coeff
         for (int j = 0; j < nPoints_tmp; ++j) {
           for (int k = 0; k < _nCoeff_; k++) {
-            #ifndef USE_FPGA
+            //#ifndef USE_FPGA
               cpu_spline_handler->coeff_many[KnotCounter*_nCoeff_ + j*_nCoeff_ + k] = many_tmp[j*_nCoeff_+k];
-            #else
-              queue.memcpy(&cpu_spline_handler->coeff_many[KnotCounter*_nCoeff_ + j*_nCoeff_ + k], &many_tmp[j*_nCoeff_+k], sizeof(float)).wait();
-            #endif
+            //#else
+            //  queue.memcpy(&cpu_spline_handler->coeff_many[KnotCounter*_nCoeff_ + j*_nCoeff_ + k], &many_tmp[j*_nCoeff_+k], sizeof(float)).wait();
+            //#endif
           }
         }
+        
         // Set the parameter number for this spline
         cpu_spline_handler->paramNo_arr[NSplinesCounter] = short(ParamNumber);
         //KS: Fill map when each spline starts
@@ -508,6 +509,9 @@ void SMonolith::PrepareForGPU(std::vector<std::vector<TResponseFunction_red*> > 
     #endif
 
   } // End the loop over the number of events
+
+  queue.memcpy(cpu_spline_handler->coeff_many_device, cpu_spline_handler->coeff_many.data(), sizeof(float)*nKnots*_nCoeff_).wait();
+
   delete[] many_tmp;
   delete[] x_tmp;
   delete[] temp_coeffs;
@@ -958,6 +962,7 @@ void SMonolith::LoadSplineFile(std::string FileName) {
   PrintInitialsiation();
 
   MoveToGPU();
+)
 }
 
 // *****************************************
@@ -1003,11 +1008,11 @@ void SMonolith::PrepareSplineFile() {
   Monolith->Branch("cpu_coeff_many", &coeff, "cpu_coeff_many/F");
   for(unsigned int i = 0; i < nKnots*_nCoeff_; i++)
   {
-    #ifndef USE_FPGA
+    //#ifndef USE_FPGA
       coeff = cpu_spline_handler->coeff_many[i];
-    #else
-      queue.memcpy(&coeff, &cpu_spline_handler->coeff_many[i], sizeof(float));
-    #endif
+    //#else
+    //  queue.memcpy(&coeff, &cpu_spline_handler->coeff_many[i], sizeof(float));
+    //#endif
       
     Monolith->Fill();
   }
@@ -1275,7 +1280,7 @@ void SMonolith::Evaluate() {
 
     struct OptimizedKernel {
       short int *SplineSegments;
-      float *coeff_many;
+      float *coeff_many_device;
       float *ParamValues;
       float *coeff_x;
       unsigned int *nKnots_arr;
@@ -1300,7 +1305,7 @@ void SMonolith::Evaluate() {
 
         // Pass all the things that FPGACalcSplineWeights needs
         task_a.async(SplineSegments,
-                     coeff_many,
+                     coeff_many_device,
                      ParamValues,
                      coeff_x,
                      nKnots_arr,
@@ -1333,7 +1338,7 @@ void SMonolith::Evaluate() {
 
     // Task A arguments
     std::cout << "SplineSegments:           " << static_cast<void*>(SplineSegments) << std::endl;
-    std::cout << "coeff_many:               " << static_cast<void*>(cpu_spline_handler->coeff_many) << std::endl;
+    std::cout << "coeff_many_device:               " << static_cast<void*>(cpu_spline_handler->coeff_many_device) << std::endl;
     std::cout << "ParamValues:              " << static_cast<void*>(ParamValues) << std::endl;
     std::cout << "coeff_x:                  " << static_cast<void*>(cpu_spline_handler->coeff_x) << std::endl;
     std::cout << "nKnots_arr:               " << static_cast<void*>(cpu_spline_handler->nKnots_arr) << std::endl;
@@ -1366,7 +1371,7 @@ void SMonolith::Evaluate() {
 
     // Call the kernel
     auto e = SMonolith::queue.single_task<IDOptimized>(OptimizedKernel{SplineSegments,
-                                                            cpu_spline_handler->coeff_many,
+                                                            cpu_spline_handler->coeff_many_device,
                                                             ParamValues,
                                                             cpu_spline_handler->coeff_x,
                                                             cpu_spline_handler->nKnots_arr,
