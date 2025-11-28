@@ -962,7 +962,7 @@ void SMonolith::LoadSplineFile(std::string FileName) {
   PrintInitialsiation();
 
   MoveToGPU();
-)
+
 }
 
 // *****************************************
