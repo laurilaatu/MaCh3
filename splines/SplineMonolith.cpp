@@ -509,8 +509,9 @@ void SMonolith::PrepareForGPU(std::vector<std::vector<TResponseFunction_red*> > 
     #endif
 
   } // End the loop over the number of events
-
-  queue.memcpy(cpu_spline_handler->coeff_many_device, cpu_spline_handler->coeff_many, sizeof(float)*nKnots*_nCoeff_).wait();
+  #ifdef USE_FPGA
+    queue.memcpy(cpu_spline_handler->coeff_many_device, cpu_spline_handler->coeff_many, sizeof(float)*nKnots*_nCoeff_).wait();
+  #endif
 
   delete[] many_tmp;
   delete[] x_tmp;
