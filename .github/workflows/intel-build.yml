@@ -5,141 +5,64 @@ on:
   push:
     branches:
       - intel_icpx
-  workflow_dispatch:      
 
 concurrency:
   group: ${{ github.ref }}
-  cancel-in-progress: true      
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
 
 jobs:
-  run-local-script:
-    # Whitelist of allowed GitHub users
-    if: github.actor == 'laurilaatu' || github.actor == 'alexanderrichards' || github.actor == 'EdAtkin'
-
+  Setup:
     runs-on: [self-hosted, icpx]
-
+    if: github.actor == 'laurilaatu' || github.actor == 'alexanderrichards' || github.actor == 'EdAtkin'
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
+      - name: Cleanup Workspace
+        run: rm -rf $GITHUB_WORKSPACE/*
+      - name: Check out MaCh3 Core
+        uses: actions/checkout@v6
+        with:
+          path: MaCh3Core
+      - name: Check out MaCh3Tutorial
+        uses: actions/checkout@v6
+        with:
+          repository: mach3-software/MaCh3Tutorial
+          ref: intel_icpx
+          path: MaCh3Tutorial
+      - name: Check out MaCh3Utils
+        uses: actions/checkout@v6
+        with:
+          repository: alexanderrichards/MaCh3Utils
+          path: MaCh3Utils
 
-      # ----------------------------------------------------------------
-      # EMULATOR BUILD & RUN
-      # ----------------------------------------------------------------
-      - name: Run the ICPX build script (Emulator)
+  Build:
+    needs: Setup
+    runs-on: [self-hosted, icpx]
+    strategy:
+      matrix: &build-matrix
+        build-type: [ "cpu", "emulator", "hardware" ]
+      fail-fast: false
+    steps:
+      - name: Build MaCh3Core
+        run: MaCh3Utils/start_build.sh ${{ matrix.build-type }} MaCh3Core build_${{ matrix.build-type }}
+      - name: Build MaCh3Tutorial
         run: |
-          chmod +x /home/hep/llaatu/mach3/MaCh3Utils/start_build.sh
-          
-          # 1. Build MaCh3 Base (build_emu)
-          /home/hep/llaatu/mach3/MaCh3Utils/start_build.sh emulator /home/hep/llaatu/gh-runner/_work/MaCh3/MaCh3/ build_emu
+          source $GITHUB_WORKSPACE/MaCh3Core/build_${{ matrix.build-type }}/bin/setup.MaCh3.sh
+          MaCh3Utils/start_build.sh ${{ matrix.build-type }} MaCh3Tutorial build_${{ matrix.build-type }}
 
-          chmod +x /home/hep/llaatu/mach3/MaCh3Utils/tutorial_build.sh
-          
-          # Source setup from base build_emu
-          source /home/hep/llaatu/gh-runner/_work/MaCh3/MaCh3/build_emu/bin/setup.MaCh3.sh
-
-          # 2. Build Tutorial (build_emu)
-          /home/hep/llaatu/mach3/MaCh3Utils/tutorial_build.sh emulator build_emu
-        shell: bash
-
-      - name: Run Tutorial (Emulator)
+  Validate:
+    needs: Build
+    runs-on: [self-hosted, icpx]
+    strategy:
+      matrix: &build-matrix
+        build-type: [ "cpu", "emulator", "hardware" ]
+      fail-fast: false
+    steps:
+      - name: Run Validation
         run: |
-          export QUARTUS_ROOTDIR_OVERRIDE=/opt/intelFPGA_pro/23.1.0/quartus/
-          export LM_LICENSE_FILE=5280@licsrv00.hep.ph.ic.ac.uk
-
-          . /opt/intel/oneapi/2025.0/oneapi-vars.sh --force
-
-          # Source setups from build_emu
-          source /home/hep/llaatu/gh-runner/_work/MaCh3/MaCh3/build_emu/bin/setup.MaCh3.sh
-          source /home/hep/llaatu/mach3/MaCh3Tutorial/build_emu/bin/setup.MaCh3Tutorial.sh
-
-          # Run from build_emu
-          cd /home/hep/llaatu/mach3/MaCh3Tutorial/build_emu/
-          ./CIValidations/SplineValidations
-          export runtime=$(date +%s)
-          cp out.txt /home/hep/llaatu/mach3/output/out_emu_$runtime.txt
-        shell: bash
-
-      # ----------------------------------------------------------------
-      # HARDWARE BUILD & RUN
-      # ----------------------------------------------------------------
-      - name: Build for hardware
-        run: |
-          chmod +x /home/hep/llaatu/mach3/MaCh3Utils/start_build.sh
-          
-          # 1. Build MaCh3 Base (build_hw)
-          /home/hep/llaatu/mach3/MaCh3Utils/start_build.sh hardware /home/hep/llaatu/gh-runner/_work/MaCh3/MaCh3/ build_hw
-
-          chmod +x /home/hep/llaatu/mach3/MaCh3Utils/tutorial_build.sh
-          
-          # Source setup from base build_hw
-          source /home/hep/llaatu/gh-runner/_work/MaCh3/MaCh3/build_hw/bin/setup.MaCh3.sh
-
-          # 2. Build Tutorial (build_hw)
-          /home/hep/llaatu/mach3/MaCh3Utils/tutorial_build.sh hardware build_hw
-        shell: bash
-
-      - name: Run Tutorial on hardware
-        run: |
-          export QUARTUS_ROOTDIR_OVERRIDE=/opt/intelFPGA_pro/23.1.0/quartus/
-          export LM_LICENSE_FILE=5280@licsrv00.hep.ph.ic.ac.uk
-
-          . /opt/intel/oneapi/2025.0/oneapi-vars.sh --force
-          aocl program acl0 /opt/oneapi-asp/ia840f/bringup/aocxs/ofs_ia840f_usm.aocx
-          aocl program acl1 /opt/oneapi-asp/ia840f/bringup/aocxs/ofs_ia840f_usm.aocx
-          
-          # Source setups from build_hw
-          source /home/hep/llaatu/gh-runner/_work/MaCh3/MaCh3/build_hw/bin/setup.MaCh3.sh
-          source /home/hep/llaatu/mach3/MaCh3Tutorial/build_hw/bin/setup.MaCh3Tutorial.sh
-
-          # Run from build_hw
-          cd /home/hep/llaatu/mach3/MaCh3Tutorial/build_hw/
-          #export SYCL_UR_TRACE=-1
-          #export ACL_CONTEXT_CALLBACK_DEBUG=1          
-          ./CIValidations/SplineValidations
-
-          export runtime=$(date +%s)
-          cp out.txt /home/hep/llaatu/mach3/output/out_hw_$runtime.txt
-          
-          # Zip report from build_hw
-          zip -r /home/hep/llaatu/mach3/output/reports/report_hw_$runtime ~/gh-runner/_work/MaCh3/MaCh3/build_hw/splines/libSplines.so.prj/reports
-          echo $runtime `grep -a elapsed ~/mach3/output/out_hw_$runtime.txt` >> ~/mach3/output/runtimes
-        shell: bash
-
-      # ----------------------------------------------------------------
-      # CPU BUILD & RUN
-      # ----------------------------------------------------------------
-      - name: Build for CPU
-        run: |
-          chmod +x /home/hep/llaatu/mach3/MaCh3Utils/start_build.sh
-          
-          # 1. Build MaCh3 Base (build_cpu)
-          /home/hep/llaatu/mach3/MaCh3Utils/start_build.sh cpu /home/hep/llaatu/gh-runner/_work/MaCh3/MaCh3/ build_cpu
-
-          chmod +x /home/hep/llaatu/mach3/MaCh3Utils/tutorial_build.sh
-          
-          # Source setup from base build_cpu
-          source /home/hep/llaatu/gh-runner/_work/MaCh3/MaCh3/build_cpu/bin/setup.MaCh3.sh
-
-          # 2. Build Tutorial (build_cpu)
-          /home/hep/llaatu/mach3/MaCh3Utils/tutorial_build.sh cpu build_cpu
-        shell: bash
-
-      - name: Run Tutorial on CPU
-        run: |
-          export QUARTUS_ROOTDIR_OVERRIDE=/opt/intelFPGA_pro/23.1.0/quartus/
-          export LM_LICENSE_FILE=5280@licsrv00.hep.ph.ic.ac.uk
-
-          . /opt/intel/oneapi/2025.0/oneapi-vars.sh --force
-
-          # Source setups from build_cpu
-          source /home/hep/llaatu/gh-runner/_work/MaCh3/MaCh3/build_cpu/bin/setup.MaCh3.sh
-          source /home/hep/llaatu/mach3/MaCh3Tutorial/build_cpu/bin/setup.MaCh3Tutorial.sh
-
-          # Run from build_cpu
-          cd /home/hep/llaatu/mach3/MaCh3Tutorial/build_cpu/
-          
-          ./CIValidations/SplineValidations
-
-          export runtime=$(date +%s)
-          cp out.txt /home/hep/llaatu/mach3/output/out_cpu_$runtime.txt
-        shell: bash
+          MaCh3Utils/run_tests.sh MaCh3Core/build_${{ matrix.build-type }} MaCh3Tutorial/build_${{ matrix.build-type }}
+          runtime=$(date +%s)
+          echo ":clock10: `grep elapsed MaCh3Tutorial/build_${{ matrix.build-type }}/out.txt`" >> $GITHUB_STEP_SUMMARY
+          #cp ./out.txt $GITHUB_WORKSPACE/MaCh3Tutorial/build_${{ matrix.build-type }}/out_${{ matrix.build-type }}_$runtime.txt
