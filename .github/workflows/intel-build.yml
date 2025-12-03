@@ -63,6 +63,24 @@ jobs:
       - name: Run Validation
         run: |
           MaCh3Utils/run_tests.sh MaCh3Core/build_${{ matrix.build-type }} MaCh3Tutorial/build_${{ matrix.build-type }}
-          runtime=$(date +%s)
           echo ":clock10: `grep elapsed MaCh3Tutorial/build_${{ matrix.build-type }}/out.txt`" >> $GITHUB_STEP_SUMMARY
-          #cp ./out.txt $GITHUB_WORKSPACE/MaCh3Tutorial/build_${{ matrix.build-type }}/out_${{ matrix.build-type }}_$runtime.txt
+
+  Archive:
+    needs: Validate
+    runs-on: [self-hosted, icpx]
+    strategy:
+      matrix: &build-matrix
+        build-type: [ "cpu", "emulator", "hardware" ]
+      fail-fast: false
+    steps:
+      - name: Archive Output
+        run: |
+          RUNTIME=$(date +%s)
+          echo "RUNTIME=$RUNTIME" >> $GITHUB_ENV
+          cp MaCh3Tutorial/build_${{ matrix.build-type }}/out.txt /home/hep/llaatu/mach3/output/out_${{ matrix.build-type }}_$RUNTIME.txt
+      - name: Archive Hardware Runtime
+        if: matrix.build-type == 'hardware'
+        run: echo $RUNTIME `grep elapsed MaCh3Tutorial/build_${{ matrix.build-type }}/out.txt` >> /home/hep/llaatu/mach3/output/runtimes
+      - name: Archive Hardware Report
+        if: matrix.build-type == 'hardware'
+        run: zip -r /home/hep/llaatu/mach3/output/reports/report_${{ matrix.build-type }}_$RUNTIME MaCh3Tutorial/build_${{ matrix.build-type }}/splines/libSplines.so.prj/reports
