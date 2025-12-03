@@ -48,7 +48,7 @@ void FPGACalcSplineWeights(short int *SplineSegments,
                            int nParams) {
 //*********************************************************
     sycl::ext::intel::host_ptr<const short int> segments_host(SplineSegments);
-    sycl::ext::intel::device_ptr<const float> coeff_many_host(coeff_many);
+    sycl::ext::intel::device_ptr<const float> coeff_many_device(coeff_many);
     sycl::ext::intel::host_ptr<const float> paramvalues_host(ParamValues);
     sycl::ext::intel::host_ptr<const float> coeff_x_host(coeff_x);
     sycl::ext::intel::host_ptr<const unsigned int> knots_host(nKnots_arr);
@@ -77,7 +77,7 @@ void FPGACalcSplineWeights(short int *SplineSegments,
         #pragma unroll
         for (unsigned int icoeff = 0; icoeff < 4; icoeff++) {
 
-        coeffs[icoeff] = coeff_many_host[CurrentKnotPos+icoeff];
+        coeffs[icoeff] = coeff_many_device[CurrentKnotPos+icoeff];
 
         }
         const float fA = coeffs[0];
@@ -440,7 +440,12 @@ void SMonolith::PrepareForGPU(std::vector<std::vector<TResponseFunction_red*> > 
             //#endif
           }
         }
-        
+
+        #ifdef USE_FPGA
+        queue.memcpy(cpu_spline_handler->coeff_many_device, cpu_spline_handler->coeff_many, sizeof(float)*nKnots*_nCoeff_).wait();
+        #endif
+
+
         // Set the parameter number for this spline
         cpu_spline_handler->paramNo_arr[NSplinesCounter] = short(ParamNumber);
         //KS: Fill map when each spline starts
@@ -509,9 +514,6 @@ void SMonolith::PrepareForGPU(std::vector<std::vector<TResponseFunction_red*> > 
     #endif
 
   } // End the loop over the number of events
-  #ifdef USE_FPGA
-    queue.memcpy(cpu_spline_handler->coeff_many_device, cpu_spline_handler->coeff_many, sizeof(float)*nKnots*_nCoeff_).wait();
-  #endif
 
   delete[] many_tmp;
   delete[] x_tmp;
@@ -887,6 +889,10 @@ void SMonolith::LoadSplineFile(std::string FileName) {
     cpu_spline_handler->coeff_many[i] = coeff;
   }
 
+  #ifdef USE_FPGA
+  queue.memcpy(cpu_spline_handler->coeff_many_device, cpu_spline_handler->coeff_many, sizeof(float)*nKnots*_nCoeff_).wait();
+  #endif
+
   float coeff_tf1 = 0.;
   Monolith_TF1->SetBranchAddress("cpu_coeff_TF1_many", &coeff_tf1);
   for(unsigned int i = 0; i < nTF1coeff; i++)
@@ -959,6 +965,7 @@ void SMonolith::LoadSplineFile(std::string FileName) {
 
   SplineFile->Close();
 
+
   // Print some info; could probably make this to a separate function
   PrintInitialsiation();
 
@@ -1017,6 +1024,11 @@ void SMonolith::PrepareSplineFile() {
       
     Monolith->Fill();
   }
+
+  #ifdef USE_FPGA
+  queue.memcpy(cpu_spline_handler->coeff_many_device, cpu_spline_handler->coeff_many, sizeof(float)*nKnots*_nCoeff_).wait();
+  #endif
+
   SplineFile->cd();
   Monolith->Write();
 
@@ -1339,6 +1351,7 @@ void SMonolith::Evaluate() {
 
     // Task A arguments
     std::cout << "SplineSegments:           " << static_cast<void*>(SplineSegments) << std::endl;
+    std::cout << "coeff_many:               " << static_cast<void*>(cpu_spline_handler->coeff_many) << std::endl;
     std::cout << "coeff_many_device:               " << static_cast<void*>(cpu_spline_handler->coeff_many_device) << std::endl;
     std::cout << "ParamValues:              " << static_cast<void*>(ParamValues) << std::endl;
     std::cout << "coeff_x:                  " << static_cast<void*>(cpu_spline_handler->coeff_x) << std::endl;
