@@ -61,26 +61,29 @@ jobs:
       fail-fast: false
     steps:
       - name: Run Validation
-        run: |
-          MaCh3Utils/run_tests.sh MaCh3Core/build_${{ matrix.build-type }} MaCh3Tutorial/build_${{ matrix.build-type }}
-          echo ":clock10: `grep elapsed MaCh3Tutorial/build_${{ matrix.build-type }}/out.txt`" >> $GITHUB_STEP_SUMMARY
+        run: MaCh3Utils/run_tests.sh MaCh3Core/build_${{ matrix.build-type }} MaCh3Tutorial/build_${{ matrix.build-type }}
+      - name: Create Runtime Summary
+        run: echo ":clock10:" `grep elapsed MaCh3Tutorial/build_${{ matrix.build-type }}/out.txt` >> $GITHUB_STEP_SUMMARY
 
   Archive:
     needs: Validate
     runs-on: [self-hosted, icpx]
+    env:
+      ARCHIVE_DIR: /home/hep/llaatu/mach3/output
     strategy:
       matrix: &build-matrix
         build-type: [ "cpu", "emulator", "hardware" ]
       fail-fast: false
     steps:
-      - name: Archive Output
+      - name: Create Re-usable Timestamp
         run: |
-          RUNTIME=$(date +%s)
-          echo "RUNTIME=$RUNTIME" >> $GITHUB_ENV
-          cp MaCh3Tutorial/build_${{ matrix.build-type }}/out.txt /home/hep/llaatu/mach3/output/out_${{ matrix.build-type }}_$RUNTIME.txt
+          TIMESTAMP=$(date +%s)
+          echo "TIMESTAMP=$TIMESTAMP" >> $GITHUB_ENV
+      - name: Archive Output
+        run: cp MaCh3Tutorial/build_${{ matrix.build-type }}/out.txt $ARCHIVE_DIR/out_${{ matrix.build-type }}_$TIMESTAMP.txt
       - name: Archive Hardware Runtime
         if: matrix.build-type == 'hardware'
-        run: echo $RUNTIME `grep elapsed MaCh3Tutorial/build_${{ matrix.build-type }}/out.txt` >> /home/hep/llaatu/mach3/output/runtimes
+        run: echo $TIMESTAMP `grep elapsed MaCh3Tutorial/build_${{ matrix.build-type }}/out.txt` >> $ARCHIVE_DIR/runtimes
       - name: Archive Hardware Report
         if: matrix.build-type == 'hardware'
-        run: zip -r /home/hep/llaatu/mach3/output/reports/report_${{ matrix.build-type }}_$RUNTIME MaCh3Tutorial/build_${{ matrix.build-type }}/splines/libSplines.so.prj/reports
+        run: zip -r $ARCHIVE_DIR/reports/report_${{ matrix.build-type }}_$TIMESTAMP MaCh3Core/build_${{ matrix.build-type }}/splines/libSplines.so.prj/reports
