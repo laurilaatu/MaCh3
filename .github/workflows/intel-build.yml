@@ -87,3 +87,11 @@ jobs:
       - name: Archive Hardware Report
         if: matrix.build-type == 'hardware'
         run: zip -r $ARCHIVE_DIR/reports/report_${{ matrix.build-type }}_$TIMESTAMP MaCh3Core/build_${{ matrix.build-type }}/splines/libSplines.so.prj/reports
+      - name: Upload Report Artifact
+        if: matrix.build-type == 'hardware'
+        uses: actions/upload-artifact@v4
+        with:
+          name: fpga-build-report
+          overwrite: true
+          path: $ARCHIVE_DIR/reports/report_${{ matrix.build-type }}_$TIMESTAMP.zip
+

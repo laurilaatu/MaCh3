@@ -1248,7 +1248,7 @@ void SMonolith::Evaluate() {
   FindSplineSegment();
 
   std::cout << "------------------" << std::endl;
-  std::ofstream out("out.txt", std::ios_base::trunc);
+  std::ofstream out("out.txt", std::ios_base::app);
   std::streambuf *coutbuf = std::cout.rdbuf(); //save old buf
   std::cout.rdbuf(out.rdbuf()); //redirect std::cout to out.txt!
 
