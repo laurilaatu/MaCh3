@@ -93,5 +93,4 @@ jobs:
         with:
           name: fpga-build-report
           overwrite: true
-          path: $ARCHIVE_DIR/reports/report_${{ matrix.build-type }}_$TIMESTAMP.zip
-
+          path: ${{ env.ARCHIVE_DIR }}/reports/report_${{ matrix.build-type }}_${{ env.TIMESTAMP }}.zip
