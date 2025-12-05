@@ -1293,7 +1293,8 @@ void SMonolith::Evaluate() {
 
     struct OptimizedKernel {
       short int *SplineSegments;
-      float *coeff_many_device;
+      sycl::ext::oneapi::experimental::annotated_ptr<float*, decltype(properties { sycl::ext::oneapi::experimental::alignment<32> } ) > coeff_many_device;
+      //float *coeff_many_device;
       float *ParamValues;
       float *coeff_x;
       unsigned int *nKnots_arr;
