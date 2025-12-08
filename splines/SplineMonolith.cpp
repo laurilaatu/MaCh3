@@ -8,6 +8,8 @@
 #include <sycl/ext/intel/fpga_extensions.hpp>
 #include <sycl/ext/intel/ac_types/ac_int.hpp>
 #include <sycl/sycl.hpp>
+using namespace sycl::ext::intel::experimental;
+using namespace sycl::ext::oneapi::experimental;
 
 // Forward declare the kernel names in the global scope.
 // This FPGA best practice reduces name mangling in the optimization reports.
@@ -37,7 +39,7 @@ sycl::queue SMonolith::queue = sycl::queue(SMonolith::selector);//, fpga_tools::
 //*********************************************************
 [[intel::use_stall_enable_clusters]]
 void FPGACalcSplineWeights(short int *SplineSegments,
-                           float *coeff_many,
+			   annotated_arg<float*, decltype(properties{sycl::ext::oneapi::experimental::alignment<32>})> coeff_many,
                            float *ParamValues,
                            float *coeff_x,
                            unsigned int *nKnots_arr,
@@ -1293,7 +1295,7 @@ void SMonolith::Evaluate() {
 
     struct OptimizedKernel {
       short int *SplineSegments;
-      sycl::ext::oneapi::experimental::annotated_ptr<float*, decltype(properties { sycl::ext::oneapi::experimental::alignment<32> } ) > coeff_many_device;
+      annotated_arg<float*, decltype(properties { alignment<32> } ) > coeff_many_device;
       //float *coeff_many_device;
       float *ParamValues;
       float *coeff_x;
