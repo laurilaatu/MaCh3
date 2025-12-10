@@ -10,7 +10,8 @@ SplineMonoUSM::SplineMonoUSM(sycl::queue& queue,
                              int paramNo_arr_size,
                              int number_of_events_size):m_queue(queue){
     coeff_x = sycl::malloc_host<float>(coeff_x_size, queue);
-    coeff_many_device = sycl::malloc_device<float>(coeff_many_size, queue, sycl::ext::oneapi::accessor_property_list{sycl::ext::oneapi::no_offset});
+    // coeff_many_device = sycl::malloc_device<float>(coeff_many_size, queue, sycl::ext::oneapi::accessor_property_list{sycl::ext::oneapi::no_offset});
+    coeff_many_device = sycl::malloc_host<float>(coeff_many_size, queue, sycl::ext::oneapi::accessor_property_list{sycl::ext::oneapi::no_offset});
     coeff_many = sycl::malloc_host<float>(coeff_many_size, queue);
     nKnots_arr = sycl::malloc_host<unsigned int>(nKnots_arr_size, queue);
     paramNo_arr = sycl::malloc_host<short int>(paramNo_arr_size, queue);
