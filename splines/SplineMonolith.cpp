@@ -39,7 +39,7 @@ sycl::queue SMonolith::queue = sycl::queue(SMonolith::selector);//, fpga_tools::
 //*********************************************************
 [[intel::use_stall_enable_clusters]]
 void FPGACalcSplineWeights(short int *SplineSegments,
-			   annotated_arg<float*, decltype(properties{sycl::ext::oneapi::experimental::alignment<32>})> coeff_many,
+			                     float*coeff_many,
                            float *ParamValues,
                            float *coeff_x,
                            unsigned int *nKnots_arr,
@@ -893,7 +893,7 @@ void SMonolith::LoadSplineFile(std::string FileName) {
   }
 
   #ifdef USE_FPGA
-  queue.memcpy(cpu_spline_handler->coeff_many_device, cpu_spline_handler->coeff_many, sizeof(float)*nKnots*_nCoeff_).wait();
+    //queue.memcpy(cpu_spline_handler->coeff_many_device, cpu_spline_handler->coeff_many, sizeof(float)*nKnots*_nCoeff_).wait();
   #endif
 
   float coeff_tf1 = 0.;
@@ -1029,7 +1029,7 @@ void SMonolith::PrepareSplineFile() {
   }
 
   #ifdef USE_FPGA
-  queue.memcpy(cpu_spline_handler->coeff_many_device, cpu_spline_handler->coeff_many, sizeof(float)*nKnots*_nCoeff_).wait();
+    //queue.memcpy(cpu_spline_handler->coeff_many_device, cpu_spline_handler->coeff_many, sizeof(float)*nKnots*_nCoeff_).wait();
   #endif
 
   SplineFile->cd();
@@ -1296,8 +1296,8 @@ void SMonolith::Evaluate() {
 
     struct OptimizedKernel {
       short int *SplineSegments;
-      annotated_arg<float*, decltype(properties { alignment<32> } ) > coeff_many_device;
-      //float *coeff_many_device;
+      // annotated_arg<float*, decltype(properties { alignment<32> } ) > coeff_many_device;
+      float *coeff_many_host;
       float *ParamValues;
       float *coeff_x;
       unsigned int *nKnots_arr;
@@ -1322,7 +1322,7 @@ void SMonolith::Evaluate() {
 
         // Pass all the things that FPGACalcSplineWeights needs
         task_a.async(SplineSegments,
-                     coeff_many_device,
+                     coeff_many_host,
                      ParamValues,
                      coeff_x,
                      nKnots_arr,
@@ -1356,7 +1356,7 @@ void SMonolith::Evaluate() {
     // Task A arguments
     std::cout << "SplineSegments:           " << static_cast<void*>(SplineSegments) << std::endl;
     std::cout << "coeff_many:               " << static_cast<void*>(cpu_spline_handler->coeff_many) << std::endl;
-    std::cout << "coeff_many_device:               " << static_cast<void*>(cpu_spline_handler->coeff_many_device) << std::endl;
+    //std::cout << "coeff_many_device:               " << static_cast<void*>(cpu_spline_handler->coeff_many_device) << std::endl;
     std::cout << "ParamValues:              " << static_cast<void*>(ParamValues) << std::endl;
     std::cout << "coeff_x:                  " << static_cast<void*>(cpu_spline_handler->coeff_x) << std::endl;
     std::cout << "nKnots_arr:               " << static_cast<void*>(cpu_spline_handler->nKnots_arr) << std::endl;
@@ -1389,7 +1389,8 @@ void SMonolith::Evaluate() {
 
     // Call the kernel
     auto e = SMonolith::queue.single_task<IDOptimized>(OptimizedKernel{SplineSegments,
-                                                            cpu_spline_handler->coeff_many_device,
+                                                            // cpu_spline_handler->coeff_many_device,
+                                                            cpu_spline_handler->coeff_many,
                                                             ParamValues,
                                                             cpu_spline_handler->coeff_x,
                                                             cpu_spline_handler->nKnots_arr,
