@@ -1451,7 +1451,6 @@ void SMonolith::Evaluate() {
 //*********************************************************
 void SMonolith::CalcSplineWeights() {
 //*********************************************************
-void SMonolith::CalcSplineWeights() {
 
     // Constants for the vectors
     const __m256i vMaxKnots = _mm256_set1_epi32(_max_knots);
