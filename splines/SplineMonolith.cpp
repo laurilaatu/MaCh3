@@ -13,6 +13,7 @@
 #define LOAD_F(ptr) _mm256_loadu_ps(ptr)
 
 // Helper: Load 8 "shorts" and convert them to 8 "ints" in a 256-bit register
+__attribute__((target("avx2")))
 inline __m256i load_short_as_int(const short* ptr) {
     // Load 128 bits (8 shorts)
     __m128i raw_shorts = _mm_loadu_si128((const __m128i*)ptr);
@@ -1457,6 +1458,7 @@ void SMonolith::Evaluate() {
 #endif
 
 //*********************************************************
+__attribute__((target("avx2,fma")))
 void SMonolith::CalcSplineWeights() {
 //*********************************************************
 // Constants
@@ -1467,14 +1469,11 @@ void SMonolith::CalcSplineWeights() {
     const short* paramNo_ptr        = cpu_spline_handler->paramNo_arr.data();
     const unsigned int* nKnots_ptr  = cpu_spline_handler->nKnots_arr.data(); 
     
-    // Check if these are vectors or pointers in your class. 
-    // If 'coeff_many' is a vector, use .data(). If it's a raw pointer, leave as is.
-    // Based on errors, these are vectors:
+    // Pointers for float data
     const float* coeff_ptr   = cpu_spline_handler->coeff_many.data();
     const float* coeff_x_ptr = cpu_spline_handler->coeff_x.data();
 
-    // These didn't error, so assuming they are raw pointers or arrays. 
-    // If they are vectors, add .data() to them too.
+    // Standard pointers
     const short* segments_ptr       = SplineSegments; 
     const float* pvals_ptr          = ParamValues;
 
@@ -1511,38 +1510,30 @@ void SMonolith::CalcSplineWeights() {
         __m256i vParamIdx = load_short_as_int(&paramNo_ptr[i]);
 
         // 3. MANUAL GATHER for SplineSegments (Because it is short*)
-        // AVX2 cannot gather 'shorts'. We do a mini-scalar lookup for this part.
-        
         alignas(32) int temp_params[8];
         _mm256_store_si256((__m256i*)temp_params, vParamIdx);
         
         alignas(32) int temp_segments[8];
-        // We have to scalar load the shorts, but we store them as ints for the vector math
         for(int k=0; k<8; ++k) {
             temp_segments[k] = segments_ptr[temp_params[k]]; 
         }
         __m256i vSegment = _mm256_load_si256((const __m256i*)temp_segments);
 
-        // 4. Gather ParamValues (Float - Standard Gather works)
+        // 4. Gather ParamValues
         __m256 vPVal = _mm256_i32gather_ps(pvals_ptr, vParamIdx, 4);
 
         // 5. Calculate Intermediate Indices
-        
-        // segment_X = Param * _max_knots + segment
         __m256i vSegX_Idx = _mm256_add_epi32(_mm256_mullo_epi32(vParamIdx, vMaxKnots), vSegment);
 
-        // Load nKnots (unsigned int is 32-bit, compatible with __m256i loading)
+        // Load nKnots (unsigned int compatible with __m256i)
         __m256i vNKnots = _mm256_loadu_si256((const __m256i*)&nKnots_ptr[i]);
         
         // KnotPos = (nKnots + segment) * nCoeff
         __m256i vBaseIdx = _mm256_mullo_epi32(_mm256_add_epi32(vNKnots, vSegment), vNCoeff);
 
         // 6. Gather Data for Math
-        
-        // Gather coeff_x[segment_X]
         __m256 vCoeffX = _mm256_i32gather_ps(coeff_x_ptr, vSegX_Idx, 4);
         
-        // Gather Coefficients Y, B, C, D
         __m256 vY = _mm256_i32gather_ps(coeff_ptr, vBaseIdx, 4);
         
         __m256i vIdx_B = _mm256_add_epi32(vBaseIdx, _mm256_set1_epi32(1));
@@ -1567,6 +1558,7 @@ void SMonolith::CalcSplineWeights() {
 } // End Parallel
 #endif
 }
+
 
 //*********************************************************
 //KS: Calc total event weight on CPU
