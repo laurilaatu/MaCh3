@@ -7,6 +7,7 @@
 #include <immintrin.h>
 #include <omp.h>
 
+#ifndef USE_FPGA
 // Helper to load 8 integers from memory (unaligned)
 #define LOAD_I(ptr) _mm256_loadu_si256((const __m256i*)(ptr))
 // Helper to load 8 floats from memory (unaligned)
@@ -20,7 +21,7 @@ inline __m256i load_short_as_int(const short* ptr) {
     // Sign-extend them to 32-bit integers
     return _mm256_cvtepi16_epi32(raw_shorts);
 }
-
+#endif
 
 #ifdef USE_FPGA
 #include <sycl/ext/intel/experimental/task_sequence.hpp>
@@ -1460,6 +1461,8 @@ void SMonolith::Evaluate() {
 //*********************************************************
 __attribute__((target("avx2,fma")))
 void SMonolith::CalcSplineWeights() {
+
+	#ifndef USE_FPGA
 //*********************************************************
 // Constants
     const __m256i vMaxKnots = _mm256_set1_epi32(_max_knots);
@@ -1556,6 +1559,7 @@ void SMonolith::CalcSplineWeights() {
         _mm256_storeu_ps(&cpu_weights_spline_var[i], vRes);
     }
 } // End Parallel
+#endif
 #endif
 }
 
