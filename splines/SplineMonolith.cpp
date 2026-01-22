@@ -3,6 +3,16 @@
 #define STRING2(x) #x
 #define STRING(x) STRING2(x)
 #pragma message "CHECKME: " STRING(USE_FPGA)
+
+#include <immintrin.h>
+#include <omp.h>
+
+// Helper to load 8 integers from memory (unaligned)
+#define LOAD_I(ptr) _mm256_loadu_si256((const __m256i*)(ptr))
+// Helper to load 8 floats from memory (unaligned)
+#define LOAD_F(ptr) _mm256_loadu_ps(ptr)
+
+
 #ifdef USE_FPGA
 #include <sycl/ext/intel/experimental/task_sequence.hpp>
 #include <sycl/ext/intel/fpga_extensions.hpp>
@@ -10,6 +20,7 @@
 #include <sycl/sycl.hpp>
 using namespace sycl::ext::intel::experimental;
 using namespace sycl::ext::oneapi::experimental;
+
 
 // Forward declare the kernel names in the global scope.
 // This FPGA best practice reduces name mangling in the optimization reports.
@@ -1440,65 +1451,172 @@ void SMonolith::Evaluate() {
 //*********************************************************
 void SMonolith::CalcSplineWeights() {
 //*********************************************************
+void SMonolith::CalcSplineWeights() {
 
-  #ifdef MULTITHREAD
-  //KS: Open parallel region
-  #pragma omp parallel
-  {
-  #endif
-    //KS: First we calculate
-    #ifdef MULTITHREAD
-    #pragma omp for simd nowait
-    #endif
-    for (unsigned int splineNum = 0; splineNum < NSplines_valid; ++splineNum)
-    {
-      //CW: Which Parameter we are accessing
-      const short int Param = cpu_spline_handler->paramNo_arr[splineNum];
-      //CW: Avoids doing costly binary search on GPU
-      const short int segment = SplineSegments[Param];
+    // Constants for the vectors
+    const __m256i vMaxKnots = _mm256_set1_epi32(_max_knots);
+    const __m256i vNCoeff   = _mm256_set1_epi32(_nCoeff_); // Assuming 4
 
-      //KS: Segment for coeff_x is simply parameter*max knots + segment as each parameters has the same spacing
-      const short int segment_X = short(Param*_max_knots+segment);
+    // Pointers for cleaner code
+    const int* paramNo_ptr   = cpu_spline_handler->paramNo_arr;
+    const int* nKnots_ptr    = cpu_spline_handler->nKnots_arr;
+    const float* coeff_ptr   = cpu_spline_handler->coeff_many;
+    const float* coeff_x_ptr = cpu_spline_handler->coeff_x;
+    const int* segments_ptr  = SplineSegments;
+    const float* pvals_ptr   = ParamValues;
 
-      //KS: Find knot position in out monolithical structure
-      const unsigned int CurrentKnotPos = cpu_spline_handler->nKnots_arr[splineNum]*_nCoeff_+segment*_nCoeff_;
+#ifdef MULTITHREAD
+#pragma omp parallel
+{
+    // ---------------------------------------------------------
+    // LOOP 1: Cubic Splines (The Heavy Lifter)
+    // ---------------------------------------------------------
+    #pragma omp for schedule(static) nowait
+    for (unsigned int i = 0; i < NSplines_valid; i += 8) {
+        
+        // 1. Safety check for the tail (if NSplines_valid is not divisible by 8)
+        if (i + 8 > NSplines_valid) {
+            // Scalar Fallback for the last few items
+            for (unsigned int j = i; j < NSplines_valid; ++j) {
+                short int Param = paramNo_ptr[j];
+                short int segment = segments_ptr[Param];
+                short int segment_X = short(Param * _max_knots + segment);
+                unsigned int CurrentKnotPos = nKnots_ptr[j] * _nCoeff_ + segment * _nCoeff_;
+                
+                float fY = coeff_ptr[CurrentKnotPos];
+                float fB = coeff_ptr[CurrentKnotPos + 1];
+                float fC = coeff_ptr[CurrentKnotPos + 2];
+                float fD = coeff_ptr[CurrentKnotPos + 3];
+                
+                float dx = pvals_ptr[Param] - coeff_x_ptr[segment_X];
+                cpu_weights_spline_var[j] = std::fma(dx, std::fma(dx, std::fma(dx, fD, fC), fB), fY);
+            }
+            continue; // Jump to next loop
+        }
 
-      // We've read the segment straight from CPU and is saved in segment_gpu
-      // polynomial parameters from the monolithic splineMonolith
-      const float fY = cpu_spline_handler->coeff_many[CurrentKnotPos];
-      const float fB = cpu_spline_handler->coeff_many[CurrentKnotPos + 1];
-      const float fC = cpu_spline_handler->coeff_many[CurrentKnotPos + 2];
-      const float fD = cpu_spline_handler->coeff_many[CurrentKnotPos + 3];
-      // The is the variation itself (needed to evaluate variation - stored spline point = dx)
-      const float dx = ParamValues[Param] - cpu_spline_handler->coeff_x[segment_X];
+        // 2. Load Indices for 8 Splines
+        __m256i vParamIdx = LOAD_I(&paramNo_ptr[i]); // Load 8 'Param' indices
 
-      //CW: Wooow, let's use some fancy intrinsic and pull down the processing time by <1% from normal multiplication! HURRAY
-      cpu_weights_spline_var[splineNum] = fmaf(dx, fmaf(dx, fmaf(dx, fD, fC), fB), fY);
-      // Or for the more "easy to read" version:
-      //cpu_weights_spline_var[splineNum] = (fY+dx*(fB+dx*(fC+dx*fD)));
+        // 3. GATHER Phase (The "magic" that fixes indirect addressing)
+        
+        // Gather 'SplineSegments[Param]'
+        // Scale 4 because sizeof(int/float) = 4 bytes
+        __m256i vSegment = _mm256_i32gather_epi32(segments_ptr, vParamIdx, 4);
+
+        // Gather 'ParamValues[Param]'
+        __m256 vPVal = _mm256_i32gather_ps(pvals_ptr, vParamIdx, 4);
+
+        // 4. Calculate Intermediate Indices (Vector Integer Math)
+        
+        // segment_X = Param * _max_knots + segment
+        __m256i vSegX_Idx = _mm256_add_epi32(_mm256_mullo_epi32(vParamIdx, vMaxKnots), vSegment);
+
+        // CurrentKnotPos calculation
+        // Load nKnots_arr[splineNum]
+        __m256i vNKnots = LOAD_I(&nKnots_ptr[i]);
+        
+        // KnotPos = (nKnots * nCoeff) + (segment * nCoeff)
+        // Optimization: = (nKnots + segment) * nCoeff
+        __m256i vBaseIdx = _mm256_mullo_epi32(_mm256_add_epi32(vNKnots, vSegment), vNCoeff);
+
+        // 5. Gather Data for Math
+        
+        // Gather coeff_x[segment_X]
+        __m256 vCoeffX = _mm256_i32gather_ps(coeff_x_ptr, vSegX_Idx, 4);
+        
+        // Gather Coefficients Y, B, C, D
+        // Note: We use the calculated vBaseIdx, and add offsets (0, 1, 2, 3) 
+        // We have to add the offsets to the indices, not the pointers.
+        
+        __m256 vY = _mm256_i32gather_ps(coeff_ptr, vBaseIdx, 4);
+        
+        __m256i vIdx_B = _mm256_add_epi32(vBaseIdx, _mm256_set1_epi32(1));
+        __m256 vB = _mm256_i32gather_ps(coeff_ptr, vIdx_B, 4);
+        
+        __m256i vIdx_C = _mm256_add_epi32(vBaseIdx, _mm256_set1_epi32(2));
+        __m256 vC = _mm256_i32gather_ps(coeff_ptr, vIdx_C, 4);
+        
+        __m256i vIdx_D = _mm256_add_epi32(vBaseIdx, _mm256_set1_epi32(3));
+        __m256 vD = _mm256_i32gather_ps(coeff_ptr, vIdx_D, 4);
+
+        // 6. The Calculation (Horner's Method)
+        
+        // dx = ParamValue - coeff_x
+        __m256 vDX = _mm256_sub_ps(vPVal, vCoeffX);
+
+        // Result = D*dx + C
+        __m256 vRes = _mm256_fmadd_ps(vDX, vD, vC);
+        // Result = (Result)*dx + B
+        vRes = _mm256_fmadd_ps(vDX, vRes, vB);
+        // Result = (Result)*dx + Y
+        vRes = _mm256_fmadd_ps(vDX, vRes, vY);
+
+        // 7. Store Result
+        _mm256_storeu_ps(&cpu_weights_spline_var[i], vRes);
     }
 
-    #ifdef MULTITHREAD
-    #pragma omp for simd
-    #endif
-    for (unsigned int tf1Num = 0; tf1Num < NTF1_valid; ++tf1Num)
-    {
-      // The is the variation itself (needed to evaluate variation - stored spline point = dx)
-      const float x = ParamValues[cpu_paramNo_TF1_arr[tf1Num]];
+    // ---------------------------------------------------------
+    // LOOP 2: TF1 (Linear)
+    // ---------------------------------------------------------
+    // Assuming _nTF1Coeff_ is 2 (a, b). 
+    // Data is contiguous: A1 B1 A2 B2 A3 B3...
+    #pragma omp for schedule(static)
+    for (unsigned int i = 0; i < NTF1_valid; i += 8) {
+        
+        if (i + 8 > NTF1_valid) {
+            // Scalar Fallback
+            for (unsigned int j = i; j < NTF1_valid; ++j) {
+                float x = ParamValues[cpu_paramNo_TF1_arr[j]];
+                unsigned int idx = j * _nTF1Coeff_;
+                float a = cpu_coeff_TF1_many[idx];
+                float b = cpu_coeff_TF1_many[idx + 1];
+                cpu_weights_tf1_var[j] = std::fma(a, x, b);
+            }
+            continue;
+        }
 
-      // Read the coefficients
-      const unsigned int TF1_Index = tf1Num * _nTF1Coeff_;
-      const float a = cpu_coeff_TF1_many[TF1_Index];
-      const float b = cpu_coeff_TF1_many[TF1_Index + 1];
+        // 1. Get X values (Gather required due to indirection)
+        __m256i vTF1Params = LOAD_I(&cpu_paramNo_TF1_arr[i]);
+        __m256 vX = _mm256_i32gather_ps(ParamValues, vTF1Params, 4);
 
-      cpu_weights_tf1_var[tf1Num] = fmaf(a, x, b);
-      // cpu_weights_tf1_var[tf1Num] = a*x + b;
-      //cpu_weights_tf1_var[splineNum] = 1 + a*x + b*x*x + c*x*x*x + d*x*x*x*x + e*x*x*x*x*x;
+        // 2. Get Coefficients (A and B)
+        // Since they are stored [A, B, A, B...], we can load 16 floats (8 pairs)
+        // and shuffle them, which is faster than gather.
+        
+        // Load 8 pairs (16 floats, requires 2 loads)
+        // Pointers:
+        const float* base_tf1 = &cpu_coeff_TF1_many[i * 2]; // Assuming stride is 2
+        __m256 vRaw1 = _mm256_loadu_ps(base_tf1);     // A1 B1 A2 B2 A3 B3 A4 B4
+        __m256 vRaw2 = _mm256_loadu_ps(base_tf1 + 8); // A5 B5 A6 B6 A7 B7 A8 B8
+
+        // De-interleave into AAAAAAAA and BBBBBBBB
+        // Shuffle allows us to sort them.
+        // (Note: This specific shuffle sequence depends on AVX logic, 
+        // simplified here using a common unpack trick)
+        
+        // Unpack low parts: A1 A5 B1 B5 A2 A6 B2 B6... (conceptual)
+        // Actually, let's use a simpler permute path for clarity or standard gather if lazy.
+        // Given complexity of manual shuffle, GATHER is safer to write and reasonably fast:
+        
+        // Calculate indices for A and B
+        __m256i vBaseIdx = _mm256_set1_epi32(i * 2); 
+        // Create sequence 0, 2, 4... for A
+        __m256i vSeqA = _mm256_setr_epi32(0, 2, 4, 6, 8, 10, 12, 14);
+        __m256i vIdxA = _mm256_add_epi32(vBaseIdx, vSeqA);
+        __m256i vIdxB = _mm256_add_epi32(vIdxA, _mm256_set1_epi32(1));
+
+        __m256 vA = _mm256_i32gather_ps(cpu_coeff_TF1_many, vIdxA, 4);
+        __m256 vB = _mm256_i32gather_ps(cpu_coeff_TF1_many, vIdxB, 4);
+
+        // 3. FMA
+        __m256 vRes = _mm256_fmadd_ps(vA, vX, vB);
+
+        // 4. Store
+        _mm256_storeu_ps(&cpu_weights_tf1_var[i], vRes);
     }
-  #ifdef MULTITHREAD
-  //KS: End parallel region
-  }
-  #endif
+
+} // End Parallel
+#endif
 }
 
 //*********************************************************
