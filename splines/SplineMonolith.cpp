@@ -63,9 +63,7 @@ void FPGACalcSplineWeights(short int *SplineSegments,
 			                     float*coeff_many,
                            float *ParamValues,
                            float *coeff_x,
-                           unsigned int *nKnots_arr,
-                           short int *paramNo_arr,
-                           int NSplines_valid,
+                           int TotalSplines,
                            int nCoeff,
                            int max_knots,
                            int nParams) {
@@ -75,8 +73,6 @@ void FPGACalcSplineWeights(short int *SplineSegments,
     // sycl::ext::intel::device_ptr<const float> coeff_many_device(coeff_many);
     sycl::ext::intel::host_ptr<const float> paramvalues_host(ParamValues);
     sycl::ext::intel::host_ptr<const float> coeff_x_host(coeff_x);
-    sycl::ext::intel::host_ptr<const unsigned int> knots_host(nKnots_arr);
-    sycl::ext::intel::host_ptr<const short int> params_host(paramNo_arr);
     
     [[intel::fpga_memory("BLOCK_RAM")]] int segments_bram[200];
     [[intel::max_replicates(4)]] float paramvalues_bram[200];
@@ -90,11 +86,11 @@ void FPGACalcSplineWeights(short int *SplineSegments,
 
     //#pragma unroll 2
     [[intel::initiation_interval(1)]]
-    for (unsigned int splineNum = 0; splineNum < NSplines_valid; ++splineNum){
-        const short int Param = params_host[splineNum];
+    for (unsigned int splineNum = 0; splineNum < TotalSplines; ++splineNum){
+        const short int Param = splineNum % nParams;
         const short int segment = segments_bram[Param];
         const short int segment_X = static_cast<short int>(Param * max_knots + segment);
-        const unsigned int CurrentKnotPos = knots_host[splineNum] * nCoeff + segment * nCoeff;
+        const unsigned int CurrentKnotPos = splineNum * max_knots * nCoeff + segment * nCoeff;
 
         // fetch all fX simultaneously
         float coeffs[4];
@@ -147,22 +143,19 @@ void FPGACalcSplineWeights(short int *SplineSegments,
 
 [[intel::use_stall_enable_clusters]]
 void FPGAModifyWeights(int NEvents,
-                       float *cpu_total_weights,
-                       unsigned int *cpu_nParamPerEvent
+                       int nParams,
+                       float *cpu_total_weights
                       // unsigned int *cpu_nParamPerEvent_tf1
                       ){
   sycl::ext::intel::host_ptr<float> total_weights_host(cpu_total_weights);
-  sycl::ext::intel::host_ptr<const unsigned int> nParamPerEvent_host(cpu_nParamPerEvent);
   //sycl::ext::intel::host_ptr<const unsigned int> nParamPerEvent_tf1_host(cpu_nParamPerEvent_tf1);
 
   for (unsigned int EventNum = 0; EventNum < NEvents; ++EventNum){
     float totalWeight = 1.0f; // Initialize total weight for each event
 
-    const unsigned int Offset = 2 * EventNum;
-
-    // Extract the parameters for the current event
-    const unsigned int startIndex = nParamPerEvent_host[Offset + 1];
-    const unsigned int numParams = nParamPerEvent_host[Offset];
+    // In dense mode, we process all parameters for each event
+    const unsigned int startIndex = EventNum * nParams;
+    const unsigned int numParams = nParams;
 
     float spline_val;
 
@@ -331,7 +324,19 @@ void SMonolith::PrepareForGPU(std::vector<std::vector<TResponseFunction_red*> > 
 
 
   #ifdef USE_FPGA
-  cpu_spline_handler = new SplineMonoUSM(SMonolith::queue, event_size_max, nKnots*_nCoeff_, NSplines_valid, NSplines_valid, NEvents);
+  // KS: Allocate dense array for FPGA
+  // We allocate memory for ALL parameters for ALL events, padded to max_knots
+  unsigned int total_size_dense = NEvents * nParams * _max_knots * _nCoeff_;
+  // We don't use nKnots_arr and paramNo_arr in FPGA dense mode, so pass size 1
+  cpu_spline_handler = new SplineMonoUSM(SMonolith::queue, event_size_max, total_size_dense, 1, 1, NEvents);
+
+  // Initialize with identity splines (y=1.0, b=0, c=0, d=0)
+  for (unsigned int i = 0; i < NEvents * nParams * _max_knots; ++i) {
+      cpu_spline_handler->coeff_many[i * _nCoeff_ + 0] = 1.0f; // y
+      cpu_spline_handler->coeff_many[i * _nCoeff_ + 1] = 0.0f; // b
+      cpu_spline_handler->coeff_many[i * _nCoeff_ + 2] = 0.0f; // c
+      cpu_spline_handler->coeff_many[i * _nCoeff_ + 3] = 0.0f; // d
+  }
 
     //cpu_coeff_TF1_many = sycl::malloc_host<float>(nTF1coeff, queue);
     //cpu_paramNo_TF1_arr = sycl::malloc_host<short int>(NTF1_valid, queue);
@@ -455,15 +460,20 @@ void SMonolith::PrepareForGPU(std::vector<std::vector<TResponseFunction_red*> > 
           cpu_spline_handler->coeff_x[ParamNumber*_max_knots + j] = x_tmp[j];
         }
         //KS: Contrary to X coeff we keep for other coeff only filled knots, there is no much gain for doing so for x coeff
+        #ifdef USE_FPGA
+        unsigned int dense_idx_start = (EventCounter * nParams + ParamNumber) * _max_knots * _nCoeff_;
         for (int j = 0; j < nPoints_tmp; ++j) {
           for (int k = 0; k < _nCoeff_; k++) {
-            //#ifndef USE_FPGA
-              cpu_spline_handler->coeff_many[KnotCounter*_nCoeff_ + j*_nCoeff_ + k] = many_tmp[j*_nCoeff_+k];
-            //#else
-            //  queue.memcpy(&cpu_spline_handler->coeff_many[KnotCounter*_nCoeff_ + j*_nCoeff_ + k], &many_tmp[j*_nCoeff_+k], sizeof(float)).wait();
-            //#endif
+             cpu_spline_handler->coeff_many[dense_idx_start + j*_nCoeff_ + k] = many_tmp[j*_nCoeff_+k];
           }
         }
+        #else
+        for (int j = 0; j < nPoints_tmp; ++j) {
+          for (int k = 0; k < _nCoeff_; k++) {
+              cpu_spline_handler->coeff_many[KnotCounter*_nCoeff_ + j*_nCoeff_ + k] = many_tmp[j*_nCoeff_+k];
+          }
+        }
+        #endif
 
         #ifdef USE_FPGA
         //queue.memcpy(cpu_spline_handler->coeff_many_device, cpu_spline_handler->coeff_many, sizeof(float)*nKnots*_nCoeff_).wait();
@@ -471,9 +481,11 @@ void SMonolith::PrepareForGPU(std::vector<std::vector<TResponseFunction_red*> > 
 
 
         // Set the parameter number for this spline
+        #ifndef USE_FPGA
         cpu_spline_handler->paramNo_arr[NSplinesCounter] = short(ParamNumber);
         //KS: Fill map when each spline starts
         cpu_spline_handler->nKnots_arr[NSplinesCounter] = KnotCounter;
+        #endif
         KnotCounter += nPoints_tmp;
 
         #ifdef Weight_On_SplineBySpline_Basis
@@ -935,16 +947,15 @@ void SMonolith::LoadSplineFile(std::string FileName) {
     ParamInfo->GetEntry(i);
     std::cout << "CPU DEBUG 0" << std::endl;
     std::cout << "Grabbed param_no and nKNots: " << paramNo_arr << " " << nKnots_arr << std::endl;
+    #ifndef USE_FPGA
     cpu_spline_handler->paramNo_arr[i] = paramNo_arr;
     cpu_spline_handler->nKnots_arr[i] = nKnots_arr;
+    #endif
     #ifdef USE_FPGA
     std::cout << "FPGA DEBUG 0" << std::endl;
     std::cout << "Grabbed param_no and nKNots: " << paramNo_arr << " " << nKnots_arr << std::endl;
     int parameter_number = static_cast<int>(paramNo_arr);
     int knots_number = static_cast<int>(nKnots_arr);
-    cpu_spline_handler->paramNo_arr[i] = parameter_number;//paramNo_arr;
-    cpu_spline_handler->nKnots_arr[i] = knots_number;//nKnots_arr;
-    std::cout << "Grabbed from array param_no and nKNots: " << cpu_spline_handler->paramNo_arr[i] << " " << cpu_spline_handler->nKnots_arr[i] << std::endl;
     #endif
   }
 
@@ -1073,8 +1084,10 @@ void SMonolith::PrepareSplineFile() {
   ParamInfo->Branch("cpu_nKnots_arr", &nKnots_arr, "cpu_nKnots_arr/i");
   for(unsigned int i = 0; i < NSplines_valid; i++)
   {
+    #ifndef USE_FPGA
     paramNo_arr = cpu_spline_handler->paramNo_arr[i];
     nKnots_arr = cpu_spline_handler->nKnots_arr[i];
+    #endif
 
     ParamInfo->Fill();
   }
@@ -1294,11 +1307,6 @@ void SMonolith::Evaluate() {
 #ifdef USE_FPGA
     std::cout << "FPGA DEBUG!" << std::endl;
     std::cout << "Spline number is " << spline_i << std::endl;
-    std::cout << "Parameter number: " << cpu_spline_handler->paramNo_arr[spline_i] << std::endl;
-    std::cout << "Number of knots: " << cpu_spline_handler->nKnots_arr[spline_i+1] << std::endl;
-    std::cout << "Segment is: " << SplineSegments[cpu_spline_handler->paramNo_arr[spline_i]] << std::endl;
-    std::cout << "segment_X is: " << cpu_spline_handler->nKnots_arr[spline_i]*_max_knots+SplineSegments[cpu_spline_handler->paramNo_arr[spline_i]] << std::endl;
-    std::cout << "CurrentKnotPos is: " << cpu_spline_handler->nKnots_arr[spline_i]*_nCoeff_ + SplineSegments[cpu_spline_handler->paramNo_arr[spline_i]]*_nCoeff_ << std::endl;
     std::cout << "splines in first event" << cpu_spline_handler->splines_per_event_arr[0]<<std::endl;
 #else
     std::cout << "CPU DEBUG!" << std::endl;
@@ -1321,8 +1329,6 @@ void SMonolith::Evaluate() {
       float *coeff_many_host;
       float *ParamValues;
       float *coeff_x;
-      unsigned int *nKnots_arr;
-      short int *paramNo_arr;
       unsigned int NSplines_valid;
       int n_coeff;
       int max_knots;
@@ -1333,7 +1339,6 @@ void SMonolith::Evaluate() {
       //int nTF1Coeff;
       unsigned int n_events;
       float *cpu_total_weights;
-      unsigned int *cpu_nParamPerEvent;
       //unsigned int *cpu_nParamPerEvent_tf1;
       [[intel::kernel_args_restrict]]
       void operator()() const {
@@ -1346,14 +1351,12 @@ void SMonolith::Evaluate() {
                      coeff_many_host,
                      ParamValues,
                      coeff_x,
-                     nKnots_arr,
-                     paramNo_arr,
-                     NSplines_valid,
+                     n_events * nParams,
                      n_coeff,
                      max_knots,
                      nParams);
         //task_b.async(ParamValues, cpu_paramNo_TF1_arr,cpu_coeff_TF1_many, NTF1_valid, nTF1Coeff, nParams);
-        task_c.async(n_events, cpu_total_weights, cpu_nParamPerEvent);//, cpu_nParamPerEvent_tf1);
+        task_c.async(n_events, nParams, cpu_total_weights);//, cpu_nParamPerEvent_tf1);
       }
     };
  
@@ -1363,10 +1366,8 @@ void SMonolith::Evaluate() {
     // nChunk is a const int = 2 in the producer
     const int nChunk = 2; 
     
-    for (unsigned int i = 0; i < NEvents; ++i) {
-        // This is a common way to calculate ceil(a/b) with integer arithmetic
-        total_chunks += (cpu_spline_handler->splines_per_event_arr[i] + nChunk - 1) / nChunk;
-    }
+    // In dense mode, every event has nParams splines
+    total_chunks = NEvents * ((nParams + nChunk - 1) / nChunk);
   
 
 
@@ -1380,9 +1381,7 @@ void SMonolith::Evaluate() {
     //std::cout << "coeff_many_device:               " << static_cast<void*>(cpu_spline_handler->coeff_many_device) << std::endl;
     std::cout << "ParamValues:              " << static_cast<void*>(ParamValues) << std::endl;
     std::cout << "coeff_x:                  " << static_cast<void*>(cpu_spline_handler->coeff_x) << std::endl;
-    std::cout << "nKnots_arr:               " << static_cast<void*>(cpu_spline_handler->nKnots_arr) << std::endl;
-    std::cout << "paramNo_arr:              " << static_cast<void*>(cpu_spline_handler->paramNo_arr) << std::endl;
-    std::cout << "NSplines_valid:           " << NSplines_valid << std::endl;
+    std::cout << "NSplines_valid (unused):  " << NSplines_valid << std::endl;
     std::cout << "_nCoeff_:                 " << _nCoeff_ << std::endl;
     std::cout << "_max_knots:               " << _max_knots << std::endl;
     std::cout << "nParams:                  " << nParams << std::endl;
@@ -1396,9 +1395,6 @@ void SMonolith::Evaluate() {
     // Task C arguments
     std::cout << "NEvents:                  " << NEvents << std::endl;
     std::cout << "cpu_total_weights:        " << static_cast<void*>(cpu_total_weights) << std::endl;
-    //std::cout << "cpu_nParamPerEvent.data(): " << static_cast<void*>(cpu_nParamPerEvent.data()) << std::endl;
-    //std::cout << "cpu_nParamPerEvent_tf1.data(): " << static_cast<void*>(cpu_nParamPerEvent_tf1.data()) << std::endl;
-    std::cout << "cpu_nParamPerEvent: " << static_cast<void*>(cpu_nParamPerEvent) << std::endl;
 
 
     std::cout << "Calling kernel:" << std::endl;
@@ -1414,8 +1410,6 @@ void SMonolith::Evaluate() {
                                                             cpu_spline_handler->coeff_many,
                                                             ParamValues,
                                                             cpu_spline_handler->coeff_x,
-                                                            cpu_spline_handler->nKnots_arr,
-                                                            cpu_spline_handler->paramNo_arr,
                                                             NSplines_valid,
                                                             _nCoeff_,
                                                             _max_knots,
@@ -1426,7 +1420,6 @@ void SMonolith::Evaluate() {
                                                             //_nTF1Coeff_,
                                                             NEvents,
                                                             cpu_total_weights,
-                                                            cpu_nParamPerEvent//.data()
                                                             //cpu_nParamPerEvent_tf1.data()
                                                             });
 
