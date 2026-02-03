@@ -104,6 +104,9 @@ class SMonolith : public SplineBase {
     /// @brief Conversion from valid splines to all
     inline void ModifyWeights_GPU();
     
+    /// @brief KS: Populates the expanded arrays for vectorization
+    inline void PopulateExpandedArrays();
+
     /// @brief KS: Prepare spline file that can be used for fast loading
     inline void PrepareSplineFile();
     /// @brief KS: Load preprocessed spline file
@@ -139,6 +142,13 @@ class SMonolith : public SplineBase {
     float *cpu_weights_spline_var;
     /// CPU arrays to hold weight for each TF1
     float *cpu_weights_tf1_var;
+
+    /// Arrays to hold expanded values for vectorization
+    std::vector<float> cpu_vals_dx;
+    std::vector<float> cpu_vals_y;
+    std::vector<float> cpu_vals_b;
+    std::vector<float> cpu_vals_c;
+    std::vector<float> cpu_vals_d;
 
     /// KS: CPU map keeping track how many parameters applies to each event, we keep two numbers here {number of TF1 per event, index where TF1 start for a given event}
     std::vector<unsigned int> cpu_nParamPerEvent_tf1;
