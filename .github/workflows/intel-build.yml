@@ -18,7 +18,7 @@ defaults:
 jobs:
   Setup:
     runs-on: [self-hosted, icpx]
-    if: github.actor == 'laurilaatu' || github.actor == 'alexanderrichards' || github.actor == 'EdAtkin' || github.actor == 'alisanikiforova'
+    if: github.actor == 'laurilaatu' || github.actor == 'alexanderrichards' || github.actor == 'EdAtkin' || github.actor == 'alisanikiforova' || github.actor == 'jules-ai'
     steps:
       - name: Cleanup Workspace
         run: rm -rf $GITHUB_WORKSPACE/*
