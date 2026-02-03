@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - intel_icpx
+      - vectorize-cpu-spline-optimization
 
 concurrency:
   group: ${{ github.ref }}
