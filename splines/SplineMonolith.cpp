@@ -1282,7 +1282,9 @@ void SMonolith::Evaluate() {
   FindSplineSegment();
 
   // Populate the expanded arrays before calculating weights
+  #ifndef USE_FPGA
   PopulateExpandedArrays();
+  #endif
 
   std::cout << "------------------" << std::endl;
   std::ofstream out("out.txt", std::ios_base::app);
@@ -1475,6 +1477,7 @@ void SMonolith::Evaluate() {
 //KS: Populates the expanded arrays for vectorization
 void SMonolith::PopulateExpandedArrays() {
 //*********************************************************
+  #ifndef USE_FPGA
   const short* paramNo_ptr = cpu_spline_handler->paramNo_arr.data();
   const unsigned int* nKnots_ptr = cpu_spline_handler->nKnots_arr.data();
   const float* coeff_ptr = cpu_spline_handler->coeff_many.data();
@@ -1503,6 +1506,7 @@ void SMonolith::PopulateExpandedArrays() {
     int segment_x = int(param) * _max_knots + segment;
     cpu_vals_dx[i] = pvals_ptr[param] - coeff_x_ptr[segment_x];
   }
+  #endif
 }
 
 //*********************************************************
