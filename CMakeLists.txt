@@ -13,7 +13,7 @@ option(MaCh3_MULTITHREAD_ENABLED "This will enable multithreading (OMP) in whole
 option(MaCh3_DEBUG_ENABLED "Enable special debugging mode, with additional printouts and data structure, increases RAM usage and low performance" OFF)
 option(MaCh3_DependancyGraph "Will produce dependency graph" OFF)
 option(MaCh3_GPU_BENCHMARK "Perform fancy CUDA Benchmarking" OFF)
-option(MaCh3_NATIVE_ENABLED "Enable native CPU optimizations for improved performance during benchmarking)" OFF)
+option(MaCh3_NATIVE_ENABLED "Enable native CPU optimizations for improved performance during benchmarking)" ON)
 option(MaCh3_GPU_ENABLED "Use GPU acceleration or not" ON)
 
 #KS: Load cmake function like DefineEnabledRequiredSwitch allowing to write more compact cmake
