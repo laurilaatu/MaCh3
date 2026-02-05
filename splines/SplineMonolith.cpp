@@ -351,6 +351,11 @@ void SMonolith::PrepareForGPU(std::vector<std::vector<TResponseFunction_red*> > 
     cpu_spline_handler->coeff_x.resize(event_size_max);
     cpu_coeff_TF1_many.resize(nTF1coeff);
     cpu_paramNo_TF1_arr.resize(NTF1_valid);
+    cpu_vals_dx.resize(NSplines_valid);
+    cpu_vals_y.resize(NSplines_valid);
+    cpu_vals_b.resize(NSplines_valid);
+    cpu_vals_c.resize(NSplines_valid);
+    cpu_vals_d.resize(NSplines_valid);
   #endif
 
 
@@ -884,6 +889,11 @@ void SMonolith::LoadSplineFile(std::string FileName) {
     cpu_spline_handler->coeff_x.resize(event_size_max);
     cpu_coeff_TF1_many.resize(nTF1coeff);
     cpu_paramNo_TF1_arr.resize(NTF1_valid);
+    cpu_vals_dx.resize(NSplines_valid);
+    cpu_vals_y.resize(NSplines_valid);
+    cpu_vals_b.resize(NSplines_valid);
+    cpu_vals_c.resize(NSplines_valid);
+    cpu_vals_d.resize(NSplines_valid);
   #endif
 
 
@@ -1271,6 +1281,11 @@ void SMonolith::Evaluate() {
   std::cout << "CPU Evaluate!" << std::endl;
   FindSplineSegment();
 
+  // Populate the expanded arrays before calculating weights
+  #ifndef USE_FPGA
+  PopulateExpandedArrays();
+  #endif
+
   std::cout << "------------------" << std::endl;
   std::ofstream out("out.txt", std::ios_base::app);
   std::streambuf *coutbuf = std::cout.rdbuf(); //save old buf
@@ -1459,26 +1474,54 @@ void SMonolith::Evaluate() {
 #endif
 
 //*********************************************************
-__attribute__((target("avx2,fma")))
+//KS: Populates the expanded arrays for vectorization
+void SMonolith::PopulateExpandedArrays() {
+//*********************************************************
+  #ifndef USE_FPGA
+  const short* paramNo_ptr = cpu_spline_handler->paramNo_arr.data();
+  const unsigned int* nKnots_ptr = cpu_spline_handler->nKnots_arr.data();
+  const float* coeff_ptr = cpu_spline_handler->coeff_many.data();
+  const float* coeff_x_ptr = cpu_spline_handler->coeff_x.data();
+  const short* segments_ptr = SplineSegments;
+  const float* pvals_ptr = ParamValues;
+
+  #ifdef MULTITHREAD
+  #pragma omp parallel for
+  #endif
+  for (unsigned int i = 0; i < NSplines_valid; ++i) {
+    short param = paramNo_ptr[i];
+    short segment = segments_ptr[param];
+    unsigned int knot_start = nKnots_ptr[i];
+    // _nCoeff_ is 4
+    unsigned int idx = (knot_start + segment) * 4;
+
+    // Coeffs are stored as y, b, c, d
+    cpu_vals_y[i] = coeff_ptr[idx + 0];
+    cpu_vals_b[i] = coeff_ptr[idx + 1];
+    cpu_vals_c[i] = coeff_ptr[idx + 2];
+    cpu_vals_d[i] = coeff_ptr[idx + 3];
+
+    // DX calculation
+    // segment_X = Param * _max_knots + segment
+    int segment_x = int(param) * _max_knots + segment;
+    cpu_vals_dx[i] = pvals_ptr[param] - coeff_x_ptr[segment_x];
+  }
+  #endif
+}
+
+//*********************************************************
+__attribute__((target("avx512f")))
 void SMonolith::CalcSplineWeights() {
 
 	#ifndef USE_FPGA
 //*********************************************************
 // Constants
-    const __m256i vMaxKnots = _mm256_set1_epi32(_max_knots);
-    const __m256i vNCoeff   = _mm256_set1_epi32(_nCoeff_);
-
     // FIX: Use .data() to get raw pointers from std::vector
-    const short* paramNo_ptr        = cpu_spline_handler->paramNo_arr.data();
-    const unsigned int* nKnots_ptr  = cpu_spline_handler->nKnots_arr.data(); 
-    
-    // Pointers for float data
-    const float* coeff_ptr   = cpu_spline_handler->coeff_many.data();
-    const float* coeff_x_ptr = cpu_spline_handler->coeff_x.data();
-
-    // Standard pointers
-    const short* segments_ptr       = SplineSegments; 
-    const float* pvals_ptr          = ParamValues;
+    const float* vals_dx_ptr = cpu_vals_dx.data();
+    const float* vals_y_ptr  = cpu_vals_y.data();
+    const float* vals_b_ptr  = cpu_vals_b.data();
+    const float* vals_c_ptr  = cpu_vals_c.data();
+    const float* vals_d_ptr  = cpu_vals_d.data();
 
 #ifdef MULTITHREAD
 #pragma omp parallel
@@ -1487,76 +1530,36 @@ void SMonolith::CalcSplineWeights() {
     // LOOP 1: Cubic Splines
     // ---------------------------------------------------------
     #pragma omp for schedule(static) nowait
-    for (unsigned int i = 0; i < NSplines_valid; i += 8) {
+    for (unsigned int i = 0; i < NSplines_valid; i += 16) {
         
         // 1. Tail Safety Check
-        if (i + 8 > NSplines_valid) {
+        if (i + 16 > NSplines_valid) {
             for (unsigned int j = i; j < NSplines_valid; ++j) {
-                short int Param = paramNo_ptr[j];
-                short int segment = segments_ptr[Param];
-                short int segment_X = short(Param * _max_knots + segment);
+                float dx = vals_dx_ptr[j];
+                float fY = vals_y_ptr[j];
+                float fB = vals_b_ptr[j];
+                float fC = vals_c_ptr[j];
+                float fD = vals_d_ptr[j];
                 
-                unsigned int CurrentKnotPos = nKnots_ptr[j] * _nCoeff_ + segment * _nCoeff_;
-                
-                float fY = coeff_ptr[CurrentKnotPos];
-                float fB = coeff_ptr[CurrentKnotPos + 1];
-                float fC = coeff_ptr[CurrentKnotPos + 2];
-                float fD = coeff_ptr[CurrentKnotPos + 3];
-                
-                float dx = pvals_ptr[Param] - coeff_x_ptr[segment_X];
                 cpu_weights_spline_var[j] = std::fma(dx, std::fma(dx, std::fma(dx, fD, fC), fB), fY);
             }
             continue;
         }
 
-        // 2. Load Indices (short -> int conversion)
-        __m256i vParamIdx = load_short_as_int(&paramNo_ptr[i]);
+        // 2. Load Data Directly
+        __m512 vDX = _mm512_loadu_ps(&vals_dx_ptr[i]);
+        __m512 vY  = _mm512_loadu_ps(&vals_y_ptr[i]);
+        __m512 vB  = _mm512_loadu_ps(&vals_b_ptr[i]);
+        __m512 vC  = _mm512_loadu_ps(&vals_c_ptr[i]);
+        __m512 vD  = _mm512_loadu_ps(&vals_d_ptr[i]);
 
-        // 3. MANUAL GATHER for SplineSegments (Because it is short*)
-        alignas(32) int temp_params[8];
-        _mm256_store_si256((__m256i*)temp_params, vParamIdx);
-        
-        alignas(32) int temp_segments[8];
-        for(int k=0; k<8; ++k) {
-            temp_segments[k] = segments_ptr[temp_params[k]]; 
-        }
-        __m256i vSegment = _mm256_load_si256((const __m256i*)temp_segments);
+        // 3. Horner's Method
+        __m512 vRes = _mm512_fmadd_ps(vDX, vD, vC);
+        vRes = _mm512_fmadd_ps(vDX, vRes, vB);
+        vRes = _mm512_fmadd_ps(vDX, vRes, vY);
 
-        // 4. Gather ParamValues
-        __m256 vPVal = _mm256_i32gather_ps(pvals_ptr, vParamIdx, 4);
-
-        // 5. Calculate Intermediate Indices
-        __m256i vSegX_Idx = _mm256_add_epi32(_mm256_mullo_epi32(vParamIdx, vMaxKnots), vSegment);
-
-        // Load nKnots (unsigned int compatible with __m256i)
-        __m256i vNKnots = _mm256_loadu_si256((const __m256i*)&nKnots_ptr[i]);
-        
-        // KnotPos = (nKnots + segment) * nCoeff
-        __m256i vBaseIdx = _mm256_mullo_epi32(_mm256_add_epi32(vNKnots, vSegment), vNCoeff);
-
-        // 6. Gather Data for Math
-        __m256 vCoeffX = _mm256_i32gather_ps(coeff_x_ptr, vSegX_Idx, 4);
-        
-        __m256 vY = _mm256_i32gather_ps(coeff_ptr, vBaseIdx, 4);
-        
-        __m256i vIdx_B = _mm256_add_epi32(vBaseIdx, _mm256_set1_epi32(1));
-        __m256 vB = _mm256_i32gather_ps(coeff_ptr, vIdx_B, 4);
-        
-        __m256i vIdx_C = _mm256_add_epi32(vBaseIdx, _mm256_set1_epi32(2));
-        __m256 vC = _mm256_i32gather_ps(coeff_ptr, vIdx_C, 4);
-        
-        __m256i vIdx_D = _mm256_add_epi32(vBaseIdx, _mm256_set1_epi32(3));
-        __m256 vD = _mm256_i32gather_ps(coeff_ptr, vIdx_D, 4);
-
-        // 7. Horner's Method
-        __m256 vDX = _mm256_sub_ps(vPVal, vCoeffX);
-
-        __m256 vRes = _mm256_fmadd_ps(vDX, vD, vC);
-        vRes = _mm256_fmadd_ps(vDX, vRes, vB);
-        vRes = _mm256_fmadd_ps(vDX, vRes, vY);
-
-        // 8. Store Result
-        _mm256_storeu_ps(&cpu_weights_spline_var[i], vRes);
+        // 4. Store Result
+        _mm512_storeu_ps(&cpu_weights_spline_var[i], vRes);
     }
 } // End Parallel
 #endif
