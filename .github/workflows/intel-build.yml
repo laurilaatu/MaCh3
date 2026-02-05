@@ -38,7 +38,7 @@ jobs:
           repository: alexanderrichards/MaCh3Utils
           path: MaCh3Utils
 
-  Build:
+  BuildAndTest:
     needs: Setup
     runs-on: [self-hosted, icpx]
     strategy:
@@ -52,22 +52,13 @@ jobs:
         run: |
           source $GITHUB_WORKSPACE/MaCh3Core/build_${{ matrix.build-type }}/bin/setup.MaCh3.sh
           MaCh3Utils/start_build.sh ${{ matrix.build-type }} MaCh3Tutorial build_${{ matrix.build-type }}
-
-  Validate:
-    needs: Build
-    runs-on: [self-hosted, icpx]
-    strategy:
-      matrix: &build-matrix
-        build-type: [ "cpu", "emulator", "hardware" ]
-      fail-fast: false
-    steps:
       - name: Run Validation
         run: MaCh3Utils/run_tests.sh MaCh3Core/build_${{ matrix.build-type }} MaCh3Tutorial/build_${{ matrix.build-type }}
       - name: Create Runtime Summary
         run: echo ":clock10:" `grep elapsed MaCh3Tutorial/build_${{ matrix.build-type }}/out.txt` >> $GITHUB_STEP_SUMMARY
 
   Archive:
-    needs: Validate
+    needs: BuildAndTest
     runs-on: [self-hosted, icpx]
     env:
       ARCHIVE_DIR: /home/hep/llaatu/mach3/output
