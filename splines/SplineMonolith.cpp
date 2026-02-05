@@ -1510,7 +1510,7 @@ void SMonolith::PopulateExpandedArrays() {
 }
 
 //*********************************************************
-__attribute__((target("avx2,fma")))
+__attribute__((target("avx512f")))
 void SMonolith::CalcSplineWeights() {
 
 	#ifndef USE_FPGA
@@ -1530,10 +1530,10 @@ void SMonolith::CalcSplineWeights() {
     // LOOP 1: Cubic Splines
     // ---------------------------------------------------------
     #pragma omp for schedule(static) nowait
-    for (unsigned int i = 0; i < NSplines_valid; i += 8) {
+    for (unsigned int i = 0; i < NSplines_valid; i += 16) {
         
         // 1. Tail Safety Check
-        if (i + 8 > NSplines_valid) {
+        if (i + 16 > NSplines_valid) {
             for (unsigned int j = i; j < NSplines_valid; ++j) {
                 float dx = vals_dx_ptr[j];
                 float fY = vals_y_ptr[j];
@@ -1547,19 +1547,19 @@ void SMonolith::CalcSplineWeights() {
         }
 
         // 2. Load Data Directly
-        __m256 vDX = _mm256_loadu_ps(&vals_dx_ptr[i]);
-        __m256 vY  = _mm256_loadu_ps(&vals_y_ptr[i]);
-        __m256 vB  = _mm256_loadu_ps(&vals_b_ptr[i]);
-        __m256 vC  = _mm256_loadu_ps(&vals_c_ptr[i]);
-        __m256 vD  = _mm256_loadu_ps(&vals_d_ptr[i]);
+        __m512 vDX = _mm512_loadu_ps(&vals_dx_ptr[i]);
+        __m512 vY  = _mm512_loadu_ps(&vals_y_ptr[i]);
+        __m512 vB  = _mm512_loadu_ps(&vals_b_ptr[i]);
+        __m512 vC  = _mm512_loadu_ps(&vals_c_ptr[i]);
+        __m512 vD  = _mm512_loadu_ps(&vals_d_ptr[i]);
 
         // 3. Horner's Method
-        __m256 vRes = _mm256_fmadd_ps(vDX, vD, vC);
-        vRes = _mm256_fmadd_ps(vDX, vRes, vB);
-        vRes = _mm256_fmadd_ps(vDX, vRes, vY);
+        __m512 vRes = _mm512_fmadd_ps(vDX, vD, vC);
+        vRes = _mm512_fmadd_ps(vDX, vRes, vB);
+        vRes = _mm512_fmadd_ps(vDX, vRes, vY);
 
         // 4. Store Result
-        _mm256_storeu_ps(&cpu_weights_spline_var[i], vRes);
+        _mm512_storeu_ps(&cpu_weights_spline_var[i], vRes);
     }
 } // End Parallel
 #endif
