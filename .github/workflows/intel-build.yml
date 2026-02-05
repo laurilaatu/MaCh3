@@ -41,6 +41,8 @@ jobs:
   BuildAndTest:
     needs: Setup
     runs-on: [self-hosted, icpx]
+    env:
+      ARCHIVE_DIR: /home/hep/llaatu/mach3/output
     strategy:
       matrix: &build-matrix
         build-type: [ "cpu", "emulator", "hardware" ]
@@ -56,17 +58,6 @@ jobs:
         run: MaCh3Utils/run_tests.sh MaCh3Core/build_${{ matrix.build-type }} MaCh3Tutorial/build_${{ matrix.build-type }}
       - name: Create Runtime Summary
         run: echo ":clock10:" `grep elapsed MaCh3Tutorial/build_${{ matrix.build-type }}/out.txt` >> $GITHUB_STEP_SUMMARY
-
-  Archive:
-    needs: BuildAndTest
-    runs-on: [self-hosted, icpx]
-    env:
-      ARCHIVE_DIR: /home/hep/llaatu/mach3/output
-    strategy:
-      matrix: &build-matrix
-        build-type: [ "cpu", "emulator", "hardware" ]
-      fail-fast: false
-    steps:
       - name: Create Re-usable Timestamp
         run: |
           TIMESTAMP=$(date +%s)
