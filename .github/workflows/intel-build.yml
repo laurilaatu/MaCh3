@@ -44,9 +44,10 @@ jobs:
     env:
       ARCHIVE_DIR: /home/hep/llaatu/mach3/output
     strategy:
+      max-parallel: 1
       matrix: &build-matrix
         build-type: [ "cpu", "emulator", "hardware" ]
-      fail-fast: false
+      fail-fast: true
     steps:
       - name: Build MaCh3Core
         run: MaCh3Utils/start_build.sh ${{ matrix.build-type }} MaCh3Core build_${{ matrix.build-type }}
